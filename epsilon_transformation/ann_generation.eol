@@ -1,0 +1,134 @@
+/*
+  This file implements the ANNController denotational semantic rules, avaliable here: https://github.com/UoY-RoboStar/ann-circus-rules
+
+  This relies on 'boolean_query.eol', Fang Yan's implementation of the RC to Circus M2M translation. 
+
+  We will import, a minimal version of boolean_query, Fang's RC to Circus rules, not all of it, because it is very big. 
+
+  Author: Ziggy Attala
+*/
+
+//import "boolean_query.eol";
+import "RoboChart2Circus_M2M.eol";
+
+//This creates AnglePIDANN ANNController manually, as the RoboChart Model Exporter, to a .model file in EMF, is not functional yet. 
+//Treat, the Z declaration, Value == \real, as part of the toolkit, as part of the import. 
+
+/*
+Parsing
+Slowdown, not in the creating channels, or name lists, or names, and it is fine with old version. 
+
+It is some change, just to the expressions, but not FloatExp. Applied expressions, or ref exprs, or createing channel declarations. 
+
+
+*/
+
+var anglepidann = RC!ANNController.all().at(0);
+
+anglepidann.annSemantics();
+
+//RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule.
+operation RC!ANNController annSemantics() {
+
+  self.ANNChannelDecl();
+  //procList.paras.add(self.ANNProc());
+}
+
+//RULE 2: Function ANNChannelDecl().
+operation RC!ANNController ANNChannelDecl() {
+
+  //The index of the last layer, -1 because 0-indexed. 
+  var lastLayerI = self.layerNo()-1;
+  //lastLayerS, as an integer, by taking the value attribute of the IntegerExp.
+  var lastLayerS = self.annparameters.layerstructure.values.at(lastLayerI).value;
+  
+  self.ANNChannels(self.layerNo(), lastLayerS);
+  
+  //declare terminate channel
+  Set{"terminate"}.createChannelPara("");
+  
+  //Implementation of set comprehension, using nested collect method in EOL.
+  var hiddenEvtsNames = Set{1..(self.layerNo()-1)}.collect(l | Set{1..l}.collect(n | layerRes(l, n)));
+  var hiddenEvtsNamesFlat = hiddenEvtsNames.flatten().asSet();
+  var hiddenEvts = createChannelSet(createBasicChannelSetExpr(hiddenEvtsNamesFlat));
+  hiddenEvts.createChanSetPara("ANNHiddenEvts");
+  
+}
+
+//RULE 3: Function ANNChannels
+operation RC!ANNController ANNChannels(l : Integer, n : Integer) {
+  if((l == 0) and (n == 1)) {
+    Set{layerRes(l, n)}.createChannelPara("", "Value");
+  }
+  else {
+    Set{layerRes(l, n)}.createChannelPara("", "Value");
+    NodeOutChannels(l, n, self.annparameters.layerstructure.values.size());
+    if(n > 1) {
+      self.ANNChannels(l, (n-1));
+    }
+    else {
+      self.ANNChannels((l-1), self.LStructure((l-1)));
+    }
+  }
+}
+
+//RULE 4: Function NodeOutChannels.
+operation NodeOutChannels(l : Integer, n : Integer, i : Integer) {
+  if(i == 1) {
+    Set{nodeOut(l, n, i)}.createChannelPara("", "Value");
+  }
+  else {
+    Set{nodeOut(l, n, i)}.createChannelPara("", "Value");
+    NodeOutChannels(l, n, (i-1));
+  
+  }
+}
+
+
+operation RC!ANNController ANNProc() : Z!ProcessPara {
+  
+}
+
+//RULE 13: 
+operation RC!ANNController LStructure(i : Integer) : Integer {
+  if(i == 0) {
+    return self.annparameters.inputContext.allEvents().size();
+  }
+  else {
+    return self.annparameters.layerstructure.values.at(i).value;
+  }
+}
+
+//RULE 14: layerRes Channel. Has to be a string, because of how channels are created.
+operation layerRes(l : Integer, n : Integer) : String {
+  return "layerRes" + l + "" + n;
+}
+//RULE 16: nodeOut Channel. 
+operation nodeOut(l : Integer, n : Integer, i : Integer) : String {
+  return "nodeOut" + l + "" + n + "" + i;
+}
+
+//RULE 17: Function layerNo.
+operation RC!ANNController layerNo() : Integer {
+  var layerstructure = self.annparameters.layerstructure;
+  var lSize = layerstructure.values.size();
+  return lSize;
+}
+
+//ADDITIONAL: Rule 4, 
+operation RC!Context allEvents() : Set<RC!Event> {
+  var selfEvents = self.events;
+  var interfaceEvents = self.interfaces.collect(i | i.events);
+  selfEvents.addAll(interfaceEvents.flatten().asSet());
+  return selfEvents; 
+}
+
+
+//Only translation rules we should need are the floating point expressions, and events, and channels. 
+
+//Do channels first. 
+//make operations. 
+//useful operations: 
+//createFloatExpr() : Z!Expr, context type, is RC!FloatExp
+//operation Sequence<Z!Para> createBasicProcess(mainActionName: String): Z!BasicProcess{
+//

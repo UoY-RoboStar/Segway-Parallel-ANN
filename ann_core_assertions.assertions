@@ -1,0 +1,20 @@
+timed assertion M1: SegwayANN is deadlock-free
+
+timed assertion M2: SegwayANN is divergence-free
+
+timed assertion M3: SegwayANN is divergence-free
+
+timed assertion C1: SegwayANN::SegwayController is deadlock-free
+
+timed assertion C2: SegwayANN::SegwayController is divergence-free
+
+timed assertion C3: SegwayANN::SegwayController is divergence-free
+
+timed assertion A1: SegwayANN::AnglePIDANN is deadlock-free
+
+timed assertion A2: SegwayANN::AnglePIDANN is divergence-free
+
+timed assertion A3: SegwayANN::AnglePIDANN is deterministic
+
+
+

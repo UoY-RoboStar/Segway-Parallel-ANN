@@ -1,0 +1,135 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 15-05-2024 16:48:16
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "core_timed_defs.csp"
+include "core_defs.csp"
+include "SegwayANN_SegwayController.csp"
+include "file_SegwayANN_defs.csp"
+include "state_timed_defs.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+
+transparent wbisim
+channel r__
+-- generate SegwayANN_SegwayController
+P_SegwayANN_SegwayController = let
+	id__ = 0
+	
+	
+	
+	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
+	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
+	const_SegwayANN_SegwayController_stm_ref0_startupDelay = const_BalanceSTM_startupDelay
+	const_SegwayANN_SegwayController_stm_ref0_speedUpdate = const_BalanceSTM_speedUpdate
+	const_SegwayANN_SegwayController_stm_ref0_rotationUpdate = const_BalanceSTM_rotationUpdate
+	const_SegwayANN_SegwayController_stm_ref0_motorBudget = const_BalanceSTM_motorBudget
+	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
+	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
+	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
+	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
+	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
+	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
+		
+within
+	SegwayANN_SegwayController::O__(id__,
+			    const_SegwayANN_SegwayController_stm_ref0_maxAngle,
+			    const_SegwayANN_SegwayController_stm_ref0_loopTime,
+			    const_SegwayANN_SegwayController_stm_ref0_startupDelay,
+			    const_SegwayANN_SegwayController_stm_ref0_speedUpdate,
+			    const_SegwayANN_SegwayController_stm_ref0_rotationUpdate,
+			    const_SegwayANN_SegwayController_stm_ref0_motorBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_angleBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_speedBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_rotationBudget,
+			    const_SegwayANN_SegwayController_stm_ref2_P,
+			    const_SegwayANN_SegwayController_stm_ref2_I,
+			    const_SegwayANN_SegwayController_stm_ref2_maxIntegral,
+			    const_SegwayANN_SegwayController_stm_ref3_D)
+
+assert P_SegwayANN_SegwayController :[deadlock-free]	
+assert P_SegwayANN_SegwayController;RUN({r__}) :[deadlock-free]
+assert P_SegwayANN_SegwayController :[deterministic]
+assert P_SegwayANN_SegwayController :[divergence-free]
+
+-- generate SegwayANN_SegwayController_stm_ref0
+P_SegwayANN_SegwayController_stm_ref0 = let
+	id__ = 0
+	
+	
+	
+within
+	SegwayANN_SegwayController::stm_ref0::O__(
+		id__,
+		const_BalanceSTM_maxAngle,
+		const_BalanceSTM_loopTime,
+		const_BalanceSTM_startupDelay,
+		const_BalanceSTM_speedUpdate,
+		const_BalanceSTM_rotationUpdate,
+		const_BalanceSTM_motorBudget,
+		const_BalanceSTM_angleBudget,
+		const_BalanceSTM_speedBudget,
+		const_BalanceSTM_rotationBudget
+	)
+assert P_SegwayANN_SegwayController_stm_ref0 :[deadlock-free]	
+assert P_SegwayANN_SegwayController_stm_ref0;RUN({r__}) :[deadlock-free]
+assert P_SegwayANN_SegwayController_stm_ref0 :[deterministic]
+assert P_SegwayANN_SegwayController_stm_ref0 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_SegwayANN_SegwayController_stm_ref0[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_SegwayANN_SegwayController_stm_ref0
+-- generate SegwayANN_SegwayController_stm_ref2
+P_SegwayANN_SegwayController_stm_ref2 = let
+	id__ = 0
+	
+	
+	
+within
+	SegwayANN_SegwayController::stm_ref2::O__(
+		id__,
+		const_SpeedPID_P,
+		const_SpeedPID_I,
+		const_SpeedPID_maxIntegral
+	)
+assert P_SegwayANN_SegwayController_stm_ref2 :[deadlock-free]	
+assert P_SegwayANN_SegwayController_stm_ref2;RUN({r__}) :[deadlock-free]
+assert P_SegwayANN_SegwayController_stm_ref2 :[deterministic]
+assert P_SegwayANN_SegwayController_stm_ref2 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_SegwayANN_SegwayController_stm_ref2[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_SegwayANN_SegwayController_stm_ref2
+-- generate SegwayANN_SegwayController_stm_ref3
+P_SegwayANN_SegwayController_stm_ref3 = let
+	id__ = 0
+	
+	
+	
+within
+	SegwayANN_SegwayController::stm_ref3::O__(
+		id__,
+		const_RotationPID_D
+	)
+assert P_SegwayANN_SegwayController_stm_ref3 :[deadlock-free]	
+assert P_SegwayANN_SegwayController_stm_ref3;RUN({r__}) :[deadlock-free]
+assert P_SegwayANN_SegwayController_stm_ref3 :[deterministic]
+assert P_SegwayANN_SegwayController_stm_ref3 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_SegwayANN_SegwayController_stm_ref3[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_SegwayANN_SegwayController_stm_ref3
+-- timed deadlock free
+assert prioritise(P_SegwayANN_SegwayController[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_SegwayANN_SegwayController

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:circus="http://www.robocalc.circus/Circus">
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="layerRes21"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut212"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut211"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="layerRes11"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut112"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut111"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="layerRes02"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut022"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="nodeOut021"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="layerRes01"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="Value"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelPara>
+    <declList>
+      <decls xsi:type="circus:ChannelDecl">
+        <genFormals/>
+        <channelNameList>
+          <names word="terminate"/>
+        </channelNameList>
+        <expr xsi:type="circus:RefExpr">
+          <name word="SYNCH"/>
+        </expr>
+      </decls>
+    </declList>
+    <name word=""/>
+  </circus:ChannelPara>
+  <circus:ChannelSetPara>
+    <channelSet xsi:type="circus:CircusChannelSet">
+      <expr xsi:type="circus:BasicChannelSetExpr">
+        <communicationList>
+          <communications commUsage="Normal" multiSych="0">
+            <channelExpr>
+              <name word="layerRes11"/>
+            </channelExpr>
+            <fieldList/>
+          </communications>
+        </communicationList>
+      </expr>
+    </channelSet>
+    <name word="ANNHiddenEvts"/>
+  </circus:ChannelSetPara>
+</xmi:XMI>

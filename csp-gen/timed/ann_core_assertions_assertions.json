@@ -1,0 +1,38 @@
+[
+{ "name": "timed SegwayANN is deadlock free (M1) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN is divergence free (M2) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN is divergence free (M3) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::SegwayController is deadlock free (C1) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::SegwayController is divergence free (C2) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::SegwayController is divergence free (C3) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::AnglePIDANN is deadlock free (A1) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::AnglePIDANN is divergence free (A2) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::AnglePIDANN is deterministic (A3) [failures divergences model]",
+  "type": "deterministic",
+  "negated": false 
+}
+			]
