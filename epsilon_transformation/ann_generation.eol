@@ -31,7 +31,7 @@ anglepidann.annSemantics();
 operation RC!ANNController annSemantics() {
 
   self.ANNChannelDecl();
-  //procList.paras.add(self.ANNProc());
+  self.ANNProc();
 }
 
 //RULE 2: Function ANNChannelDecl().
@@ -85,8 +85,208 @@ operation NodeOutChannels(l : Integer, n : Integer, i : Integer) {
 }
 
 
-operation RC!ANNController ANNProc() : Z!ProcessPara {
+operation RC!ANNController ANNProc() {
+  //We need to create a SEQUENCE of Z paragraphs, which are the paras of the paraList. 
+  //for the createBasicProcess(mainActionName: String) where create the Call Action, ANNRenamed. 
+  //needs to be of type Z!Para, 
+  /*
+    lower levels, Action_Para, 
+
+    createActionPara(), makes an ActionPara, which is a type of Para. 
+
+   need a Z!CircusAction, 
+
+  createAction2(
+	type: String, 
+	fst_action: Z!CircusAction, 
+	snd_action: Z!CircusAction
+	):
+  this is, "InterruptAction", "SeqAction", or "ExtChoiceAction". 
+
+  createParallelProcess(
+	cs_name: String, 
+	left: Z!CircusProcess, 
+	right: Z!CircusProcess
+	):Z!ParallelProcess
+
+    Parameterised action, Param_Action, 
+
+There is NO param_action, creation, that Fang has made, it is Z!ParamAction. 
+
+Then we need Extch Action, 
+
+External choice action, 
+
+The class is Z!ExtChoiceAction. It is an Action2. 
+
+This function, 
+operation Sequence<Z!CircusAction> createSequenceAsExtchoiceAction(): Z!ExtChoiceAction
+
+Automatically creates nested external choices, we can use this, sequence of Z!CircusActions. 
+
+Decl_List. 
+
+  Fang also has: 
+operation Sequence<Z!CircusAction> createSequenceAsSeqAction(): Z!SeqAction
+
+  Parameterised action, it is an ActionD, action with a list of declarations. 
+
+Action1, unary action, has a ZDeclList, 0-1, ZDeclList.decls, declaration, which is a Term. 
+
+Action1, just has a .circusAction, which is just a Z!CircusAction. 
+
+no decl, A Decl is JUST a Term. 
+
+a Term is ANYTHING. 
+
+Declaration, 
+
+Var_Decl, with type, ref_expr, to natural numbers, and name_list, a list of names, of just l, n, i, 
+
+operation String createZName(): Z!ZName{
+
+String context, createZName(), 
+
+Create name list: 
+operation createNameList(stringSet: Set<String>): Z!ZNameList{
+
+
+
+VarDeclCommand, 
+
+VarDecl, is a Decl, with an expression, and a ZNameList, 
+
+Then need RefExpr, 
+
+createRefExpr:
+operation String createRefExpr(explicit: Boolean, mixFix: Boolean): Z!RefExpr{
+
+false, false, usually. if the reference expression is mix fit. 
+
+
+
+
+    
+  */
   
+  //Let's create the basicProcess, don't need to return anything, just need to create the write processes. 
+  
+  //create the basic process first. 
+  
+  //It's to text, not to model, why its different. 
+  
+  //need to create 
+  
+  //each action, 
+  
+  //sequence of Z Paras, each one is the actionpara, is an
+  
+  //Each is an ActionPara. 
+  
+  //Each, of the collator, etc, rules, returns an actionpara. 
+  
+  //Try to create a basic process, 
+  
+  //Main action name, is ANNRenamed
+  
+  var mainAction = "ANNRenamed";
+  
+  var collatorPar = self.Collator();
+  
+  
+  var annProcFull = Sequence{collatorPar}.createBasicProcess(mainAction);
+  
+  
+}
+
+//RULE 6: Function Collator
+operation RC!ANNController Collator() : Z!ActionPara {
+  //replicated external choice, 
+  //createsequenceasextchoice, is what we need, mixed with collecting, 
+  
+  //collecting into a single expression, which is a 
+  //needs to be gathered into a createsequecneasseq
+  
+  //for l 1 to ayerno, 
+  //collatorActions is a sequence, of CircusActions, which we feed into, 
+  //need to fix this. start with just
+  var collatorActions = Sequence{1..(self.layerNo())}.collect(l | Sequence{1..(self.LStructure(l))}.collect(n | Sequence{0..self.LStructure(l-1)}.collect(i | CollatorExp(l, n, i)))); 
+  collatorActions.println();
+  collatorActions.flatten().println();
+  /*var collatorActions = Set{1..(self.layerNo())}.collect(l |
+  	 Set{1..(self.LStructure(l))}.collect(n | 
+  	 	Set{1..(self.LStructure((l-1))}.collect(i |
+  	 		CollatorExp(l, n, i)) )));*/
+  	 		
+  
+  //Not it, we need this to be a param action. 
+  
+  //var collatorAction = collatorActions.flatten().asSequence().createSequenceAsExtChoiceAction();
+  
+  //var collatorParamAction = 
+  	 		
+  //return collatorParamAction.createActionPara("Collator");
+  
+  //Just need to replace this with the list of external choice. 
+  //collatorExp, next stage, is jus tthe 
+  
+  
+  var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
+  
+  
+  
+    
+  var varList1 = createVarDecl(Set{"l, n, i"}, "int");
+  var varList2 = createVarDecl(Set{"sum"}, "Value");
+  
+  var declList = Set{varList1, varList2}.createDeclList();
+  
+  var paramProcess = basicAction.createParamAction(declList);
+  
+  var collatorActionPar = paramProcess.createActionPara("Collator");
+  
+  return collatorActionPar;
+  
+}
+//Additional rule:
+operation CollatorExp(l, n, i : Integer) : Z!CircusAction {
+  //prefix action, with skip. 
+  //comm, communication, 
+  /*
+operation createPrefixingAction(
+	commu: Z!Communication, 
+	action: Z!CircusAction
+	): Z!PrefixingAction{
+
+operation createInputCommunication(
+	chan_name: String,
+	var_name:String
+	): Z!Communication{
+
+outputcommunication, 
+
+operation createOutputCommunication(
+	chan_name: String,
+	expr:RC!Expression,
+	type: String
+	): Z!Communication{
+
+for now, just have ref expression. 
+  */
+  
+  var e = "x";
+  self.layerRes(l,n).type().println();
+  //We need to create, 
+  //(relu(sum + ( 0 \decimalpoint 125424 )))
+  //create the addition, 
+  
+  
+  
+  var layerResEvent = createOutputCommunication(self.layerRes(l, n), e.createRefExpr(false, false)); 
+  
+  var prefixAction = createPrefixingAction(layerResEvent, createSkipAction());
+  
+  return prefixAction;
 }
 
 //RULE 13: 
@@ -95,7 +295,8 @@ operation RC!ANNController LStructure(i : Integer) : Integer {
     return self.annparameters.inputContext.allEvents().size();
   }
   else {
-    return self.annparameters.layerstructure.values.at(i).value;
+    //0 indexing. 
+    return self.annparameters.layerstructure.values.at(i-1).value;
   }
 }
 
@@ -115,7 +316,94 @@ operation RC!ANNController layerNo() : Integer {
   return lSize;
 }
 
-//ADDITIONAL: Rule 4, 
+
+//******************RULES AND HELPERS NOT FROM OUR RULES*******************/
+
+//ADDITIONAL: Need a way of creating Paramerised Actions, Z!ParamAction
+
+
+operation Z!CircusAction createParamAction(declList : Z!ZDeclList) : Z!ParamAction {
+  var paramAction = new Z!ParamAction;
+  paramAction.declList = declList;
+  paramAction.circusAction = self;
+  return paramAction;
+}
+
+operation Set<Z!VarDecl> createDeclList() : Z!ZDeclList {
+  var declList = new Z!ZDeclList; 
+  declList.decls.addAll(self);
+  return declList;
+}
+
+
+//Creates a VarDecl, using a reference expression to the string type, and a ZNameList formed out of the set of strings namelist. 
+operation createVarDecl(nameList : Set<String>, type : String) : Z!VarDecl {
+  var varDecl = new Z!VarDecl;
+  varDecl.expr = type.createRefExpr(false, false);
+  varDecl.nameList = createNameList(nameList);
+  
+  return varDecl;
+}
+
+//Always creates an output field, cannot create a sync communication. Does not take a type, 
+operation createOutputCommunication(
+	chan_name: String,
+	expr:Z!Expr
+	): Z!Communication{
+	
+	var commu = new Z!Communication;
+
+	commu.commUsage = Z!CommUsage#Normal;
+	commu.indexed = false;
+	commu.multiSych = 0;
+	commu.channelExpr = chan_name.createRefExpr(false, false);
+
+	commu.fieldList = new Z!CircusFieldList; 
+		
+	
+	commu.commPattern = Z!CommPattern#Output;		
+	var field = new Z!DotField;
+	field.expr = expr;
+		
+    field.outputField = true;
+	
+	commu.fieldList.fields = Sequence{field};
+	
+	return commu;
+}
+
+//Modify this, to take two arbritrary Z Expressions. Left is the operator, 
+//mixfix, is if the operator itself is mixfix. 
+//the operator itself, is 
+//the operator, is, create applied expression, the operator itself is not mixfix, the 
+//the reference expression, itself, is not, but the 
+operation createApplExpr(operator: String, operandRight: Z!Expr): Z!ApplExpr{
+	var expr = new Z!ApplExpr;
+	//left expression, and right expression, 
+	//we just need a left and right, 
+	expr.mixFix = true; //CZT: C.6.21 (Function Operator Application). For example: S + T.
+
+	expr.leftExpr = operator.createRefExpr(false, false);
+
+	expr.rightExpr = Sequence{leftExpr, operandRight}.createTupleExpr();	
+//	var left = operator.createRefExpr(false,false);
+//	var right = Sequence{operand_left, operand_right}.createTupleExpr();	
+
+//	expr.exprList = new Z!ZExprList;
+//	expr.exprList.exprs = Sequence{left, right};
+	
+	return 	expr;
+}
+
+
+//Create plus expression, from two expressions, 
+operation createPlusExpr():Z!ApplExpr{
+	return self.createApplExpr("_+_");
+}
+
+
+//ADDITIONAL: Rule 4, of the robochart reference manual
+
 operation RC!Context allEvents() : Set<RC!Event> {
   var selfEvents = self.events;
   var interfaceEvents = self.interfaces.collect(i | i.events);
