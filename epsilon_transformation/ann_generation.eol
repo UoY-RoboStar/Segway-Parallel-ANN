@@ -10,6 +10,7 @@
 
 //import "boolean_query.eol";
 import "RoboChart2Circus_M2M.eol";
+import "RoboChart2Circus_M2MExtension.eol";
 
 //This creates AnglePIDANN ANNController manually, as the RoboChart Model Exporter, to a .model file in EMF, is not functional yet. 
 //Treat, the Z declaration, Value == \real, as part of the toolkit, as part of the import. 
@@ -20,12 +21,47 @@ Slowdown, not in the creating channels, or name lists, or names, and it is fine 
 
 It is some change, just to the expressions, but not FloatExp. Applied expressions, or ref exprs, or createing channel declarations. 
 
+*/
+
+//var anglepidann = RC!ANNController.all().at(0);
+//anglepidann.annSemantics();
+
+
+//We need to wrap this in a Z Section. Name "AnglePIDANN"
+//Or, whatever the name of the 
+
+//We now need to return the paragraphs, we have generated. 
+
+/*
+operation createZSect(
+	sect_name: String,
+	paraSeq: Sequence<Z!Para>,
+	parentNameSeq: Sequence<String>
+	): Z!ZSect{
+
+sect_name, the paraSeq, and the parent name, we don't need that for the 
+We don't need this, at all, parentNameSeq, for the Isabelle transformation. 
+
+But good to have it. 
+
+Z!ZSect. 
+
+Z section, to get to a Spec. 
+
+operation createSpec(zsect: Z!ZSect): Z!Spec{
+
+narrative secction, spec sections. 
+
+NarativeSection is just blank, that is correct. 
+
+First, get the Collator working. 
+
 
 */
 
-var anglepidann = RC!ANNController.all().at(0);
 
-anglepidann.annSemantics();
+
+
 
 //RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule.
 operation RC!ANNController annSemantics() {
@@ -84,7 +120,7 @@ operation NodeOutChannels(l : Integer, n : Integer, i : Integer) {
   }
 }
 
-
+//RULE 5: ANNProc
 operation RC!ANNController ANNProc() {
   //We need to create a SEQUENCE of Z paragraphs, which are the paras of the paraList. 
   //for the createBasicProcess(mainActionName: String) where create the Call Action, ANNRenamed. 
@@ -210,7 +246,10 @@ operation RC!ANNController Collator() : Z!ActionPara {
   //for l 1 to ayerno, 
   //collatorActions is a sequence, of CircusActions, which we feed into, 
   //need to fix this. start with just
-  var collatorActions = Sequence{1..(self.layerNo())}.collect(l | Sequence{1..(self.LStructure(l))}.collect(n | Sequence{0..self.LStructure(l-1)}.collect(i | CollatorExp(l, n, i)))); 
+  var collatorActions = Sequence{1..(self.layerNo())}.collect(l | 
+  	Sequence{1..(self.LStructure(l))}.collect(n | 
+  		Sequence{0..self.LStructure(l-1)}.collect(i | 
+  			self.CollatorExp(l, n, i)))); 
   collatorActions.println();
   collatorActions.flatten().println();
   /*var collatorActions = Set{1..(self.layerNo())}.collect(l |
@@ -249,44 +288,73 @@ operation RC!ANNController Collator() : Z!ActionPara {
   
 }
 //Additional rule:
-operation CollatorExp(l, n, i : Integer) : Z!CircusAction {
-  //prefix action, with skip. 
-  //comm, communication, 
-  /*
-operation createPrefixingAction(
-	commu: Z!Communication, 
+operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
+  if(i == 0) {
+     var sumRef = "sum".createRefExpr(false, false);
+	 var weight = self.weight(l, n, i).createFloatExpr();
+	  
+	 var sumExp = createPlusExpr(sumRef, weight);
+	  
+	 var reluExp = createReluExpr(sumExp);
+	  
+	 var layerResEvent = createOutputCommunication(layerRes(l, n), reluExp); 
+	  
+	 var prefixAction = createPrefixingAction(layerResEvent, createSkipAction());
+	  
+	 //Need to create the guard, now, last thing, make it a guarded action. 
+	 //Call action, to "Collator"
+	 //could have generic, 
+	 /*
+ operation createGuardedAction(
+	pred: Z!Pred, 
 	action: Z!CircusAction
-	): Z!PrefixingAction{
+	): Z!GuardedAction{
+	var guardedaction = new Z!GuardedAction;
+	
+	guardedaction.pred = pred;
+	guardedaction.circusAction = action;
+	return guardedaction;
+}
 
-operation createInputCommunication(
-	chan_name: String,
-	var_name:String
-	): Z!Communication{
+pred, Z pred, action, 
 
-outputcommunication, 
+Pred, 
+operation createPredList(predSeq: Sequence<Z!Pred>): Z!CPredList{
+	var predList = new Z!CPredList;
+	predList.preds = predSeq;
+	return predList;
+}
+sequence of preds, CPredList, 
 
-operation createOutputCommunication(
-	chan_name: String,
-	expr:RC!Expression,
-	type: String
-	): Z!Communication{
+operation  Set<String> createSetExpr(): Z!SetExpr{
+	var setExpr = new Z!SetExpr;
+	var exprList = new Z!ZExprList;
+	var exprs = new Sequence<Z!Expr>;
+	
+	for(m in self){
+		exprs.add(m.createRefExpr(false,false));
+	}
+	exprList.exprs = exprs;
+	setExpr.exprList = exprList;
+	return setExpr;
+}
 
-for now, just have ref expression. 
+creates a set expression, with just a refexpr, 
+
+Rel_Pred, 
+
+equality, is a type of relation predicate, it is a predicate, 
   */
+	 return prefixAction;
+  }
+  else {
   
-  var e = "x";
-  self.layerRes(l,n).type().println();
-  //We need to create, 
-  //(relu(sum + ( 0 \decimalpoint 125424 )))
-  //create the addition, 
-  
-  
-  
-  var layerResEvent = createOutputCommunication(self.layerRes(l, n), e.createRefExpr(false, false)); 
-  
-  var prefixAction = createPrefixingAction(layerResEvent, createSkipAction());
-  
-  return prefixAction;
+    /*
+	  operation String createCallAction(list: Sequence<Z!Expr>): Z!CallAction{
+      then a prefixing action, to this. 
+    */
+	 
+  }
 }
 
 //RULE 13: 
@@ -316,99 +384,29 @@ operation RC!ANNController layerNo() : Integer {
   return lSize;
 }
 
-
-//******************RULES AND HELPERS NOT FROM OUR RULES*******************/
-
-//ADDITIONAL: Need a way of creating Paramerised Actions, Z!ParamAction
-
-
-operation Z!CircusAction createParamAction(declList : Z!ZDeclList) : Z!ParamAction {
-  var paramAction = new Z!ParamAction;
-  paramAction.declList = declList;
-  paramAction.circusAction = self;
-  return paramAction;
+//RULE 18: Function weight
+operation RC!ANNController weight(l, n, i : Integer) : Real {
+  var layerindex = self.annparameters.weights.values.at(l-1);
+  var nodeindex = layerindex.values.at(n-1);
+  var index = nodeindex.values.at(i-1);
+  return index.negExtract();
 }
 
-operation Set<Z!VarDecl> createDeclList() : Z!ZDeclList {
-  var declList = new Z!ZDeclList; 
-  declList.decls.addAll(self);
-  return declList;
+//RULE 19: Function bias
+operation RC!ANNController bias(l, n : Integer) : Real {
+  var layerindex = self.annparameters.biases.values.at(l-1);
+  var node = layerindex.values.at(n-1);
+  return node.negExtract();
 }
 
-
-//Creates a VarDecl, using a reference expression to the string type, and a ZNameList formed out of the set of strings namelist. 
-operation createVarDecl(nameList : Set<String>, type : String) : Z!VarDecl {
-  var varDecl = new Z!VarDecl;
-  varDecl.expr = type.createRefExpr(false, false);
-  varDecl.nameList = createNameList(nameList);
-  
-  return varDecl;
-}
-
-//Always creates an output field, cannot create a sync communication. Does not take a type, 
-operation createOutputCommunication(
-	chan_name: String,
-	expr:Z!Expr
-	): Z!Communication{
-	
-	var commu = new Z!Communication;
-
-	commu.commUsage = Z!CommUsage#Normal;
-	commu.indexed = false;
-	commu.multiSych = 0;
-	commu.channelExpr = chan_name.createRefExpr(false, false);
-
-	commu.fieldList = new Z!CircusFieldList; 
-		
-	
-	commu.commPattern = Z!CommPattern#Output;		
-	var field = new Z!DotField;
-	field.expr = expr;
-		
-    field.outputField = true;
-	
-	commu.fieldList.fields = Sequence{field};
-	
-	return commu;
-}
-
-//Modify this, to take two arbritrary Z Expressions. Left is the operator, 
-//mixfix, is if the operator itself is mixfix. 
-//the operator itself, is 
-//the operator, is, create applied expression, the operator itself is not mixfix, the 
-//the reference expression, itself, is not, but the 
-operation createApplExpr(operator: String, operandRight: Z!Expr): Z!ApplExpr{
-	var expr = new Z!ApplExpr;
-	//left expression, and right expression, 
-	//we just need a left and right, 
-	expr.mixFix = true; //CZT: C.6.21 (Function Operator Application). For example: S + T.
-
-	expr.leftExpr = operator.createRefExpr(false, false);
-
-	expr.rightExpr = Sequence{leftExpr, operandRight}.createTupleExpr();	
-//	var left = operator.createRefExpr(false,false);
-//	var right = Sequence{operand_left, operand_right}.createTupleExpr();	
-
-//	expr.exprList = new Z!ZExprList;
-//	expr.exprList.exprs = Sequence{left, right};
-	
-	return 	expr;
-}
-
-
-//Create plus expression, from two expressions, 
-operation createPlusExpr():Z!ApplExpr{
-	return self.createApplExpr("_+_");
-}
-
-
-//ADDITIONAL: Rule 4, of the robochart reference manual
-
-operation RC!Context allEvents() : Set<RC!Event> {
-  var selfEvents = self.events;
-  var interfaceEvents = self.interfaces.collect(i | i.events);
-  selfEvents.addAll(interfaceEvents.flatten().asSet());
-  return selfEvents; 
+//Helper rule: Neg extraction: 
+operation RC!Expression negExtract() : Real {
+  if(self.isTypeOf(RC!Neg)) {
+    return -(self.exp.value);
+  }
+  else {
+    return self.value;
+  }
 }
 
 
