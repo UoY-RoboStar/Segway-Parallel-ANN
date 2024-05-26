@@ -231,3 +231,12 @@ operation RC!Context allEvents() : Set<RC!Event> {
   return selfEvents; 
 }
 
+//Helper rule: Neg extraction: 
+operation RC!Expression negExtract() : Real {
+  if(self.isTypeOf(RC!Neg)) {
+    return -(self.exp.value);
+  }
+  else {
+    return self.value;
+  }
+}

@@ -1,21 +1,35 @@
-theory AnglePIDANN_CirCus
-	imports Axiomatic_Circus
+theory 	imports Axiomatic_Circus
 begin
 
-chantype chan = 
+
+
+	
+chantype  = 
 	nodeOut211 :: Value	
+	
+chantype  = 
 	layerRes21 :: Value	
+	
+chantype  = 
 	nodeOut112 :: Value	
+	
+chantype  = 
 	nodeOut111 :: Value	
+	
+chantype  = 
 	layerRes11 :: Value	
+	
+chantype  = 
 	layerRes02 :: Value	
+	
+chantype  = 
 	layerRes01 :: Value	
+	
+chantype  = 
 	terminate :: unit 	
-  
+
  
 
 end
-
-
 
 

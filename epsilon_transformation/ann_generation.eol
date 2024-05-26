@@ -12,71 +12,20 @@
 import "RoboChart2Circus_M2M.eol";
 import "RoboChart2Circus_M2MExtension.eol";
 
-//This creates AnglePIDANN ANNController manually, as the RoboChart Model Exporter, to a .model file in EMF, is not functional yet. 
-//Treat, the Z declaration, Value == \real, as part of the toolkit, as part of the import. 
-
-/*
-Parsing
-Slowdown, not in the creating channels, or name lists, or names, and it is fine with old version. 
-
-It is some change, just to the expressions, but not FloatExp. Applied expressions, or ref exprs, or createing channel declarations. 
-
-*/
-
 var anglepidann = RC!ANNController.all().at(0);
 anglepidann.annSemantics();
 
 
-//We need to wrap this in a Z Section. Name "AnglePIDANN"
-//Or, whatever the name of the 
-
-//We now need to return the paragraphs, we have generated. 
-
-/*
-operation createZSect(
-	sect_name: String,
-	paraSeq: Sequence<Z!Para>,
-	parentNameSeq: Sequence<String>
-	): Z!ZSect{
-
-sect_name, the paraSeq, and the parent name, we don't need that for the 
-We don't need this, at all, parentNameSeq, for the Isabelle transformation. 
-
-But good to have it. 
-
-Z!ZSect. 
-
-Z section, to get to a Spec. 
-
-operation createSpec(zsect: Z!ZSect): Z!Spec{
-
-narrative secction, spec sections. 
-
-NarativeSection is just blank, that is correct. 
-
-First, get the Collator working. 
-
-
-*/
-
-
-
-
-
-//RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule.
+//RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule, returns a Z!Spec.
 operation RC!ANNController annSemantics() : Z!Spec {
-  //Returns a Z Spec. 
   
   var channelPars = self.ANNChannelDecl();
   var annProc = self.ANNProc();
   
   channelPars.add(annProc);
   
-  
   var zSect = createZSect("AnglePIDANN", channelPars, Sequence{"roboworld_2d_toolkit_withval"});
   return createSpec(zSect);
-  
-  
   
 }
 
@@ -233,71 +182,22 @@ false, false, usually. if the reference expression is mix fit.
     
   */
   
-  //Let's create the basicProcess, don't need to return anything, just need to create the write processes. 
-  
-  //create the basic process first. 
-  
-  //It's to text, not to model, why its different. 
-  
-  //need to create 
-  
-  //each action, 
-  
-  //sequence of Z Paras, each one is the actionpara, is an
-  
-  //Each is an ActionPara. 
-  
-  //Each, of the collator, etc, rules, returns an actionpara. 
-  
-  //Try to create a basic process, 
-  
-  //Main action name, is ANNRenamed
-  
   var mainAction = "ANNRenamed";
   
   var collatorPar = self.Collator();
-  
   
   var annProcFull = Sequence{collatorPar}.createBasicProcess(mainAction);
   
   return annProcFull.createProcessPara("AnglePIDANN", true);
   
-  
 }
 
 //RULE 6: Function Collator
 operation RC!ANNController Collator() : Z!ActionPara {
-  //replicated external choice, 
-  //createsequenceasextchoice, is what we need, mixed with collecting, 
-  
-  //collecting into a single expression, which is a 
-  //needs to be gathered into a createsequecneasseq
-  
-  //for l 1 to ayerno, 
-  //collatorActions is a sequence, of CircusActions, which we feed into, 
-  //need to fix this. start with just
   var collatorActions = Sequence{1..(self.layerNo())}.collect(l | 
   	Sequence{1..(self.LStructure(l))}.collect(n | 
   		Sequence{0..self.LStructure(l-1)}.collect(i | 
   			self.CollatorExp(l, n, i)))); 
-  			
-  /*var collatorActions = Set{1..(self.layerNo())}.collect(l |
-  	 Set{1..(self.LStructure(l))}.collect(n | 
-  	 	Set{1..(self.LStructure((l-1))}.collect(i |
-  	 		CollatorExp(l, n, i)) )));*/
-  	 		
-  
-  //Not it, we need this to be a param action. 
-  
-  //var collatorAction = collatorActions.flatten().asSequence().createSequenceAsExtChoiceAction();
-  
-  //var collatorParamAction = 
-  	 		
-  //return collatorParamAction.createActionPara("Collator");
-  
-  //Just need to replace this with the list of external choice. 
-  //collatorExp, next stage, is jus tthe 
-  
   
   var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
@@ -366,6 +266,8 @@ operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
    
 }
 
+
+
 //RULE 13: 
 operation RC!ANNController LStructure(i : Integer) : Integer {
   if(i == 0) {
@@ -407,23 +309,3 @@ operation RC!ANNController bias(l, n : Integer) : Real {
   var node = layerindex.values.at(n-1);
   return node.negExtract();
 }
-
-//Helper rule: Neg extraction: 
-operation RC!Expression negExtract() : Real {
-  if(self.isTypeOf(RC!Neg)) {
-    return -(self.exp.value);
-  }
-  else {
-    return self.value;
-  }
-}
-
-
-//Only translation rules we should need are the floating point expressions, and events, and channels. 
-
-//Do channels first. 
-//make operations. 
-//useful operations: 
-//createFloatExpr() : Z!Expr, context type, is RC!FloatExp
-//operation Sequence<Z!Para> createBasicProcess(mainActionName: String): Z!BasicProcess{
-//
