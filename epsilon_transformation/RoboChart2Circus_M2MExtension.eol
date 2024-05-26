@@ -107,6 +107,10 @@ operation createPlusExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr
   return createApplExpr("_+_", operandLeft, operandRight);
 }
 
+operation createMinusExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr {
+  return createApplExpr("_-_", operandLeft, operandRight);
+}
+
 operation createMultExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr {
   return createApplExpr("_*_", operandLeft, operandRight);
 }

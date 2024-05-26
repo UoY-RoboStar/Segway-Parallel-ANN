@@ -23,8 +23,8 @@ It is some change, just to the expressions, but not FloatExp. Applied expression
 
 */
 
-//var anglepidann = RC!ANNController.all().at(0);
-//anglepidann.annSemantics();
+var anglepidann = RC!ANNController.all().at(0);
+anglepidann.annSemantics();
 
 
 //We need to wrap this in a Z Section. Name "AnglePIDANN"
@@ -64,64 +64,92 @@ First, get the Collator working.
 
 
 //RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule.
-operation RC!ANNController annSemantics() {
-
-  self.ANNChannelDecl();
-  self.ANNProc();
+operation RC!ANNController annSemantics() : Z!Spec {
+  //Returns a Z Spec. 
+  
+  var channelPars = self.ANNChannelDecl();
+  var annProc = self.ANNProc();
+  
+  channelPars.add(annProc);
+  
+  
+  var zSect = createZSect("AnglePIDANN", channelPars, Sequence{"roboworld_2d_toolkit_withval"});
+  return createSpec(zSect);
+  
+  
+  
 }
 
 //RULE 2: Function ANNChannelDecl().
-operation RC!ANNController ANNChannelDecl() {
+operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
 
   //The index of the last layer, -1 because 0-indexed. 
   var lastLayerI = self.layerNo()-1;
   //lastLayerS, as an integer, by taking the value attribute of the IntegerExp.
   var lastLayerS = self.annparameters.layerstructure.values.at(lastLayerI).value;
   
-  self.ANNChannels(self.layerNo(), lastLayerS);
+  var annChannels = self.ANNChannels(self.layerNo(), lastLayerS, Sequence{});
   
   //declare terminate channel
-  Set{"terminate"}.createChannelPara("");
+  var terminateChannel = Set{"terminate"}.createChannelPara("");
   
   //Implementation of set comprehension, using nested collect method in EOL.
   var hiddenEvtsNames = Set{1..(self.layerNo()-1)}.collect(l | Set{1..l}.collect(n | layerRes(l, n)));
   var hiddenEvtsNamesFlat = hiddenEvtsNames.flatten().asSet();
   var hiddenEvts = createChannelSet(createBasicChannelSetExpr(hiddenEvtsNamesFlat));
-  hiddenEvts.createChanSetPara("ANNHiddenEvts");
+  
+  var hiddenEvtsChanSet = hiddenEvts.createChanSetPara("ANNHiddenEvts");
+  
+  annChannels.add(terminateChannel);
+  annChannels.add(hiddenEvtsChanSet);
+  
+  return annChannels;
   
 }
 
 //RULE 3: Function ANNChannels
-operation RC!ANNController ANNChannels(l : Integer, n : Integer) {
+operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
+  l.println();
+  n.println();
+  "".println();
   if((l == 0) and (n == 1)) {
-    Set{layerRes(l, n)}.createChannelPara("", "Value");
+    var chanPar = Set{layerRes(l, n)}.createChannelPara("", "Value");
+    seq.add(chanPar);
+    return seq;
   }
   else {
-    Set{layerRes(l, n)}.createChannelPara("", "Value");
-    NodeOutChannels(l, n, self.annparameters.layerstructure.values.size());
+    var chanPar = Set{layerRes(l, n)}.createChannelPara("", "Value");
+    
+    if(l != 0) {
+      seq.addAll(NodeOutChannels(l, n, self.LStructure((l-1)), Sequence{}));
+    }
+      
     if(n > 1) {
-      self.ANNChannels(l, (n-1));
+      seq.add(chanPar);
+      return self.ANNChannels(l, (n-1), seq);
     }
     else {
-      self.ANNChannels((l-1), self.LStructure((l-1)));
+      seq.add(chanPar);
+      return self.ANNChannels((l-1), self.LStructure((l-1)), seq);
     }
   }
 }
 
 //RULE 4: Function NodeOutChannels.
-operation NodeOutChannels(l : Integer, n : Integer, i : Integer) {
+operation NodeOutChannels(l : Integer, n : Integer, i : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
   if(i == 1) {
-    Set{nodeOut(l, n, i)}.createChannelPara("", "Value");
+    seq.add(Set{nodeOut(l, n, i)}.createChannelPara("", "Value"));
+    return seq;
   }
   else {
-    Set{nodeOut(l, n, i)}.createChannelPara("", "Value");
-    NodeOutChannels(l, n, (i-1));
+    seq.add(Set{nodeOut(l, n, i)}.createChannelPara("", "Value"));
+    return NodeOutChannels(l, n, (i-1), seq);
   
   }
 }
 
 //RULE 5: ANNProc
-operation RC!ANNController ANNProc() {
+operation RC!ANNController ANNProc() : Z!ProcessPara {
   //We need to create a SEQUENCE of Z paragraphs, which are the paras of the paraList. 
   //for the createBasicProcess(mainActionName: String) where create the Call Action, ANNRenamed. 
   //needs to be of type Z!Para, 
@@ -232,6 +260,8 @@ false, false, usually. if the reference expression is mix fit.
   
   var annProcFull = Sequence{collatorPar}.createBasicProcess(mainAction);
   
+  return annProcFull.createProcessPara("AnglePIDANN", true);
+  
   
 }
 
@@ -250,8 +280,7 @@ operation RC!ANNController Collator() : Z!ActionPara {
   	Sequence{1..(self.LStructure(l))}.collect(n | 
   		Sequence{0..self.LStructure(l-1)}.collect(i | 
   			self.CollatorExp(l, n, i)))); 
-  collatorActions.println();
-  collatorActions.flatten().println();
+  			
   /*var collatorActions = Set{1..(self.layerNo())}.collect(l |
   	 Set{1..(self.LStructure(l))}.collect(n | 
   	 	Set{1..(self.LStructure((l-1))}.collect(i |
@@ -271,9 +300,6 @@ operation RC!ANNController Collator() : Z!ActionPara {
   
   
   var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
-  
-  
-  
     
   var varList1 = createVarDecl(Set{"l, n, i"}, "int");
   var varList2 = createVarDecl(Set{"sum"}, "Value");
@@ -287,74 +313,57 @@ operation RC!ANNController Collator() : Z!ActionPara {
   return collatorActionPar;
   
 }
+
+//create guard, as "l = l", "n = n", "i = i", and returns it. 
+operation createGuard(l, n, i : Integer) : Z!Pred {
+  //num equality pred. 
+  //create the reference expressions, l, n, and i. 
+  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
+  var nPred = createNumEqualityPred("n".createRefExpr(false, false), n);
+  var iPred = createNumEqualityPred("i".createRefExpr(false, false), i);
+  
+  return Sequence{lPred, nPred, iPred}.createSequenceAsAndPred();
+}
+
 //Additional rule:
 operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
   if(i == 0) {
+    
      var sumRef = "sum".createRefExpr(false, false);
-	 var weight = self.weight(l, n, i).createFloatExpr();
+	 var bias = self.bias(l, n).createFloatExpr();
 	  
-	 var sumExp = createPlusExpr(sumRef, weight);
+	 var sumExp = createPlusExpr(sumRef, bias);
 	  
 	 var reluExp = createReluExpr(sumExp);
 	  
 	 var layerResEvent = createOutputCommunication(layerRes(l, n), reluExp); 
 	  
 	 var prefixAction = createPrefixingAction(layerResEvent, createSkipAction());
-	  
-	 //Need to create the guard, now, last thing, make it a guarded action. 
-	 //Call action, to "Collator"
-	 //could have generic, 
-	 /*
- operation createGuardedAction(
-	pred: Z!Pred, 
-	action: Z!CircusAction
-	): Z!GuardedAction{
-	var guardedaction = new Z!GuardedAction;
-	
-	guardedaction.pred = pred;
-	guardedaction.circusAction = action;
-	return guardedaction;
-}
-
-pred, Z pred, action, 
-
-Pred, 
-operation createPredList(predSeq: Sequence<Z!Pred>): Z!CPredList{
-	var predList = new Z!CPredList;
-	predList.preds = predSeq;
-	return predList;
-}
-sequence of preds, CPredList, 
-
-operation  Set<String> createSetExpr(): Z!SetExpr{
-	var setExpr = new Z!SetExpr;
-	var exprList = new Z!ZExprList;
-	var exprs = new Sequence<Z!Expr>;
-	
-	for(m in self){
-		exprs.add(m.createRefExpr(false,false));
-	}
-	exprList.exprs = exprs;
-	setExpr.exprList = exprList;
-	return setExpr;
-}
-
-creates a set expression, with just a refexpr, 
-
-Rel_Pred, 
-
-equality, is a type of relation predicate, it is a predicate, 
-  */
-	 return prefixAction;
-  }
-  else {
-  
-    /*
-	  operation String createCallAction(list: Sequence<Z!Expr>): Z!CallAction{
-      then a prefixing action, to this. 
-    */
 	 
+	 var guardedAction = createGuardedAction(createGuard(l, n, i), prefixAction);
+	 
+	 return guardedAction;
+	 
+  } else {
+     var nodeOutEvent = createInputCommunication(nodeOut(l, n, i), "x");
+     
+     var lExpr = "l".createRefExpr(false, false);
+     var nExpr = "n".createRefExpr(false, false);
+     var i1Expr = createMinusExpr("i".createRefExpr(false, false), 1.createNumExpr());
+     
+     var plusExpr = createPlusExpr("sum".createRefExpr(false, false), "x".createRefExpr(false, false));
+     
+     var collatorArgs = Sequence{lExpr, nExpr, i1Expr, plusExpr};
+     
+     var callEvent = "Collator".createCallAction(collatorArgs);
+     
+     var prefixAction = createPrefixingAction(nodeOutEvent, callEvent);
+     
+     var guardedAction = createGuardedAction(createGuard(l, n, i), prefixAction);
+     
+     return guardedAction;
   }
+   
 }
 
 //RULE 13: 

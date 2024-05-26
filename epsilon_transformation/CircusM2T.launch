@@ -2,7 +2,7 @@
 <launchConfiguration type="org.epsilon.egl.eclipse.dt.launching.EglLaunchConfigurationDelegate">
     <booleanAttribute key="appendToFile" value="false"/>
     <listAttribute key="defaultFormatters"/>
-    <intAttribute key="egxGenerateTo" value="1"/>
+    <intAttribute key="egxGenerateTo" value="2"/>
     <booleanAttribute key="fine_grained_profiling" value="false"/>
     <intAttribute key="generateTo" value="2"/>
     <stringAttribute key="implementation_name" value="Sequential EGX"/>
@@ -13,7 +13,7 @@
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
         <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
     </listAttribute>
-    <stringAttribute key="outputDirPath" value="/simplerSTM/epsilon_transformation"/>
+    <stringAttribute key="outputDirPath" value="/Segway-Parallel-ANN/epsilon_transformation/circus_gen"/>
     <stringAttribute key="outputFilePath" value=""/>
     <listAttribute key="parameters"/>
     <booleanAttribute key="produceTrace" value="false"/>

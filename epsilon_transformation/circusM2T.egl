@@ -28,9 +28,9 @@ for(chanpara in channelparas){
 procparas.println();
 procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.type().println();
 
-procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.actionList.circusActions.println();
-procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.leftAction.println();
-procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.rightAction.println();
+//procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.actionList.circusActions.println();
+//procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.leftAction.println();
+//procparas.at(0).circusProcess.paraList.paras.at(0).circusAction.rightAction.println();
 for(procpara in procparas){
 	procpara.circusProcess.parseProc();
 }
