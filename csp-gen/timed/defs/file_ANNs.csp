@@ -1,0 +1,258 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 29-05-2024 11:14:57
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+
+
+
+module test
+shared_variable_events = {||}
+exports
+	-- declaring controller events
+	channel adiff: InOut.core_real
+	channel anewError: InOut.core_real
+	channel angleOutputE: InOut.core_real
+	
+	-- declaring controller termination channel
+	channel terminate
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	adiff,
+		anewError,
+		angleOutputE
+	|}
+	D__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- VS version
+	VS__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+	O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+							
+	-- VS_O version
+	VS_O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+		
+	HEXT(id__) = O__(id__) [|shared_variable_events|] SKIP			
+	
+endmodule
+
+module test2
+shared_variable_events = {||}
+exports
+	-- declaring controller events
+	channel adiff: InOut.core_real
+	channel anewError: InOut.core_real
+	channel angleOutputE: InOut.core_real
+	
+	-- declaring controller termination channel
+	channel terminate
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	adiff,
+		anewError,
+		angleOutputE
+	|}
+	D__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- VS version
+	VS__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+	O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+							
+	-- VS_O version
+	VS_O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+		
+	HEXT(id__) = O__(id__) [|shared_variable_events|] SKIP			
+	
+endmodule
+
+module test3
+shared_variable_events = {||}
+exports
+	-- declaring controller events
+	channel adiff: InOut.core_real
+	channel anewError: InOut.core_real
+	channel angleOutputE: InOut.core_real
+	
+	-- declaring controller termination channel
+	channel terminate
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	adiff,
+		anewError,
+		angleOutputE
+	|}
+	D__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- VS version
+	VS__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+	O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+							
+	-- VS_O version
+	VS_O__(id__) = let 
+		Input_Channels = { 
+					adiff,
+					anewError
+				} 
+		Output_Channels = { 
+					angleOutputE
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+		
+	HEXT(id__) = O__(id__) [|shared_variable_events|] SKIP			
+	
+endmodule
+
+
+
+

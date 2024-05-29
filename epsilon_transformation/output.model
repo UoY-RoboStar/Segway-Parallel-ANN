@@ -583,18 +583,18 @@
                 <declList>
                   <decls xsi:type="circus:VarDecl">
                     <expr xsi:type="circus:RefExpr">
-                      <name word="int"/>
-                    </expr>
-                    <nameList>
-                      <names word="l, n, i"/>
-                    </nameList>
-                  </decls>
-                  <decls xsi:type="circus:VarDecl">
-                    <expr xsi:type="circus:RefExpr">
                       <name word="Value"/>
                     </expr>
                     <nameList>
                       <names word="sum"/>
+                    </nameList>
+                  </decls>
+                  <decls xsi:type="circus:VarDecl">
+                    <expr xsi:type="circus:RefExpr">
+                      <name word="int"/>
+                    </expr>
+                    <nameList>
+                      <names word="l, n, i"/>
                     </nameList>
                   </decls>
                 </declList>

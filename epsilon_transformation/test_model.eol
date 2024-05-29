@@ -1,0 +1,21 @@
+
+var x = 1.5;
+
+x.println();
+
+RC!ANNController.all().at(0).name.println();
+
+Z!Term.println();
+
+//This works, it stores, the model succesfully. 
+
+//Why, other one fail? Or doe it? 
+var z = new Z!ZSect;
+z.name = "Test";
+
+
+
+
+
+
+

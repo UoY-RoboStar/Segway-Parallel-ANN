@@ -1,0 +1,26 @@
+pre {
+  var files = Sequence{"file1", "file2", "file3", "file4"};
+  var data = Map {
+    "file1" = "Content of the first file",
+    "file2" = "Content of the second file",
+    "file3" = "Content of the third file"
+  };
+}
+
+//Parameters, as a map, refer to them as LITERALLY, a variable CONTENT. 
+//files, is a sequence, how does it know, to execute the rule according to 
+//It just does. 
+//BUt it runs out of files. 
+//data.get, from the file identifier, from the file mapping. 
+//need to do all combinations, 
+//Elements to rule over, is in: files, 
+//parameters, with in, to run over, files. It will overwrite it. 
+//To do all, with every combination, Subrule. 
+//Need to execute a subrule. 
+//Then we can use an ant build to execute over all, 
+//Parameters, 
+rule ItemToFile transform file: String in: files {
+    parameters : Map {"content" = data.get(file)}
+    target : file + ".txt"
+    template: "sandbox_egl.egl"
+}

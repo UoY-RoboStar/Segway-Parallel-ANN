@@ -1,0 +1,28 @@
+/*
+ This file validates the M2M ANN generation.
+  Author: Ziggy Attala
+*/
+
+//import "boolean_query.eol";
+import "RoboChart2Circus_M2M.eol";
+import "RoboChart2Circus_M2MExtension.eol";
+import "ann_generation.eol";
+
+//Stage one, GENERATE: 
+//read in a file with multiple, start with it. 
+
+//file for generating, and a file for
+
+//No, we have the same model, input and output. 
+
+//One, transformation, 
+//works. for all three? error, something is not being reset, for the nodeout. 
+//model with multiple. 
+var ann1 = RC!ANNController.all().at(0).annSemantics();
+var ann2 = RC!ANNController.all().at(1).annSemantics();
+var ann3 = RC!ANNController.all().at(2).annSemantics();
+
+var outann1 = new ANN1!Spec;
+
+outann1 = ann1;
+

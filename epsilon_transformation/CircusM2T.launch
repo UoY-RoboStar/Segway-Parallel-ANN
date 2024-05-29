@@ -2,7 +2,7 @@
 <launchConfiguration type="org.epsilon.egl.eclipse.dt.launching.EglLaunchConfigurationDelegate">
     <booleanAttribute key="appendToFile" value="false"/>
     <listAttribute key="defaultFormatters"/>
-    <intAttribute key="egxGenerateTo" value="2"/>
+    <intAttribute key="egxGenerateTo" value="1"/>
     <booleanAttribute key="fine_grained_profiling" value="false"/>
     <intAttribute key="generateTo" value="2"/>
     <stringAttribute key="implementation_name" value="Sequential EGX"/>

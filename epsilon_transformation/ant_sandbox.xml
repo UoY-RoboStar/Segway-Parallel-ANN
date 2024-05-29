@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project default="second">
+
+	
+	<!-- try programmatically changing this input model. -->
+  
+
+  <!-- this is a task, named through name tags.	 --> 
+	
+  <target name="main">
+    <epsilon.eol>
+      var x = "output";
+    <exports ref="x" ant="true"/>
+    </epsilon.eol>
+  	
+  <echo>${x}</echo> <!-- comment -->
+  	
+    <epsilon.emf.loadModel name="RC" aliases = "RC"
+    		modelFile="SegwayANN2.rct"
+    		metamodelUri="http://www.robocalc.circus/RoboChart"
+    		expand="true" 
+    		read="true" store="false" profile="true"/>
+
+  	  <epsilon.emf.loadModel name="Z" aliases = "Z"
+  	  		modelFile="${x}.model"
+  	  		metamodelUri="http://www.robocalc.circus/Circus"
+  	  		expand="true"
+  	  		read="false" store="true" profile="true"/>
+
+
+  	
+    <epsilon.eol src="test_model.eol">
+  	<model ref="RC" />
+    	<model ref="Z" />
+    	</epsilon.eol>
+  	
+    <epsilon.disposeModels/>
+  </target>
+	
+	<!-- epsilon for task, for every output in out_dir --> 
+	
+	
+	<target name="second">
+
+	        <!-- Load RC.xml once as Ta -->
+	        <epsilon.emf.loadModel name="RC" aliases = "RC"
+	    		modelFile="SegwayANN2.rct"
+	    		metamodelUri="http://www.robocalc.circus/RoboChart"
+	    		expand="true" 
+	    		read="true" store="false" profile="true"/>
+
+	        <!-- For every XML file in the loop directory -->
+	        <epsilon.for>
+	            <fileset dir="out_dir" includes="*.model"/>
+
+	            <!-- Load the file as Tb -->
+	      	  <epsilon.emf.loadModel name="Z" aliases = "Z"
+	        	  		modelFile="out_dir/${it}"
+	        	  		metamodelUri="http://www.robocalc.circus/Circus"
+	        	  		expand="true"
+	        	  		read="false" store="true" profile="true"/>
+	        	
+	            <!-- Run an EOL program on Ta and Tb -->
+	            <epsilon.eol src="test_model.eol">
+	                <model ref="RC"/>
+	                <model ref="Z"/>   
+	            </epsilon.eol>
+
+	            <!-- Dispose of Tb -->
+	            <epsilon.disposeModel model="Z"/>
+	        </epsilon.for>
+	    </target>
+
+	<epsilon.disposeModels/>
+
+  
+</project>

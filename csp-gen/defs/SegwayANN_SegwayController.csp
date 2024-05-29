@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 15-05-2024 16:48:16
+-- Automatically generated on 28-05-2024 15:23:27
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -654,7 +654,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP)));true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP)));share__choice(get_currRightVel?currRightVel -> share__choice(get_currLeftVel?currLeftVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SKIP ; 
+					Active 		= true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP)));true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP)));share__choice(get_currLeftVel?currLeftVel -> share__choice(get_currRightVel?currRightVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SKIP ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -679,7 +679,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP)));true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP)));share__choice(get_currRightVel?currRightVel -> share__choice(get_currLeftVel?currLeftVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SKIP ; 
+					Active 		= true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP)));true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP)));share__choice(get_currLeftVel?currLeftVel -> share__choice(get_currRightVel?currRightVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SKIP ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -906,7 +906,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -918,7 +918,7 @@
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -955,7 +955,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -967,7 +967,7 @@
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1320,7 +1320,7 @@
 					    const_BalanceSTM_angleBudget,
 					    const_BalanceSTM_speedBudget,
 					    const_BalanceSTM_rotationBudget) = ((let
-				Trans = share__choice(get_rotationCount?rotationCount -> get_angleSent?angleSent -> get_rotationSent?rotationSent -> get_speedCount?speedCount -> get_currAngle?currAngle -> get_angleReceived?angleReceived -> get_speedSent?speedSent -> (
+				Trans = share__choice(get_speedSent?speedSent -> get_rotationCount?rotationCount -> get_angleSent?angleSent -> get_speedCount?speedCount -> get_currAngle?currAngle -> get_rotationSent?rotationSent -> get_angleReceived?angleReceived -> (
 					((share__ -> SKIP
 					 [] dbisim((((((((angleReceived==true)) and ((speedSent==false))) and ((rotationSent==false))) and ((((speedCount==0)) or ((speedCount<const_BalanceSTM_speedUpdate))))) and ((((rotationCount==0)) or ((rotationCount<const_BalanceSTM_rotationUpdate))))))&(internal__!NID_ReceiveInput -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j2::enter -> SKIP)))
 					 	 [] dbisim((angleOutputE__!NID_ReceiveInput.in?angleOutput:{angleOutput|angleOutput <- core_real, (((angleSent==true) and (angleReceived==false)))} -> share__choice(set_angleOutput!angleOutput -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(true & (share__choice(set_angleSent!false -> SKIP)));share__choice(true & (share__choice(set_angleReceived!true -> SKIP))) ; ReceiveInput::enter -> SKIP)))
@@ -1551,20 +1551,20 @@
 							 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 							 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 							 )
-							  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-							  [[set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_rotationSent <- setL_rotationSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent]]
+							  [[ share__ <- x__ | x__ <- {| share__,setR_speedOutput,setR_angleOutput,setR_rotationOutput |} ]] 
+							  [[set_speedSent <- setL_speedSent,set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived]]
 							 )
 							 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+							 			,setL_speedSent
 							 			,setL_rotationCount
 							 			,setL_angleSent
-							 			,setL_rotationSent
 							 			,setL_speedCount
 							 			,setL_currAngle
+							 			,setL_rotationSent
 							 			,setL_angleReceived
-							 			,setL_speedSent
-							 			,setR_rotationOutput
-							 			 			,setR_speedOutput
+							 			,setR_speedOutput
 							 			 			,setR_angleOutput
+							 			 			,setR_rotationOutput
 							 			|}) |]
 							 ((i0::enter -> Transitions(id__,
 							 		    const_BalanceSTM_maxAngle,
@@ -1576,11 +1576,11 @@
 							 		    const_BalanceSTM_angleBudget,
 							 		    const_BalanceSTM_speedBudget,
 							 		    const_BalanceSTM_rotationBudget))
-							  [[ share__ <- x__ | x__ <- {| share__,setL_rotationCount,setL_angleSent,setL_rotationSent,setL_speedCount,setL_currAngle,setL_angleReceived,setL_speedSent |} ]]
-							  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
+							  [[ share__ <- x__ | x__ <- {| share__,setL_speedSent,setL_rotationCount,setL_angleSent,setL_speedCount,setL_currAngle,setL_rotationSent,setL_angleReceived |} ]]
+							  [[set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput,set_rotationOutput <- setR_rotationOutput]]
 							 )
-							)[[setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_rotationSent <- set_rotationSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent]]
-							 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
+							)[[setL_speedSent <- set_speedSent,setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived]]
+							 [[setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput,setR_rotationOutput <- set_rotationOutput]]
 							)
 						)
 						 \ hideSet)
@@ -1986,20 +1986,20 @@
 							 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 							 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 							 )
-							  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-							  [[set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_rotationSent <- setL_rotationSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent]]
+							  [[ share__ <- x__ | x__ <- {| share__,setR_speedOutput,setR_angleOutput,setR_rotationOutput |} ]] 
+							  [[set_speedSent <- setL_speedSent,set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived]]
 							 )
 							 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+							 			,setL_speedSent
 							 			,setL_rotationCount
 							 			,setL_angleSent
-							 			,setL_rotationSent
 							 			,setL_speedCount
 							 			,setL_currAngle
+							 			,setL_rotationSent
 							 			,setL_angleReceived
-							 			,setL_speedSent
-							 			,setR_rotationOutput
-							 			 			,setR_speedOutput
+							 			,setR_speedOutput
 							 			 			,setR_angleOutput
+							 			 			,setR_rotationOutput
 							 			|}) |]
 							 ((i0::enter -> Transitions(id__,
 							 		    const_BalanceSTM_maxAngle,
@@ -2011,11 +2011,11 @@
 							 		    const_BalanceSTM_angleBudget,
 							 		    const_BalanceSTM_speedBudget,
 							 		    const_BalanceSTM_rotationBudget))
-							  [[ share__ <- x__ | x__ <- {| share__,setL_rotationCount,setL_angleSent,setL_rotationSent,setL_speedCount,setL_currAngle,setL_angleReceived,setL_speedSent |} ]]
-							  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
+							  [[ share__ <- x__ | x__ <- {| share__,setL_speedSent,setL_rotationCount,setL_angleSent,setL_speedCount,setL_currAngle,setL_rotationSent,setL_angleReceived |} ]]
+							  [[set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput,set_rotationOutput <- setR_rotationOutput]]
 							 )
-							)[[setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_rotationSent <- set_rotationSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent]]
-							 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
+							)[[setL_speedSent <- set_speedSent,setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived]]
+							 [[setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput,setR_rotationOutput <- set_rotationOutput]]
 							)
 						)
 						 \ hideSet)
@@ -2761,7 +2761,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -2780,7 +2780,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -2833,7 +2833,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -2852,7 +2852,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive

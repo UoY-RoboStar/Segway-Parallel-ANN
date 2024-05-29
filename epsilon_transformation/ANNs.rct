@@ -1,0 +1,62 @@
+interface ANNInput2 {
+	event adiff:real
+	event anewError:real
+}
+
+interface ANNOutput2 {
+	event angleOutputE:real
+}
+interface ANNInput3 {
+	event adiff:real
+	event anewError:real
+}
+
+interface ANNOutput3 {
+	event angleOutputE:real
+}
+anncontroller test {
+	params {
+			inputcontext {
+				uses ANNInput
+			}
+			outputcontext {
+				uses ANNOutput
+			}
+			layerstructure <1,1>
+			weights << < 1.22838 , 0.132874 > > , < < 0.744636 > > >
+			biases <<0.125424>, < -0.107753>>
+			activationfunction relu
+			
+		}
+}
+
+anncontroller test2 {
+	params {
+			inputcontext {
+				uses ANNInput2
+			}
+			outputcontext {
+				uses ANNOutput2
+			}
+			layerstructure <1,1>
+			weights << < 1.22838 , 0.132874 > > , < < 0.744636 > > >
+			biases <<0.125424>, < -0.107753>>
+			activationfunction relu
+			
+		}
+}
+anncontroller test3 {
+	params {
+			inputcontext {
+				uses ANNInput3
+			}
+			outputcontext {
+				uses ANNOutput3
+			}
+			layerstructure <1,1>
+			weights << < 1.22838 , 0.132874 > > , < < 0.744636 > > >
+			biases <<0.125424>, < -0.107753>>
+			activationfunction relu
+			
+		}
+}

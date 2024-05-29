@@ -12,19 +12,22 @@
 import "RoboChart2Circus_M2M.eol";
 import "RoboChart2Circus_M2MExtension.eol";
 
+RC!ANNController.all().at(0).println();
+
 var anglepidann = RC!ANNController.all().at(0);
 anglepidann.annSemantics();
 
 
 //RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule, returns a Z!Spec.
 operation RC!ANNController annSemantics() : Z!Spec {
-  
+  "START ANN SEMANTICS".println();
   var channelPars = self.ANNChannelDecl();
   var annProc = self.ANNProc();
   
   channelPars.add(annProc);
   
   var zSect = createZSect("AnglePIDANN", channelPars, Sequence{"roboworld_2d_toolkit_withval"});
+  "END ANN SEMANTICS".println();
   return createSpec(zSect);
   
 }
@@ -58,9 +61,10 @@ operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
 
 //RULE 3: Function ANNChannels
 operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
+  "ANNCHANNELSS".println();
   l.println();
   n.println();
-  "".println();
+  "ANNCHANNELSE".println();
   if((l == 0) and (n == 1)) {
     var chanPar = Set{layerRes(l, n)}.createChannelPara("", "Value");
     seq.add(chanPar);
@@ -86,6 +90,11 @@ operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<
 
 //RULE 4: Function NodeOutChannels.
 operation NodeOutChannels(l : Integer, n : Integer, i : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
+  "NODEOUTS".println();
+  l.println();
+  n.println();
+  i.println();
+  "NODEOUTE".println();
   if(i == 1) {
     seq.add(Set{nodeOut(l, n, i)}.createChannelPara("", "Value"));
     return seq;
