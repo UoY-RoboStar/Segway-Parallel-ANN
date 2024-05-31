@@ -1,20 +1,24 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 28-05-2024 15:23:39
+-- Automatically generated on 31-05-2024 12:50:08
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
 --
 
+include "defs/file_AnglePID_defs.csp"
 include "defs/file_SegwayANN_defs.csp"
 include "defs/state_timed_defs.csp"
 include "defs/core_defs.csp"
+include "defs/file_test116_defs.csp"
 include "defs/sequence_toolkit_defs.csp"
+include "defs/file_SpeedPID_defs.csp"
+include "defs/file_BalanceSTM_defs.csp"
+include "defs/file_RotationPID_defs.csp"
 include "defs/function_toolkit_defs.csp"
 include "defs/robochart_defs.csp"
 include "defs/core_timed_defs.csp"
-include "defs/file_SegwayANN2_defs.csp"
 include "defs/set_toolkit_defs.csp"
 include "instantiations.csp"
 include "defs/relation_toolkit_defs.csp"
@@ -29,7 +33,6 @@ assert prioritise(let
 	
 	
 	
-	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
 	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
 	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
@@ -42,6 +45,7 @@ assert prioritise(let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
+	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 		
 within
 	SegwayANN::D__(id__,
@@ -65,7 +69,6 @@ assert let
 	
 	
 	
-	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
 	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
 	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
@@ -78,6 +81,7 @@ assert let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
+	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 		
 within
 	SegwayANN::D__(id__,
@@ -101,7 +105,6 @@ assert let
 	
 	
 	
-	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
 	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
 	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
@@ -114,6 +117,7 @@ assert let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
+	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 		
 within
 	SegwayANN::D__(id__,

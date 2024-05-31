@@ -1,4 +1,4 @@
-theory [*[%=z.eContents.select(s|s.instanceOf(Z!ZSect)).at(0).name%]_CirCus *]
+theory [%=z.eContents.select(s|s.instanceOf(Z!ZSect)).at(0).name%]_CirCus
 	imports Axiomatic_Circus
 begin
 [%

@@ -14,20 +14,18 @@ import "RoboChart2Circus_M2MExtension.eol";
 
 RC!ANNController.all().at(0).println();
 
-var anglepidann = RC!ANNController.all().at(0);
-anglepidann.annSemantics();
+var ann = RC!ANNController.all().at(0);
+ann.annSemantics();
 
 
 //RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule, returns a Z!Spec.
 operation RC!ANNController annSemantics() : Z!Spec {
-  "START ANN SEMANTICS".println();
   var channelPars = self.ANNChannelDecl();
   var annProc = self.ANNProc();
   
   channelPars.add(annProc);
   
-  var zSect = createZSect("AnglePIDANN", channelPars, Sequence{"roboworld_2d_toolkit_withval"});
-  "END ANN SEMANTICS".println();
+  var zSect = createZSect(self.name, channelPars, Sequence{"roboworld_2d_toolkit_withval"});
   return createSpec(zSect);
   
 }
@@ -43,7 +41,7 @@ operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
   var annChannels = self.ANNChannels(self.layerNo(), lastLayerS, Sequence{});
   
   //declare terminate channel
-  var terminateChannel = Set{"terminate"}.createChannelPara("");
+  var terminateChannel = Set{"terminate"}.createChannelPara("terminate");
   
   //Implementation of set comprehension, using nested collect method in EOL.
   var hiddenEvtsNames = Set{1..(self.layerNo()-1)}.collect(l | Set{1..l}.collect(n | layerRes(l, n)));
@@ -61,17 +59,13 @@ operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
 
 //RULE 3: Function ANNChannels
 operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
-  "ANNCHANNELSS".println();
-  l.println();
-  n.println();
-  "ANNCHANNELSE".println();
   if((l == 0) and (n == 1)) {
-    var chanPar = Set{layerRes(l, n)}.createChannelPara("", "Value");
+    var chanPar = Set{layerRes(l, n)}.createChannelPara(layerRes(l, n), "real");
     seq.add(chanPar);
     return seq;
   }
   else {
-    var chanPar = Set{layerRes(l, n)}.createChannelPara("", "Value");
+    var chanPar = Set{layerRes(l, n)}.createChannelPara(layerRes(l,n), "real");
     
     if(l != 0) {
       seq.addAll(NodeOutChannels(l, n, self.LStructure((l-1)), Sequence{}));
@@ -90,17 +84,12 @@ operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<
 
 //RULE 4: Function NodeOutChannels.
 operation NodeOutChannels(l : Integer, n : Integer, i : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
-  "NODEOUTS".println();
-  l.println();
-  n.println();
-  i.println();
-  "NODEOUTE".println();
   if(i == 1) {
-    seq.add(Set{nodeOut(l, n, i)}.createChannelPara("", "Value"));
+    seq.add(Set{nodeOut(l, n, i)}.createChannelPara(nodeOut(l,n,i), "real"));
     return seq;
   }
   else {
-    seq.add(Set{nodeOut(l, n, i)}.createChannelPara("", "Value"));
+    seq.add(Set{nodeOut(l, n, i)}.createChannelPara(nodeOut(l,n,i), "real"));
     return NodeOutChannels(l, n, (i-1), seq);
   
   }
@@ -211,7 +200,7 @@ operation RC!ANNController Collator() : Z!ActionPara {
   var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
   var varList1 = createVarDecl(Set{"l, n, i"}, "int");
-  var varList2 = createVarDecl(Set{"sum"}, "Value");
+  var varList2 = createVarDecl(Set{"sum"}, "real");
   
   var declList = Set{varList1, varList2}.createDeclList();
   

@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 15-05-2024 16:45:13
+-- Automatically generated on 31-05-2024 12:50:08
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -215,7 +215,7 @@ exports
 			
 			Termination = terminate -> SKIP
 			
-			Active 		= share__choice(share__choice(get_currDiff?currDiff -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currAngleOut!Plus(Mult(currNewError, const_AnglePID_P, core_real), Mult(currDiff, const_AnglePID_D, core_real), core_real) -> SKIP))))) ; 
+			Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_currDiff?currDiff -> true & (share__choice(set_currAngleOut!Plus(Mult(currNewError, const_AnglePID_P, core_real), Mult(currDiff, const_AnglePID_D, core_real), core_real) -> SKIP))))) ; 
 					 	  Behaviour ; 
 					 	  share__choice(exit -> SKIP) ; SKIP ; 
 					 	  share__choice(exited -> SKIP) ; Inactive
@@ -233,7 +233,7 @@ exports
 			
 			Termination = terminate -> SKIP
 			
-			Active 		= share__choice(share__choice(get_currDiff?currDiff -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currAngleOut!Plus(Mult(currNewError, const_AnglePID_P, core_real), Mult(currDiff, const_AnglePID_D, core_real), core_real) -> SKIP))))) ; 
+			Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_currDiff?currDiff -> true & (share__choice(set_currAngleOut!Plus(Mult(currNewError, const_AnglePID_P, core_real), Mult(currDiff, const_AnglePID_D, core_real), core_real) -> SKIP))))) ; 
 					 	  Behaviour ; 
 					 	  share__choice(exit -> SKIP) ; SKIP ; 
 					 	  share__choice(exited -> SKIP) ; Inactive

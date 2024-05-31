@@ -16,7 +16,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="nodeOut211"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -30,7 +30,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="layerRes21"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -44,7 +44,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="nodeOut112"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -58,7 +58,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="nodeOut111"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -72,7 +72,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="layerRes11"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -86,7 +86,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="layerRes02"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -100,7 +100,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="layerRes01"/>
       </paras>
       <paras xsi:type="circus:ChannelPara">
         <declList>
@@ -114,7 +114,7 @@
             </expr>
           </decls>
         </declList>
-        <name word=""/>
+        <name word="terminate"/>
       </paras>
       <paras xsi:type="circus:ChannelSetPara">
         <channelSet xsi:type="circus:CircusChannelSet">
@@ -583,18 +583,18 @@
                 <declList>
                   <decls xsi:type="circus:VarDecl">
                     <expr xsi:type="circus:RefExpr">
-                      <name word="Value"/>
-                    </expr>
-                    <nameList>
-                      <names word="sum"/>
-                    </nameList>
-                  </decls>
-                  <decls xsi:type="circus:VarDecl">
-                    <expr xsi:type="circus:RefExpr">
                       <name word="int"/>
                     </expr>
                     <nameList>
                       <names word="l, n, i"/>
+                    </nameList>
+                  </decls>
+                  <decls xsi:type="circus:VarDecl">
+                    <expr xsi:type="circus:RefExpr">
+                      <name word="Value"/>
+                    </expr>
+                    <nameList>
+                      <names word="sum"/>
                     </nameList>
                   </decls>
                 </declList>

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<project default="second">
+
+	
+	<!-- try programmatically changing this input model. -->
+  
+
+  <!-- this is a task, named through name tags.	 --> 
+	
+  <target name="main">
+    <epsilon.eol>
+      var x = "output";
+    <exports ref="x" ant="true"/>
+    </epsilon.eol>
+  	
+  <echo>${x}</echo> <!-- comment -->
+  	
+    <epsilon.emf.loadModel name="RC" aliases = "RC"
+    		modelFile="SegwayANN2.rct"
+    		metamodelUri="http://www.robocalc.circus/RoboChart"
+    		expand="true" 
+    		read="true" store="false" profile="true"/>
+
+  	  <epsilon.emf.loadModel name="Z" aliases = "Z"
+  	  		modelFile="${x}.model"
+  	  		metamodelUri="http://www.robocalc.circus/Circus"
+  	  		expand="true"
+  	  		read="false" store="true" profile="true"/>
+
+
+  	
+    <epsilon.eol src="test_model.eol">
+  	<model ref="RC" />
+    	<model ref="Z" />
+    	</epsilon.eol>
+  	
+    <epsilon.disposeModels/>
+  </target>
+	
+	<target name="second">
+			
+		  <epsilon.eol>
+			         var index = 0;
+            <exports ref="index" ant="true"/>
+        </epsilon.eol>
+			        	
+	 
+	        <!-- For every RoboChart .rct file in gen_files, from ANNFileGeneration. -->
+	        <epsilon.for>
+	            <fileset dir="gen_files" includes="*rct"/>
+	        	
+	            <epsilon.eol>
+	              var circusModelFile= "output" + index + ".model";
+
+		          <uses ref="index" />
+	            <exports ref="circusModelFile" ant="true"/>
+	            </epsilon.eol>
+	        	
+	        	<epsilon.eol>
+		              var isabelleText = "isabelle_output_" + index + ".thy";
+
+		          <uses ref="index" />
+	            <exports ref="isabelleText" ant="true"/>
+	            </epsilon.eol>
+	        	
+	        
+	        	
+	            <!-- Load the input RoboChart model -->
+	     	        <epsilon.emf.loadModel name="RC" aliases = "RC"
+	     	    		modelFile="gen_files/${it}"
+	     	    		metamodelUri="http://www.robocalc.circus/RoboChart"
+	     	    		expand="true" 
+	     	    		read="true" store="false" profile="true"/>
+
+			  <!-- Load the output Circus Model -->
+	      	  <epsilon.emf.loadModel name="Z" aliases = "Z"
+	        	  		modelFile="out_dir/${circusModelFile}"
+	        	  		metamodelUri="http://www.robocalc.circus/Circus"
+	        	  		expand="true"
+	        	  		read="false" store="true" profile="true"/>
+	        	
+	        	<!-- Generate the Circus model using EOL -->
+	            <epsilon.eol src="ann_generation.eol">
+	                <model ref="RC"/>
+	                <model ref="Z"/>   
+	            </epsilon.eol>
+	        	
+	        	<!-- perform the Circus M2T, store it in  -->
+	        	<epsilon.egl src="CircusM2T_Param.egx">
+	        		<parameter name="TARGET" value="isabelle_out/${isabelleText}"/>
+    				<model ref="Z"/>
+    			</epsilon.egl>
+	        	
+	        	<epsilon.eol>
+	              index = (index.asInteger() + 1).asString();
+	        		<uses ref="index" />
+	        		<exports ref="index" />
+	        	   </epsilon.eol>
+
+	            <!-- Dispose of the models -->
+	            <epsilon.disposeModels />
+	        </epsilon.for>
+	    </target>
+
+	<epsilon.disposeModels/>
+
+  
+</project>

@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 28-05-2024 15:23:27
+-- Automatically generated on 31-05-2024 12:50:08
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -9,7 +9,7 @@
 
 include "core_defs.csp"
 include "SegwayANN_SegwayController.csp"
-include "file_SegwayANN2_defs.csp"
+include "file_SegwayANN_defs.csp"
 include "state_defs.csp"
 include "robochart_defs.csp"
 include "../instantiations.csp"
