@@ -1,43 +1,7 @@
 <?xml version="1.0"?>
-<project default="second">
-
+<project default="main">
 	
-	<!-- try programmatically changing this input model. -->
-  
-
-  <!-- this is a task, named through name tags.	 --> 
-	
-  <target name="main">
-    <epsilon.eol>
-      var x = "output";
-    <exports ref="x" ant="true"/>
-    </epsilon.eol>
-  	
-  <echo>${x}</echo> <!-- comment -->
-  	
-    <epsilon.emf.loadModel name="RC" aliases = "RC"
-    		modelFile="SegwayANN2.rct"
-    		metamodelUri="http://www.robocalc.circus/RoboChart"
-    		expand="true" 
-    		read="true" store="false" profile="true"/>
-
-  	  <epsilon.emf.loadModel name="Z" aliases = "Z"
-  	  		modelFile="${x}.model"
-  	  		metamodelUri="http://www.robocalc.circus/Circus"
-  	  		expand="true"
-  	  		read="false" store="true" profile="true"/>
-
-
-  	
-    <epsilon.eol src="test_model.eol">
-  	<model ref="RC" />
-    	<model ref="Z" />
-    	</epsilon.eol>
-  	
-    <epsilon.disposeModels/>
-  </target>
-	
-	<target name="second">
+	<target name="main">
 			
 		  <epsilon.eol>
 			         var index = 0;
