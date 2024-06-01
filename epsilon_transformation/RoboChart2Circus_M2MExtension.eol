@@ -1,9 +1,38 @@
 
 //******************RULES AND HELPERS NOT FROM OUR RULES*******************/
 
-//ADDITIONAL: Need a way of creating Paramerised Actions, Z!ParamAction
+
+//Iterated Actions: 
+
+//Iterated Parallel Creation, with no nameset, creates the empty set for the name set. 
+operation createInterleaveIteAction(action : Z!CircusAction, declList: Z!ZDeclList) : Z!InterleaveActionIte {
+  /*
+  Parameters we need to set: 
+	val NameSet nameSet - can ignore. 
+     - Decl, List,  which is, i : 1 .. inpSize. 
+     - CallAction, there is an Action, somewhere, which is, NodeIn, with l, n, i as parameters. 
+ */
+ 
+  var interleaveIteAction = new Z!InterleaveActionIte;
+  
+  interleaveIteAction.circusAction = action;
+  interleaveIteAction.declList = declList;
+  interleaveIteAction.nameSet = createEmptyNS();
+  
+  return interleaveIteAction;
+}
+
+//Operation to create an empty named set. 
+operation createEmptyNS() : Z!CircusNameSet {
+  var ns = new Z!CircusNameSet;
+  ns.expr = new Z!SetExpr;
+  ns.expr.exprList = new Z!ZExprList;
+  
+  return ns;
+}
 
 
+//Parameterised Actions:
 operation Z!CircusAction createParamAction(declList : Z!ZDeclList) : Z!ParamAction {
   var paramAction = new Z!ParamAction;
   paramAction.declList = declList;
@@ -22,6 +51,15 @@ operation Set<Z!VarDecl> createDeclList() : Z!ZDeclList {
 operation createVarDecl(nameList : Set<String>, type : String) : Z!VarDecl {
   var varDecl = new Z!VarDecl;
   varDecl.expr = type.createRefExpr(false, false);
+  varDecl.nameList = createNameList(nameList);
+  
+  return varDecl;
+}
+
+//Create a variable declaration, where the expression is an arbritrary expression.
+operation createVarDecl(nameList : Set<String>, expr : Z!Expr) : Z!VarDecl {
+  var varDecl = new Z!VarDecl;
+  varDecl.expr = expr;
   varDecl.nameList = createNameList(nameList);
   
   return varDecl;
@@ -57,18 +95,11 @@ operation createOutputCommunication(
 //Modified, so it takes an arbritrary Z Expression, for the operands, and an arbritrary string for an operator.
 operation createApplExpr(operator: String, operandLeft: Z!Expr, operandRight: Z!Expr): Z!ApplExpr{
 	var expr = new Z!ApplExpr;
-	//left expression, and right expression, 
-	//we just need a left and right, 
-	expr.mixFix = true; //CZT: C.6.21 (Function Operator Application). For example: S + T.
+	
+	expr.mixFix = true; 
 
 	expr.leftExpr = operator.createRefExpr(false, false);
 	expr.rightExpr = Sequence{operandLeft, operandRight}.createTupleExpr();	
-//	var left = operator.createRefExpr(false,false);
-//	var right = Sequence{operand_left, operand_right}.createTupleExpr();	
-
-//	expr.exprList = new Z!ZExprList;
-//	expr.exprList.exprs = Sequence{left, right};
-	
 	return 	expr;
 }
 
@@ -115,16 +146,17 @@ operation createMultExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr
   return createApplExpr("_*_", operandLeft, operandRight);
 }
 
-//This is a unary expression, made in this way, as a, relu_+_, that is the way CZT parsed it.
-//Parsed as binary, between the operator, and the relu ref expression. 
+operation createUpToExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr {
+  return createApplExpr("_.._", operandLeft, operandRight);
+}
+
+
 operation createReluExpr(operator: Z!Expr) : Z!ApplExpr {
  return createUnaryApplExpr("relu", operator);
 }
 
-//Equality predicate.
-//Create an arbritrary predicate equality between two expressions. 
-//equality between an expression and a number. 
-//create an equality pred between an expression and an arbritrary number. 
+
+//Equality predicate creator rule.
 operation createNumEqualityPred(left: Z!Expr, right: Integer): Z!MemPred{
 	var pred =  new Z!MemPred;
 	pred.leftExpr = left;
@@ -184,46 +216,7 @@ operation Sequence<Z!Pred> createSequenceAsAndPred(): Z!AndPred{
 	return andPred;
 }
 
-
-
-
-
-//EOL Expression to Z Expression. 
-/*
-operation RC!Plus createPlusExpr():Z!ApplExpr{
-	return self.createApplExpr("_+_");
-}
-
-
-operation Any createApplExpr(operator: String): Z!ApplExpr{
-	var expr = new Z!ApplExpr;
-	expr.mixFix = true; //CZT: C.6.21 (Function Operator Application). For example: S + T.
-	
-	var operand_left = self.left.createExpr();
-	var operand_right = self.right.createExpr();
-
-	expr.leftExpr = operator.createRefExpr(false,false);
-
-	expr.rightExpr = Sequence{operand_left, operand_right}.createTupleExpr();	
-//	var left = operator.createRefExpr(false,false);
-//	var right = Sequence{operand_left, operand_right}.createTupleExpr();	
-
-//	expr.exprList = new Z!ZExprList;
-//	expr.exprList.exprs = Sequence{left, right};
-	
-	return 	expr;
-}
-
-
-*/
-
-//what should it take, between two variables. 
-
-//operator is: "_+_"
-
-
 //ADDITIONAL: Rule 4, of the robochart reference manual
-
 operation RC!Context allEvents() : Set<RC!Event> {
   var selfEvents = self.events;
   var interfaceEvents = self.interfaces.collect(i | i.events);

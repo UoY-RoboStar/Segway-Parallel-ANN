@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 31-05-2024 12:50:08
+-- Automatically generated on 01-06-2024 13:59:35
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -77,21 +77,10 @@ exports
 	localClockResets = {||}
 	
 	
-	channel get_CLID_UpdateOutput : core_clock_type 
 	channel get_CLID_Read : core_clock_type 
 	channel get_CLID_UpdateIntegral : core_clock_type 
+	channel get_CLID_UpdateOutput : core_clock_type 
 	--channel increment__
-	
-	CLID_UpdateOutput_clock_type(id__,
-			          const_SpeedPID_P,
-			          const_SpeedPID_I,
-			          const_SpeedPID_maxIntegral) = 
-		let
-			max = (clock_type_max(Union({
-	}))+1)
-		ctype = {0..max}
-	within
-		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
 	CLID_Read_clock_type(id__,
 			          const_SpeedPID_P,
@@ -105,6 +94,17 @@ exports
 		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
 	CLID_UpdateIntegral_clock_type(id__,
+			          const_SpeedPID_P,
+			          const_SpeedPID_I,
+			          const_SpeedPID_maxIntegral) = 
+		let
+			max = (clock_type_max(Union({
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_UpdateOutput_clock_type(id__,
 			          const_SpeedPID_P,
 			          const_SpeedPID_I,
 			          const_SpeedPID_maxIntegral) = 
@@ -368,7 +368,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -387,7 +387,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+					Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -593,7 +593,7 @@ exports
 				    const_SpeedPID_I,
 				    const_SpeedPID_maxIntegral) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered|}
+				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
 			 within
 				(MachineBody(id__,
 						    const_SpeedPID_P,
@@ -610,7 +610,7 @@ exports
 				    const_SpeedPID_I,
 				    const_SpeedPID_maxIntegral) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered|}
+				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -622,26 +622,26 @@ exports
 												    const_SpeedPID_P,
 												    const_SpeedPID_I,
 												    const_SpeedPID_maxIntegral)
-										[| {|get_CLID_UpdateIntegral,UpdateIntegral::entered,terminate|} |]
-										dbisim(Clock_CLID_UpdateIntegral(id__,0,
+										[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
+										dbisim(Clock_CLID_UpdateOutput(id__,0,
 												          const_SpeedPID_P,
 												          const_SpeedPID_I,
 												          const_SpeedPID_maxIntegral))
-									)\{|get_CLID_UpdateIntegral|}
+									)\{|get_CLID_UpdateOutput|}
 								)
-								[| {|get_CLID_Read,Read::entered,terminate|} |]
-								dbisim(Clock_CLID_Read(id__,0,
+								[| {|get_CLID_UpdateIntegral,UpdateIntegral::entered,terminate|} |]
+								dbisim(Clock_CLID_UpdateIntegral(id__,0,
 										          const_SpeedPID_P,
 										          const_SpeedPID_I,
 										          const_SpeedPID_maxIntegral))
-							)\{|get_CLID_Read|}
+							)\{|get_CLID_UpdateIntegral|}
 						)
-						[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
-						dbisim(Clock_CLID_UpdateOutput(id__,0,
+						[| {|get_CLID_Read,Read::entered,terminate|} |]
+						dbisim(Clock_CLID_Read(id__,0,
 								          const_SpeedPID_P,
 								          const_SpeedPID_I,
 								          const_SpeedPID_maxIntegral))
-					)\{|get_CLID_UpdateOutput|}
+					)\{|get_CLID_Read|}
 				)
 				) \ union(stateClockSync,enteredSS)
 			)
@@ -797,7 +797,7 @@ exports
 				    const_SpeedPID_I,
 				    const_SpeedPID_maxIntegral) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered|}
+				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
 			 within
 				(MachineBody_VS_O(id__,
 						    const_SpeedPID_P,
@@ -814,7 +814,7 @@ exports
 				    const_SpeedPID_I,
 				    const_SpeedPID_maxIntegral) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered|}
+				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -826,26 +826,26 @@ exports
 												    const_SpeedPID_P,
 												    const_SpeedPID_I,
 												    const_SpeedPID_maxIntegral)
-										[| {|get_CLID_UpdateIntegral,UpdateIntegral::entered,terminate|} |]
-										dbisim(Clock_CLID_UpdateIntegral(id__,0,
+										[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
+										dbisim(Clock_CLID_UpdateOutput(id__,0,
 												          const_SpeedPID_P,
 												          const_SpeedPID_I,
 												          const_SpeedPID_maxIntegral))
-									)\{|get_CLID_UpdateIntegral|}
+									)\{|get_CLID_UpdateOutput|}
 								)
-								[| {|get_CLID_Read,Read::entered,terminate|} |]
-								dbisim(Clock_CLID_Read(id__,0,
+								[| {|get_CLID_UpdateIntegral,UpdateIntegral::entered,terminate|} |]
+								dbisim(Clock_CLID_UpdateIntegral(id__,0,
 										          const_SpeedPID_P,
 										          const_SpeedPID_I,
 										          const_SpeedPID_maxIntegral))
-							)\{|get_CLID_Read|}
+							)\{|get_CLID_UpdateIntegral|}
 						)
-						[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
-						dbisim(Clock_CLID_UpdateOutput(id__,0,
+						[| {|get_CLID_Read,Read::entered,terminate|} |]
+						dbisim(Clock_CLID_Read(id__,0,
 								          const_SpeedPID_P,
 								          const_SpeedPID_I,
 								          const_SpeedPID_maxIntegral))
-					)\{|get_CLID_UpdateOutput|}
+					)\{|get_CLID_Read|}
 				)
 				) \ diff(union(stateClockSync,enteredSS),enteredSS)
 			)
@@ -1009,28 +1009,6 @@ exports
 		
 		clockSync = {||}
 		
-		Clock_CLID_UpdateOutput(id__,x__,
-				          const_SpeedPID_P,
-				          const_SpeedPID_I,
-				          const_SpeedPID_maxIntegral) = 
-			TimeOut_1(
-				UpdateOutput::entered -> Clock_CLID_UpdateOutput(id__,0,
-						          const_SpeedPID_P,
-						          const_SpeedPID_I,
-						          const_SpeedPID_maxIntegral)
-				[]
-				get_CLID_UpdateOutput!x__ -> Clock_CLID_UpdateOutput(id__,x__,
-						          const_SpeedPID_P,
-						          const_SpeedPID_I,
-						          const_SpeedPID_maxIntegral)
-				[]
-				terminate -> SKIP,Clock_CLID_UpdateOutput(id__,clock_type_plus(x__,1,CLID_UpdateOutput_clock_type(id__,
-						          const_SpeedPID_P,
-						          const_SpeedPID_I,
-						          const_SpeedPID_maxIntegral)),
-						          const_SpeedPID_P,
-						          const_SpeedPID_I,
-						          const_SpeedPID_maxIntegral))
 		Clock_CLID_Read(id__,x__,
 				          const_SpeedPID_P,
 				          const_SpeedPID_I,
@@ -1075,16 +1053,33 @@ exports
 						          const_SpeedPID_P,
 						          const_SpeedPID_I,
 						          const_SpeedPID_maxIntegral))
+		Clock_CLID_UpdateOutput(id__,x__,
+				          const_SpeedPID_P,
+				          const_SpeedPID_I,
+				          const_SpeedPID_maxIntegral) = 
+			TimeOut_1(
+				UpdateOutput::entered -> Clock_CLID_UpdateOutput(id__,0,
+						          const_SpeedPID_P,
+						          const_SpeedPID_I,
+						          const_SpeedPID_maxIntegral)
+				[]
+				get_CLID_UpdateOutput!x__ -> Clock_CLID_UpdateOutput(id__,x__,
+						          const_SpeedPID_P,
+						          const_SpeedPID_I,
+						          const_SpeedPID_maxIntegral)
+				[]
+				terminate -> SKIP,Clock_CLID_UpdateOutput(id__,clock_type_plus(x__,1,CLID_UpdateOutput_clock_type(id__,
+						          const_SpeedPID_P,
+						          const_SpeedPID_I,
+						          const_SpeedPID_maxIntegral)),
+						          const_SpeedPID_P,
+						          const_SpeedPID_I,
+						          const_SpeedPID_maxIntegral))
 		
 		StateClocks(id__,
 				          const_SpeedPID_P,
 				          const_SpeedPID_I,
-				          const_SpeedPID_maxIntegral) = dbisim(Clock_CLID_UpdateOutput(id__,0,
-				          const_SpeedPID_P,
-				          const_SpeedPID_I,
-				          const_SpeedPID_maxIntegral))
-		[| { terminate } |] (
-		dbisim(Clock_CLID_Read(id__,0,
+				          const_SpeedPID_maxIntegral) = dbisim(Clock_CLID_Read(id__,0,
 				          const_SpeedPID_P,
 				          const_SpeedPID_I,
 				          const_SpeedPID_maxIntegral))
@@ -1093,10 +1088,15 @@ exports
 				          const_SpeedPID_P,
 				          const_SpeedPID_I,
 				          const_SpeedPID_maxIntegral))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_UpdateOutput(id__,0,
+				          const_SpeedPID_P,
+				          const_SpeedPID_I,
+				          const_SpeedPID_maxIntegral))
 		)
 		)
 		
-		stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered|}
+		stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateIntegral,UpdateIntegral::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
 		
 		-- Shared memory
 		-- Shared memory variables

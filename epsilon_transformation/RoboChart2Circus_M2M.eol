@@ -527,7 +527,7 @@ operation ncCoreBehaviour(nc:RC!NodeContainer): Z!CircusProcess{
 
 	
 	/***************start of tidsR(nc) calculation************************/
-	
+
 	//tidsR(nc) renaming is implemented as transitions renaming and nodes renaming 
 	//firstly, to calculate the renaming pair for the transitions
 	var tidsR_trans_pairL = new Sequence<String>;
