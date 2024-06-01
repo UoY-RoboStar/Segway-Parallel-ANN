@@ -15,12 +15,8 @@ import "RoboChart2Circus_M2MExtension.eol";
 //RC!ANNController.all().at(0).println();
 
 var ann = RC!ANNController.all().at(0);
-//ann.annSemantics();
+ann.annSemantics();
 
-ann.IndexedLayerRes(0);
-ann.AllNodeOut();
-ann.IndexedNodeOut(1, 1);
-ann.IndexedNodeOut(2, 1);
 
 //RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule, returns a Z!Spec.
 operation RC!ANNController annSemantics() : Z!Spec {
@@ -153,8 +149,10 @@ operation Sequence<Z!CircusAction> createSequenceAsSeqAction(): Z!SeqAction
   var collatorPar = self.Collator();
   var nodeInPar = self.NodeIn();
   var nodePar = self.Node();
+  var hiddenLayerPar = self.HiddenLayer();
   
-  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar}.createBasicProcess(mainAction);
+  
+  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar, hiddenLayerPar}.createBasicProcess(mainAction);
   
   return annProcFull.createProcessPara("AnglePIDANN", true);
   
@@ -206,7 +204,7 @@ operation RC!ANNController NodeIn() : Z!ActionPara {
 operation RC!ANNController Node() : Z!ActionPara {
    var nodeActions = Sequence{1..(self.layerNo())}.collect(l | 
   		Sequence{1..(self.LStructure(l))}.collect(n | 
-  			self.NodeExp())); 
+  			self.NodeExp(l, n))); 
   
   var basicAction = nodeActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
@@ -220,62 +218,25 @@ operation RC!ANNController Node() : Z!ActionPara {
   
   return nodePar;
 }
-//Node Helper Rule:
-operation RC!ANNController NodeExp() : Z!CircusAction {
 
-   /*
-  InterleaveActionIdx is ActionD, 
-Action with a declaration, with a declaration list. 
-abstract class ActionD extends Action1 {
-	val ZDeclList declList;
-
-abstract class Action1 extends CircusAction {
-	val CircusAction circusAction;
-
-
-//Has a nameset, which is, 
-abstract class ParActionIte extends ActionIte {
-	val NameSet nameSet;
-
-NameSet, is EMPTY, for interleaving, it is the name of the variables. for stateful behaviour. 
-
-It is for stateful behaviour, we never have anything for the namesets. 
-
-i, then the expression, is the ".." function, just a function from 1 to insize. 
-
-class AlphabetisedParallelActionIte extends ParActionIte {
-	val ChannelSet channelSet;
-}
-
-class InterleaveActionIte extends ParActionIte {
-}
-Channelsets, none, so we just need decllist, 
-
-class ParallelActionIte extends ParActionIte {
-	val ChannelSet channelSet;
-}
-
-To create channel sets, 
-
-
-
-*/
-
+//Rule 9: Function HiddenLayer. 
+operation RC!ANNController HiddenLayer() : Z!ActionPara {
+     var hiddenLayerAction = Sequence{1..(self.layerNo())}.collect(l | 
+  			self.HiddenLayerExp(l)); 
   
-   var nodeInArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "i".createRefExpr(false, false)};
-     
-   var nodeInCall = "NodeIn".createCallAction(nodeInArgs);
-     
-  var varList = createVarDecl(Set{"i"}, createUpToExpr(1.createNumExpr(), "inpSize".createRefExpr(false, false)));
+  var basicAction = hiddenLayerAction.flatten().asSequence().createSequenceAsExtchoiceAction();
+    
+  var varList = createVarDecl(Set{"l, s, inpSize"}, "int");
   
   var declList = Set{varList}.createDeclList();
   
-  var iteActionTest = createInterleaveIteAction(nodeInCall, declList); 
+  var paramProcess = basicAction.createParamAction(declList);
   
-  //Parallel action, with the nameset, of 
+  var hiddenLayerPar = paramProcess.createActionPara("HiddenLayer");
   
-  return iteActionTest;
+  return hiddenLayerPar;
 }
+
 
 //RULE 13: 
 operation RC!ANNController LStructure(i : Integer) : Integer {
@@ -380,14 +341,26 @@ operation RC!ANNController NodeInExp(l, n, i : Integer) : Z!CircusAction {
 
 //Guard creation helper.
 operation createGuard(l, n, i : Integer) : Z!Pred {
-  //num equality pred. 
-  //create the reference expressions, l, n, and i. 
   var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
   var nPred = createNumEqualityPred("n".createRefExpr(false, false), n);
   var iPred = createNumEqualityPred("i".createRefExpr(false, false), i);
   
   return Sequence{lPred, nPred, iPred}.createSequenceAsAndPred();
 }
+
+operation createGuard(l, n : Integer) : Z!Pred {
+  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
+  var nPred = createNumEqualityPred("n".createRefExpr(false, false), n);
+  
+  return Sequence{lPred, nPred}.createSequenceAsAndPred();
+}
+
+operation createGuard(l : Integer) : Z!Pred {
+  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
+  
+  return lPred;
+}
+
 
 operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
   if(i == 0) {
@@ -426,5 +399,56 @@ operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
      
      return guardedAction;
   }
-   
+}
+
+//Node Helper Rule:
+operation RC!ANNController NodeExp(l : Integer, n : Integer) : Z!CircusAction {
+  
+   var nodeInArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "i".createRefExpr(false, false)};
+     
+   var nodeInCall = "NodeIn".createCallAction(nodeInArgs);
+     
+  var varList = createVarDecl(Set{"i"}, createUpToExpr(1.createNumExpr(), "inpSize".createRefExpr(false, false)));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createInterleaveIteAction(nodeInCall, declList); 
+  
+  //Parallel, synchronising on indexednodeout. 
+  
+  //CallACtion, 
+  
+  //HideAction, 
+  
+  var collatorArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "inpSize".createRefExpr(false, false), 0.createNumExpr()};
+  
+  var collatorCall = "Collator".createCallAction(collatorArgs);
+  
+  var collatorHideAction = createHideAction(self.IndexedNodeOut(l, n), collatorCall);
+  
+  var parNode = createParallelAction(self.IndexedNodeOut(l, n), iteAction, collatorHideAction);
+  
+  var guardedAction = createGuardedAction(createGuard(l, n), parNode);
+  
+  
+  return guardedAction;
+}
+
+
+//HiddenLayer Helper Rule:
+operation RC!ANNController HiddenLayerExp(l : Integer) : Z!CircusAction {
+  
+   var nodeArgs = Sequence{"l".createRefExpr(false, false), "i".createRefExpr(false, false), "inpSize".createRefExpr(false, false)};
+     
+   var nodeCall = "Node".createCallAction(nodeArgs);
+     
+  var varList = createVarDecl(Set{"i"}, createUpToExpr(1.createNumExpr(), "s".createRefExpr(false, false)));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createParallelActionIte(self.IndexedLayerRes(l), nodeCall, declList); 
+  
+  var guardedAction = createGuardedAction(createGuard(l), iteAction);
+  
+  return guardedAction;
 }

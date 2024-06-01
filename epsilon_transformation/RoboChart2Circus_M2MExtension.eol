@@ -22,6 +22,45 @@ operation createInterleaveIteAction(action : Z!CircusAction, declList: Z!ZDeclLi
   return interleaveIteAction;
 }
 
+
+//Parallel process creation methods: 
+//just with a channelset itself, not a reference to a csexp.
+operation createParallelAction(
+	csexp : Z!ChannelSet,
+	left: Z!CircusAction, 
+	right: Z!CircusAction
+	):Z!ParallelAction {
+	
+	var parAction = new Z!ParallelAction;
+	parAction.channelSet = csexp;
+	parAction.leftAction = left;
+	parAction.rightAction = right;
+	
+	return parAction;
+}
+
+operation createParallelActionIte(
+	csexp : Z!ChannelSet,
+	action: Z!CircusAction, 
+	declList: Z!ZDeclList
+	):Z!ParallelActionIte {
+	
+	var parAction = new Z!ParallelActionIte;
+	parAction.channelSet = csexp;
+	parAction.declList = declList;
+	parAction.circusAction = action;
+	
+	return parAction;
+}
+
+//Create Hide Action
+operation createHideAction(csexp : Z!ChannelSet, action : Z!CircusAction) : Z!HideAction {
+  var hideAction = new Z!HideAction;
+  hideAction.circusAction = action;
+  hideAction.channelSet = csexp;
+  return hideAction;
+}
+
 //Operation to create an empty named set. 
 operation createEmptyNS() : Z!CircusNameSet {
   var ns = new Z!CircusNameSet;
