@@ -1,0 +1,96 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 31-05-2024 12:53:39
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+
+
+
+module test19
+shared_variable_events = {||}
+exports
+	-- declaring controller events
+	channel in0: InOut.core_real
+	channel out0: InOut.core_real
+	channel out1: InOut.core_real
+	
+	-- declaring controller termination channel
+	channel terminate
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	in0,
+		out0,
+		out1
+	|}
+	D__(id__) = let 
+		Input_Channels = { 
+					in0
+				} 
+		Output_Channels = { 
+					out0,
+					out1
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- VS version
+	VS__(id__) = let 
+		Input_Channels = { 
+					in0
+				} 
+		Output_Channels = { 
+					out0,
+					out1
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+	O__(id__) = let 
+		Input_Channels = { 
+					in0
+				} 
+		Output_Channels = { 
+					out0,
+					out1
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+							
+	-- VS_O version
+	VS_O__(id__) = let 
+		Input_Channels = { 
+					in0
+				} 
+		Output_Channels = { 
+					out0,
+					out1
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+		
+	HEXT(id__) = O__(id__) [|shared_variable_events|] SKIP			
+	
+endmodule
+
+
+
+

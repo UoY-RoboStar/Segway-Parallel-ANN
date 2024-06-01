@@ -1,0 +1,144 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 31-05-2024 12:54:13
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+
+
+
+module test111
+shared_variable_events = {||}
+exports
+	-- declaring controller events
+	channel in0: InOut.core_real
+	channel in1: InOut.core_real
+	channel in2: InOut.core_real
+	channel in3: InOut.core_real
+	channel in4: InOut.core_real
+	channel in5: InOut.core_real
+	channel in6: InOut.core_real
+	channel in7: InOut.core_real
+	channel in8: InOut.core_real
+	channel in9: InOut.core_real
+	channel out0: InOut.core_real
+	
+	-- declaring controller termination channel
+	channel terminate
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	in0,
+		in1,
+		in2,
+		in3,
+		in4,
+		in5,
+		in6,
+		in7,
+		in8,
+		in9,
+		out0
+	|}
+	D__(id__) = let 
+		Input_Channels = { 
+					in0,
+					in1,
+					in2,
+					in3,
+					in4,
+					in5,
+					in6,
+					in7,
+					in8,
+					in9
+				} 
+		Output_Channels = { 
+					out0
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- VS version
+	VS__(id__) = let 
+		Input_Channels = { 
+					in0,
+					in1,
+					in2,
+					in3,
+					in4,
+					in5,
+					in6,
+					in7,
+					in8,
+					in9
+				} 
+		Output_Channels = { 
+					out0
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+	
+	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+	O__(id__) = let 
+		Input_Channels = { 
+					in0,
+					in1,
+					in2,
+					in3,
+					in4,
+					in5,
+					in6,
+					in7,
+					in8,
+					in9
+				} 
+		Output_Channels = { 
+					out0
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+							
+	-- VS_O version
+	VS_O__(id__) = let 
+		Input_Channels = { 
+					in0,
+					in1,
+					in2,
+					in3,
+					in4,
+					in5,
+					in6,
+					in7,
+					in8,
+					in9
+				} 
+		Output_Channels = { 
+					out0
+				} 
+		Choose(CS) = ||| c: CS @ c?x -> SKIP
+		C = Choose(Input_Channels) ; Choose(Output_Channels); C
+	
+	within
+		C
+		
+	HEXT(id__) = O__(id__) [|shared_variable_events|] SKIP			
+	
+endmodule
+
+
+
+

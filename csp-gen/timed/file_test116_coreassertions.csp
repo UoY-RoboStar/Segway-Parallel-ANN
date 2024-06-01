@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 31-05-2024 12:50:08
+-- Automatically generated on 31-05-2024 12:53:57
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -11,4 +11,9 @@ include "file_test116.csp"
 
 
 
+-- timed deadlock free
+assert prioritise(P_test116[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_test116
 
