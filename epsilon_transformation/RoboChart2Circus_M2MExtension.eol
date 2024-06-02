@@ -255,12 +255,16 @@ operation Sequence<Z!Pred> createSequenceAsAndPred(): Z!AndPred{
 	return andPred;
 }
 
-//ADDITIONAL: Rule 4, of the robochart reference manual
-operation RC!Context allEvents() : Set<RC!Event> {
+//ADDITIONAL: Rule 4, of the robochart reference manual, but as a Sequence, returned in order, not implemented as a Set.
+//This returns the events in order, based on how they are defined, including when in an interface, says unordered in RoboChart EMF but still returns ordered.
+operation RC!Context allEvents() : Sequence<RC!Event> {
   var selfEvents = self.events;
   var interfaceEvents = self.interfaces.collect(i | i.events);
-  selfEvents.addAll(interfaceEvents.flatten().asSet());
-  return selfEvents; 
+  
+  var selfEventsSeq = selfEvents.asSequence();
+  
+  selfEventsSeq.addAll(interfaceEvents.flatten().asSequence());
+  return selfEventsSeq; 
 }
 
 //Helper rule: Neg extraction: 

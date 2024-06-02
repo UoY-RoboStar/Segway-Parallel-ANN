@@ -1,7 +1,10 @@
 /*
   This file implements the ANNController denotational semantic rules, avaliable here: https://github.com/UoY-RoboStar/ann-circus-rules
 
-  This relies on 'boolean_query.eol', Fang Yan's implementation of the RC to Circus M2M translation. 
+  This depends on 'RoboChart2Circus_M2M.eol', Fang Yan's implementation of the RC to Circus M2M translation. 
+
+  This also depends on 'RoboChart2Circus_M2MExtension.eol', my custom functions that creation Circus model elements, created for those functions I found useful during
+  creating the M2M implementation.
 
   We will import, a minimal version of boolean_query, Fang's RC to Circus rules, not all of it, because it is very big. 
 
@@ -97,62 +100,30 @@ operation NodeOutChannels(l : Integer, n : Integer, i : Integer, seq : Sequence<
 
 //RULE 5: ANNProc
 operation RC!ANNController ANNProc() : Z!ProcessPara {
-  //We need to create a SEQUENCE of Z paragraphs, which are the paras of the paraList. 
-  //for the createBasicProcess(mainActionName: String) where create the Call Action, ANNRenamed. 
-  //needs to be of type Z!Para, 
-  /*
-    lower levels, Action_Para, 
 
-    createActionPara(), makes an ActionPara, which is a type of Para. 
-
-   need a Z!CircusAction, 
-
-  createAction2(
-	type: String, 
-	fst_action: Z!CircusAction, 
-	snd_action: Z!CircusAction
-	):
-  this is, "InterruptAction", "SeqAction", or "ExtChoiceAction". 
-
-  createParallelProcess(
-	cs_name: String, 
-	left: Z!CircusProcess, 
-	right: Z!CircusProcess
-	):Z!ParallelProcess
-
-    Parameterised action, Param_Action, 
-
-There is NO param_action, creation, that Fang has made, it is Z!ParamAction. 
-
-Then we need Extch Action, 
-
-External choice action, 
-
-The class is Z!ExtChoiceAction. It is an Action2. 
-
-This function, 
-operation Sequence<Z!CircusAction> createSequenceAsExtchoiceAction(): Z!ExtChoiceAction
-
-Automatically creates nested external choices, we can use this, sequence of Z!CircusActions. 
-
-Decl_List. 
-
-  Fang also has: 
-operation Sequence<Z!CircusAction> createSequenceAsSeqAction(): Z!SeqAction
-
-  Parameterised action, it is an ActionD, action with a list of declarations. 
-    
-  */
-  
   var mainAction = "ANNRenamed";
   
   var collatorPar = self.Collator();
   var nodeInPar = self.NodeIn();
   var nodePar = self.Node();
   var hiddenLayerPar = self.HiddenLayer();
+  var hiddenLayersPar = self.HiddenLayers(self.layerNo() - 1);
+  var outputLayerPar = self.OutputLayer();
   
+  //ANN Action Paragraph. 
+  var hiddenLayersCall = "HiddenLayers".createCallAction();
+  var outputLayerCall = "OutputLayer".createCallAction();
+
+  var annParAction = createParallelAction(self.IndexedLayerRes(self.layerNo()-1), hiddenLayersCall, outputLayerCall);
+  var hiddenEvts = createChannelSet("ANNHiddenEvts".createRefExpr(false, false));
+  var annHiddenAction = createHideAction(hiddenEvts, annParAction);
+  var annFinal = createAction2("SeqAction", annHiddenAction, "ANN".createCallAction());
   
-  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar, hiddenLayerPar}.createBasicProcess(mainAction);
+  var annPara = annFinal.createActionPara("ANN");
+  
+  var annRenamedPara = self.ANNRenamed();
+  
+  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar, hiddenLayerPar, hiddenLayersPar, outputLayerPar, annPara, annRenamedPara}.createBasicProcess(mainAction);
   
   return annProcFull.createProcessPara("AnglePIDANN", true);
   
@@ -235,6 +206,66 @@ operation RC!ANNController HiddenLayer() : Z!ActionPara {
   var hiddenLayerPar = paramProcess.createActionPara("HiddenLayer");
   
   return hiddenLayerPar;
+}
+
+//Rule 10: Function HiddenLayers
+operation RC!ANNController HiddenLayers(l : Integer) : Z!ActionPara {
+    return self.HiddenLayersInt(l).createActionPara("HiddenLayers");
+}
+
+//Rule 11: Function OutputLayer
+operation RC!ANNController OutputLayer() : Z!ActionPara {
+    
+   var nodeArgs = Sequence{"l".createRefExpr(false, false), "i".createRefExpr(false, false), self.LStructure(self.layerNo()-1).createNumExpr()};
+     
+   var nodeCall = "Node".createCallAction(nodeArgs);
+     
+  var varList = createVarDecl(Set{"i"}, createUpToExpr(1.createNumExpr(), self.LStructure(self.layerNo()).createNumExpr()));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createParallelActionIte(self.IndexedLayerRes(self.layerNo()-1), nodeCall, declList); 
+    
+  return iteAction.createActionPara("OutputLayer");
+
+}
+
+//Rule 12: Function ANNRenamed
+
+operation RC!ANNController ANNRenamed() : Z!ActionPara {
+  var annRenamedAction = new Z!RenameAction;
+  annRenamedAction.circusAction = "ANN".createCallAction();
+  
+  //Sequence of strings, that is fine, assignment pairs will be pairs. 
+  //
+  var orderedLayerRes = Set{0, self.layerNo()}.collect(l | 
+  	Set{1..self.LStructure(l)}.collect(n | 
+  	  layerRes(l, n)
+  	));
+  	
+  var orderedLayerResS = orderedLayerRes.flatten().asSequence();
+  
+  //concatenation of all events. 
+  var eventListFull = self.annparameters.inputcontext.allEvents();
+  
+  eventListFull.addAll(self.annparameters.outputcontext.allEvents());
+  
+  var eventList = eventListFull.collect(e | e.name);
+  
+  var assignmentPairs = createAssignmentPairs(orderedLayerResS, eventList);
+  
+  annRenamedAction.assignmentPairs = assignmentPairs;
+  
+  
+  var terminateComm = new Z!Communication;
+     
+  terminateComm.channelExpr = "terminate".createRefExpr(false, false);
+     
+  var prefixAction = createPrefixingAction(terminateComm, createSkipAction());
+  
+  var circusAction = createAction2("InterruptAction", annRenamedAction, prefixAction);
+	
+  return circusAction.createActionPara("ANNRenamed");
 }
 
 
@@ -451,4 +482,18 @@ operation RC!ANNController HiddenLayerExp(l : Integer) : Z!CircusAction {
   var guardedAction = createGuardedAction(createGuard(l), iteAction);
   
   return guardedAction;
+}
+
+//Internal behaviour of HiddenLayers, that returns a CircusAction.
+operation RC!ANNController HiddenLayersInt(l : Integer) : Z!CircusAction {
+  var hiddenLayerArgs = Sequence{l.createNumExpr(), self.LStructure(l).createNumExpr(), self.LStructure(l-1).createNumExpr()};
+  var hiddenLayerCall = "HiddenLayer".createCallAction(hiddenLayerArgs);
+  
+  if(l == 1) {
+    return hiddenLayerCall;
+  }
+  
+  else {
+    return createParallelAction(self.IndexedLayerRes(l-1), self.HiddenLayersInt(l-1), hiddenLayerCall);
+  }
 }

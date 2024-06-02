@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 01-06-2024 13:59:43
+-- Automatically generated on 02-06-2024 15:15:36
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -20,6 +20,10 @@ P_SegwayANN = let
 	
 	
 	
+	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
+	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
+	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
 	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
 	const_SegwayANN_SegwayController_stm_ref0_startupDelay = const_BalanceSTM_startupDelay
@@ -29,10 +33,6 @@ P_SegwayANN = let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
-	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
-	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
-	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
-	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 		
 	
 within

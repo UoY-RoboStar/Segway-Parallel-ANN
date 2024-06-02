@@ -1269,6 +1269,147 @@
               </circusAction>
               <name word="HiddenLayer"/>
             </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:CallAction">
+                <exprList>
+                  <exprs xsi:type="circus:NumExpr">
+                    <numeral value="1"/>
+                  </exprs>
+                  <exprs xsi:type="circus:NumExpr">
+                    <numeral value="1"/>
+                  </exprs>
+                  <exprs xsi:type="circus:NumExpr">
+                    <numeral value="2"/>
+                  </exprs>
+                </exprList>
+                <name word="HiddenLayer"/>
+              </circusAction>
+              <name word="HiddenLayers"/>
+            </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:ParallelActionIte">
+                <circusAction xsi:type="circus:CallAction">
+                  <exprList>
+                    <exprs xsi:type="circus:RefExpr">
+                      <name word="l"/>
+                    </exprs>
+                    <exprs xsi:type="circus:RefExpr">
+                      <name word="i"/>
+                    </exprs>
+                    <exprs xsi:type="circus:NumExpr">
+                      <numeral value="1"/>
+                    </exprs>
+                  </exprList>
+                  <name word="Node"/>
+                </circusAction>
+                <declList>
+                  <decls xsi:type="circus:VarDecl">
+                    <expr xsi:type="circus:ApplExpr" mixFix="true">
+                      <leftExpr xsi:type="circus:RefExpr">
+                        <name word="_.._"/>
+                      </leftExpr>
+                      <rightExpr xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="1"/>
+                          </exprs>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="1"/>
+                          </exprs>
+                        </exprList>
+                      </rightExpr>
+                    </expr>
+                    <nameList>
+                      <names word="i"/>
+                    </nameList>
+                  </decls>
+                </declList>
+                <channelSet xsi:type="circus:CircusChannelSet">
+                  <expr xsi:type="circus:BasicChannelSetExpr">
+                    <communicationList>
+                      <communications commUsage="Normal" multiSych="0">
+                        <channelExpr>
+                          <name word="layerRes11"/>
+                        </channelExpr>
+                        <fieldList/>
+                      </communications>
+                    </communicationList>
+                  </expr>
+                </channelSet>
+              </circusAction>
+              <name word="OutputLayer"/>
+            </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:SeqAction">
+                <leftAction xsi:type="circus:HideAction">
+                  <circusAction xsi:type="circus:ParallelAction">
+                    <leftAction xsi:type="circus:CallAction">
+                      <name word="HiddenLayers"/>
+                    </leftAction>
+                    <rightAction xsi:type="circus:CallAction">
+                      <name word="OutputLayer"/>
+                    </rightAction>
+                    <channelSet xsi:type="circus:CircusChannelSet">
+                      <expr xsi:type="circus:BasicChannelSetExpr">
+                        <communicationList>
+                          <communications commUsage="Normal" multiSych="0">
+                            <channelExpr>
+                              <name word="layerRes11"/>
+                            </channelExpr>
+                            <fieldList/>
+                          </communications>
+                        </communicationList>
+                      </expr>
+                    </channelSet>
+                  </circusAction>
+                  <channelSet xsi:type="circus:CircusChannelSet">
+                    <expr xsi:type="circus:RefExpr">
+                      <name word="ANNHiddenEvts"/>
+                    </expr>
+                  </channelSet>
+                </leftAction>
+                <rightAction xsi:type="circus:CallAction">
+                  <name word="ANN"/>
+                </rightAction>
+              </circusAction>
+              <name word="ANN"/>
+            </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:InterruptAction">
+                <leftAction xsi:type="circus:RenameAction">
+                  <circusAction xsi:type="circus:CallAction">
+                    <name word="ANN"/>
+                  </circusAction>
+                  <assignmentPairs>
+                    <lhsElement>
+                      <names word="layerRes01"/>
+                      <names word="layerRes02"/>
+                      <names word="layerRes21"/>
+                    </lhsElement>
+                    <rhsElement>
+                      <exprs xsi:type="circus:RefExpr">
+                        <name word="anewError"/>
+                      </exprs>
+                      <exprs xsi:type="circus:RefExpr">
+                        <name word="adiff"/>
+                      </exprs>
+                      <exprs xsi:type="circus:RefExpr">
+                        <name word="angleOutputE"/>
+                      </exprs>
+                    </rhsElement>
+                  </assignmentPairs>
+                </leftAction>
+                <rightAction xsi:type="circus:PrefixingAction">
+                  <circusAction xsi:type="circus:SkipAction"/>
+                  <communication>
+                    <channelExpr>
+                      <name word="terminate"/>
+                    </channelExpr>
+                  </communication>
+                </rightAction>
+              </circusAction>
+              <name word="ANNRenamed"/>
+            </paras>
           </paraList>
         </circusProcess>
         <name word="AnglePIDANN"/>

@@ -1,8 +1,8 @@
 diagram Segway
 
 interface ANNInput {
-	event adiff:real
 	event anewError:real
+	event adiff:real
 }
 
 interface ANNOutput {
