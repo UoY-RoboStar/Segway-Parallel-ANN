@@ -189,6 +189,17 @@ operation createUpToExpr(operandLeft: Z!Expr, operandRight: Z!Expr) : Z!ApplExpr
   return createApplExpr("_.._", operandLeft, operandRight);
 }
 
+operation createAndExpr(operandLeft: Z!Expr, operandRight: Z!Expr):Z!ApplExpr{
+	return createApplExpr("_And_", operandLeft, operandRight);
+}
+
+operation createOrExpr(operandLeft: Z!Expr, operandRight: Z!Expr):Z!ApplExpr{
+	return createApplExpr("_Or_", operandLeft, operandRight);
+}
+
+operation createEqualsExpr(operandLeft: Z!Expr, operandRight: Z!Expr):Z!ApplExpr{
+	return createApplExpr("_equals_", operandLeft, operandRight);
+}
 
 operation createReluExpr(operator: Z!Expr) : Z!ApplExpr {
  return createUnaryApplExpr("relu", operator);
@@ -199,6 +210,7 @@ operation createReluExpr(operator: Z!Expr) : Z!ApplExpr {
 operation createNumEqualityPred(left: Z!Expr, right: Integer): Z!MemPred{
 	var pred =  new Z!MemPred;
 	pred.leftExpr = left;
+	
 	
 	pred.rightExpr = Set{right}.createNumSetExpr();
 	//Equality, so mixFix = true. 
@@ -241,6 +253,7 @@ operation createAndPred(left: Z!Pred, right: Z!Pred) : Z!AndPred {
 
 //for a set of predicates, create a chain of and preds. They have to be different, each pred.
 operation Sequence<Z!Pred> createSequenceAsAndPred(): Z!AndPred{
+ 
 	var andPred;
 	var size = self.size();
 	var i = 0;

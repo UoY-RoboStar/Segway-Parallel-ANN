@@ -49,17 +49,18 @@
 	                <model ref="Z"/>   
 	            </epsilon.eol>
 	        	
-	        	<!-- perform the Circus M2T, store it in  -->
-	        	<epsilon.egl src="CircusM2T_Param.egx">
+	        	<!-- Commented out for now, only for channels, I performed this for a previous, not full version, 
+	        	and the channels loaded in Isabelle. perform the Circus M2T, store it in  -->
+	        	<!--<epsilon.egl src="CircusM2T_Param.egx">
 	        		<parameter name="TARGET" value="isabelle_out/${isabelleText}"/>
     				<model ref="Z"/>
-    			</epsilon.egl>
+    			</epsilon.egl> -->
 	        	
 	        	<epsilon.eol>
 	              index = (index.asInteger() + 1).asString();
 	        		<uses ref="index" />
 	        		<exports ref="index" />
-	        	   </epsilon.eol>
+	        	   </epsilon.eol> 
 
 	            <!-- Dispose of the models -->
 	            <epsilon.disposeModels />

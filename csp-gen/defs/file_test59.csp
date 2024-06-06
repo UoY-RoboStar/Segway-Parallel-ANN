@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 02-06-2024 15:13:22
+-- Automatically generated on 06-06-2024 16:14:52
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -15,7 +15,6 @@ shared_variable_events = {||}
 exports
 	-- declaring controller events
 	channel in0: InOut.core_real
-	channel in1: InOut.core_real
 	channel out0: InOut.core_real
 	
 	-- declaring controller termination channel
@@ -25,13 +24,11 @@ exports
 	sem__events = {|
 		terminate
 	,	in0,
-		in1,
 		out0
 	|}
 	D__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1
+					in0
 				} 
 		Output_Channels = { 
 					out0
@@ -45,8 +42,7 @@ exports
 	-- VS version
 	VS__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1
+					in0
 				} 
 		Output_Channels = { 
 					out0
@@ -60,8 +56,7 @@ exports
 	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
 	O__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1
+					in0
 				} 
 		Output_Channels = { 
 					out0
@@ -75,8 +70,7 @@ exports
 	-- VS_O version
 	VS_O__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1
+					in0
 				} 
 		Output_Channels = { 
 					out0

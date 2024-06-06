@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 02-06-2024 15:13:25
+-- Automatically generated on 06-06-2024 16:16:40
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -15,16 +15,8 @@ shared_variable_events = {||}
 exports
 	-- declaring controller events
 	channel in0: InOut.core_real
-	channel in1: InOut.core_real
-	channel in2: InOut.core_real
-	channel in3: InOut.core_real
-	channel in4: InOut.core_real
-	channel in5: InOut.core_real
-	channel in6: InOut.core_real
-	channel in7: InOut.core_real
-	channel in8: InOut.core_real
-	channel in9: InOut.core_real
 	channel out0: InOut.core_real
+	channel out1: InOut.core_real
 	
 	-- declaring controller termination channel
 	channel terminate
@@ -33,32 +25,16 @@ exports
 	sem__events = {|
 		terminate
 	,	in0,
-		in1,
-		in2,
-		in3,
-		in4,
-		in5,
-		in6,
-		in7,
-		in8,
-		in9,
-		out0
+		out0,
+		out1
 	|}
 	D__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1,
-					in2,
-					in3,
-					in4,
-					in5,
-					in6,
-					in7,
-					in8,
-					in9
+					in0
 				} 
 		Output_Channels = { 
-					out0
+					out0,
+					out1
 				} 
 		Choose(CS) = ||| c: CS @ c?x -> SKIP
 		C = Choose(Input_Channels) ; Choose(Output_Channels); C
@@ -69,19 +45,11 @@ exports
 	-- VS version
 	VS__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1,
-					in2,
-					in3,
-					in4,
-					in5,
-					in6,
-					in7,
-					in8,
-					in9
+					in0
 				} 
 		Output_Channels = { 
-					out0
+					out0,
+					out1
 				} 
 		Choose(CS) = ||| c: CS @ c?x -> SKIP
 		C = Choose(Input_Channels) ; Choose(Output_Channels); C
@@ -92,19 +60,11 @@ exports
 	-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
 	O__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1,
-					in2,
-					in3,
-					in4,
-					in5,
-					in6,
-					in7,
-					in8,
-					in9
+					in0
 				} 
 		Output_Channels = { 
-					out0
+					out0,
+					out1
 				} 
 		Choose(CS) = ||| c: CS @ c?x -> SKIP
 		C = Choose(Input_Channels) ; Choose(Output_Channels); C
@@ -115,19 +75,11 @@ exports
 	-- VS_O version
 	VS_O__(id__) = let 
 		Input_Channels = { 
-					in0,
-					in1,
-					in2,
-					in3,
-					in4,
-					in5,
-					in6,
-					in7,
-					in8,
-					in9
+					in0
 				} 
 		Output_Channels = { 
-					out0
+					out0,
+					out1
 				} 
 		Choose(CS) = ||| c: CS @ c?x -> SKIP
 		C = Choose(Input_Channels) ; Choose(Output_Channels); C

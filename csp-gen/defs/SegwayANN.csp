@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 02-06-2024 15:15:36
+-- Automatically generated on 06-06-2024 16:20:41
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -73,10 +73,10 @@ module SegwayANN
 			
 			
 			-- declaring call and ret events for undefined operations
-			channel enableInterruptsCall
 			channel setLeftMotorSpeedCall: core_real
-			channel disableInterruptsCall
 			channel setRightMotorSpeedCall: core_real
+			channel enableInterruptsCall
+			channel disableInterruptsCall
 			
 			-- declaring controller termination channel
 			channel terminate
@@ -93,10 +93,10 @@ module SegwayANN
 				anewError,
 				adiff,
 				angleOutputE
-			,	enableInterruptsCall,
-				setLeftMotorSpeedCall,
-				disableInterruptsCall,
-				setRightMotorSpeedCall
+			,	setLeftMotorSpeedCall,
+				setRightMotorSpeedCall,
+				enableInterruptsCall,
+				disableInterruptsCall
 			|}
 	
 			-- defined operations
@@ -183,10 +183,10 @@ module SegwayANN
 				channel rotationOutputE: InOut.core_real
 				
 				-- Declaring call and ret events for undefined operations
-				channel enableInterruptsCall
 				channel setLeftMotorSpeedCall: core_real
-				channel disableInterruptsCall
 				channel setRightMotorSpeedCall: core_real
+				channel enableInterruptsCall
+				channel disableInterruptsCall
 				
 				enterSS = {|
 				i0::enter,
@@ -235,10 +235,10 @@ module SegwayANN
 					speedOutputE,
 					rdiff,
 					rotationOutputE
-				,	enableInterruptsCall,
-					setLeftMotorSpeedCall,
-					disableInterruptsCall,
-					setRightMotorSpeedCall
+				,	setLeftMotorSpeedCall,
+					setRightMotorSpeedCall,
+					enableInterruptsCall,
+					disableInterruptsCall
 					|}
 			
 				-- Nodes --
@@ -1223,16 +1223,6 @@ module SegwayANN
 				-- If it is in the context of a controller, the required operations not provided by the
 				-- controller will be declared here, and the defined operations will be defined in the
 				-- context of the Controller module, and therefore within scope of the state machine module.
-				CALL__enableInterrupts(id__,
-						    const_BalanceSTM_maxAngle,
-						    const_BalanceSTM_loopTime,
-						    const_BalanceSTM_startupDelay,
-						    const_BalanceSTM_speedUpdate,
-						    const_BalanceSTM_rotationUpdate,
-						    const_BalanceSTM_motorBudget,
-						    const_BalanceSTM_angleBudget,
-						    const_BalanceSTM_speedBudget,
-						    const_BalanceSTM_rotationBudget) 	= enableInterruptsCall -> SKIP
 				CALL__setLeftMotorSpeed(id__,
 						    const_BalanceSTM_maxAngle,
 						    const_BalanceSTM_loopTime,
@@ -1244,16 +1234,6 @@ module SegwayANN
 						    const_BalanceSTM_speedBudget,
 						    const_BalanceSTM_rotationBudget,
 							param_speed) 	= setLeftMotorSpeedCall.param_speed -> SKIP
-				CALL__disableInterrupts(id__,
-						    const_BalanceSTM_maxAngle,
-						    const_BalanceSTM_loopTime,
-						    const_BalanceSTM_startupDelay,
-						    const_BalanceSTM_speedUpdate,
-						    const_BalanceSTM_rotationUpdate,
-						    const_BalanceSTM_motorBudget,
-						    const_BalanceSTM_angleBudget,
-						    const_BalanceSTM_speedBudget,
-						    const_BalanceSTM_rotationBudget) 	= disableInterruptsCall -> SKIP
 				CALL__setRightMotorSpeed(id__,
 						    const_BalanceSTM_maxAngle,
 						    const_BalanceSTM_loopTime,
@@ -1265,6 +1245,26 @@ module SegwayANN
 						    const_BalanceSTM_speedBudget,
 						    const_BalanceSTM_rotationBudget,
 							param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
+				CALL__enableInterrupts(id__,
+						    const_BalanceSTM_maxAngle,
+						    const_BalanceSTM_loopTime,
+						    const_BalanceSTM_startupDelay,
+						    const_BalanceSTM_speedUpdate,
+						    const_BalanceSTM_rotationUpdate,
+						    const_BalanceSTM_motorBudget,
+						    const_BalanceSTM_angleBudget,
+						    const_BalanceSTM_speedBudget,
+						    const_BalanceSTM_rotationBudget) 	= enableInterruptsCall -> SKIP
+				CALL__disableInterrupts(id__,
+						    const_BalanceSTM_maxAngle,
+						    const_BalanceSTM_loopTime,
+						    const_BalanceSTM_startupDelay,
+						    const_BalanceSTM_speedUpdate,
+						    const_BalanceSTM_rotationUpdate,
+						    const_BalanceSTM_motorBudget,
+						    const_BalanceSTM_angleBudget,
+						    const_BalanceSTM_speedBudget,
+						    const_BalanceSTM_rotationBudget) 	= disableInterruptsCall -> SKIP
 				
 				-- END of Operation calls --
 				
@@ -1362,7 +1362,7 @@ module SegwayANN
 						    const_BalanceSTM_angleBudget,
 						    const_BalanceSTM_speedBudget,
 						    const_BalanceSTM_rotationBudget) = ((let
-					Trans = share__choice(get_angleSent?angleSent -> get_angleReceived?angleReceived -> get_speedCount?speedCount -> get_currAngle?currAngle -> get_speedSent?speedSent -> get_rotationSent?rotationSent -> get_rotationCount?rotationCount -> (
+					Trans = share__choice(get_angleSent?angleSent -> get_angleReceived?angleReceived -> get_speedSent?speedSent -> get_speedCount?speedCount -> get_currAngle?currAngle -> get_rotationCount?rotationCount -> get_rotationSent?rotationSent -> (
 						((share__ -> SKIP
 						 [] dbisim((((((((angleReceived==true)) and ((speedSent==false))) and ((rotationSent==false))) and ((((speedCount==0)) or ((speedCount<const_BalanceSTM_speedUpdate))))) and ((((rotationCount==0)) or ((rotationCount<const_BalanceSTM_rotationUpdate))))))&(internal__!NID_ReceiveInput -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j2::enter -> SKIP)))
 						 	 [] dbisim((angleOutputE__!NID_ReceiveInput.in?angleOutput:{angleOutput|angleOutput <- core_real, (((angleSent==true) and (angleReceived==false)))} -> share__choice(set_angleOutput!angleOutput -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(true & (share__choice(set_angleSent!false -> SKIP)));share__choice(true & (share__choice(set_angleReceived!true -> SKIP))) ; ReceiveInput::enter -> SKIP)))
@@ -1594,16 +1594,16 @@ module SegwayANN
 								 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 								 )
 								  [[ share__ <- x__ | x__ <- {| share__,setR_speedOutput,setR_rotationOutput,setR_angleOutput |} ]] 
-								  [[set_angleSent <- setL_angleSent,set_angleReceived <- setL_angleReceived,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_speedSent <- setL_speedSent,set_rotationSent <- setL_rotationSent,set_rotationCount <- setL_rotationCount]]
+								  [[set_angleSent <- setL_angleSent,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_rotationCount <- setL_rotationCount,set_rotationSent <- setL_rotationSent]]
 								 )
 								 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 								 			,setL_angleSent
 								 			,setL_angleReceived
+								 			,setL_speedSent
 								 			,setL_speedCount
 								 			,setL_currAngle
-								 			,setL_speedSent
-								 			,setL_rotationSent
 								 			,setL_rotationCount
+								 			,setL_rotationSent
 								 			,setR_speedOutput
 								 			 			,setR_rotationOutput
 								 			 			,setR_angleOutput
@@ -1618,10 +1618,10 @@ module SegwayANN
 								 		    const_BalanceSTM_angleBudget,
 								 		    const_BalanceSTM_speedBudget,
 								 		    const_BalanceSTM_rotationBudget))
-								  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_angleReceived,setL_speedCount,setL_currAngle,setL_speedSent,setL_rotationSent,setL_rotationCount |} ]]
+								  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_angleReceived,setL_speedSent,setL_speedCount,setL_currAngle,setL_rotationCount,setL_rotationSent |} ]]
 								  [[set_speedOutput <- setR_speedOutput,set_rotationOutput <- setR_rotationOutput,set_angleOutput <- setR_angleOutput]]
 								 )
-								)[[setL_angleSent <- set_angleSent,setL_angleReceived <- set_angleReceived,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_speedSent <- set_speedSent,setL_rotationSent <- set_rotationSent,setL_rotationCount <- set_rotationCount]]
+								)[[setL_angleSent <- set_angleSent,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_rotationCount <- set_rotationCount,setL_rotationSent <- set_rotationSent]]
 								 [[setR_speedOutput <- set_speedOutput,setR_rotationOutput <- set_rotationOutput,setR_angleOutput <- set_angleOutput]]
 								)
 							)
@@ -2029,16 +2029,16 @@ module SegwayANN
 								 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 								 )
 								  [[ share__ <- x__ | x__ <- {| share__,setR_speedOutput,setR_rotationOutput,setR_angleOutput |} ]] 
-								  [[set_angleSent <- setL_angleSent,set_angleReceived <- setL_angleReceived,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_speedSent <- setL_speedSent,set_rotationSent <- setL_rotationSent,set_rotationCount <- setL_rotationCount]]
+								  [[set_angleSent <- setL_angleSent,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_speedCount <- setL_speedCount,set_currAngle <- setL_currAngle,set_rotationCount <- setL_rotationCount,set_rotationSent <- setL_rotationSent]]
 								 )
 								 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 								 			,setL_angleSent
 								 			,setL_angleReceived
+								 			,setL_speedSent
 								 			,setL_speedCount
 								 			,setL_currAngle
-								 			,setL_speedSent
-								 			,setL_rotationSent
 								 			,setL_rotationCount
+								 			,setL_rotationSent
 								 			,setR_speedOutput
 								 			 			,setR_rotationOutput
 								 			 			,setR_angleOutput
@@ -2053,10 +2053,10 @@ module SegwayANN
 								 		    const_BalanceSTM_angleBudget,
 								 		    const_BalanceSTM_speedBudget,
 								 		    const_BalanceSTM_rotationBudget))
-								  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_angleReceived,setL_speedCount,setL_currAngle,setL_speedSent,setL_rotationSent,setL_rotationCount |} ]]
+								  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_angleReceived,setL_speedSent,setL_speedCount,setL_currAngle,setL_rotationCount,setL_rotationSent |} ]]
 								  [[set_speedOutput <- setR_speedOutput,set_rotationOutput <- setR_rotationOutput,set_angleOutput <- setR_angleOutput]]
 								 )
-								)[[setL_angleSent <- set_angleSent,setL_angleReceived <- set_angleReceived,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_speedSent <- set_speedSent,setL_rotationSent <- set_rotationSent,setL_rotationCount <- set_rotationCount]]
+								)[[setL_angleSent <- set_angleSent,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_speedCount <- set_speedCount,setL_currAngle <- set_currAngle,setL_rotationCount <- set_rotationCount,setL_rotationSent <- set_rotationSent]]
 								 [[setR_speedOutput <- set_speedOutput,setR_rotationOutput <- set_rotationOutput,setR_angleOutput <- set_angleOutput]]
 								)
 							)
@@ -2803,7 +2803,7 @@ module SegwayANN
 						
 						Termination = terminate -> SKIP
 						
-						Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
+						Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
 								 	  Behaviour ; 
 								 	  share__choice(exit -> SKIP) ; SKIP ; 
 								 	  share__choice(exited -> SKIP) ; Inactive
@@ -2822,7 +2822,7 @@ module SegwayANN
 						
 						Termination = terminate -> SKIP
 						
-						Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
+						Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_speedIntegral!Plus(speedIntegral, currNewError, core_real) -> SKIP)))));share__choice(share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_speedIntegral!(if (speedIntegral>const_SpeedPID_maxIntegral) then const_SpeedPID_maxIntegral else (if (speedIntegral<Neg(const_SpeedPID_maxIntegral, core_real)) then Neg(const_SpeedPID_maxIntegral, core_real) else speedIntegral)) -> SKIP)))) ; 
 								 	  Behaviour ; 
 								 	  share__choice(exit -> SKIP) ; SKIP ; 
 								 	  share__choice(exited -> SKIP) ; Inactive
@@ -2875,7 +2875,7 @@ module SegwayANN
 						
 						Termination = terminate -> SKIP
 						
-						Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+						Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 								 	  Behaviour ; 
 								 	  share__choice(exit -> SKIP) ; SKIP ; 
 								 	  share__choice(exited -> SKIP) ; Inactive
@@ -2894,7 +2894,7 @@ module SegwayANN
 						
 						Termination = terminate -> SKIP
 						
-						Active 		= share__choice(share__choice(get_currNewError?currNewError -> share__choice(get_speedIntegral?speedIntegral -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
+						Active 		= share__choice(share__choice(get_speedIntegral?speedIntegral -> share__choice(get_currNewError?currNewError -> true & (share__choice(set_currSpeedOutput!Plus(Mult(currNewError, const_SpeedPID_P, core_real), Mult(speedIntegral, const_SpeedPID_I, core_real), core_real) -> SKIP))))) ; 
 								 	  Behaviour ; 
 								 	  share__choice(exit -> SKIP) ; SKIP ; 
 								 	  share__choice(exited -> SKIP) ; Inactive
@@ -3957,12 +3957,12 @@ module SegwayANN
 			endmodule
 			
 				-- undefined operations
-				CALL__enableInterrupts(id__) 	= enableInterruptsCall -> SKIP
 				CALL__setLeftMotorSpeed(id__,
 						    param_speed) 	= setLeftMotorSpeedCall.param_speed -> SKIP
-				CALL__disableInterrupts(id__) 	= disableInterruptsCall -> SKIP
 				CALL__setRightMotorSpeed(id__,
 						    param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
+				CALL__enableInterrupts(id__) 	= enableInterruptsCall -> SKIP
+				CALL__disableInterrupts(id__) 	= disableInterruptsCall -> SKIP
 				
 				-- declaring controller memory
 				Memory(id__) = SKIP
@@ -4017,10 +4017,10 @@ module SegwayANN
 								stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 								stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 								stm_ref0::angleOutputE <- angleOutputE,
-								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
 								stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								stm_ref0::disableInterruptsCall <- disableInterruptsCall,
-								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
+								stm_ref0::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref3::rotationOutputE, stm_ref0::rdiff|}|]
@@ -4131,10 +4131,10 @@ module SegwayANN
 								stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 								stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 								stm_ref0::angleOutputE <- angleOutputE,
-								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
 								stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								stm_ref0::disableInterruptsCall <- disableInterruptsCall,
-								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
+								stm_ref0::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref3::rotationOutputE, stm_ref0::rdiff|}|]
@@ -4245,10 +4245,10 @@ module SegwayANN
 								stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 								stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 								stm_ref0::angleOutputE <- angleOutputE,
-								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
 								stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								stm_ref0::disableInterruptsCall <- disableInterruptsCall,
-								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
+								stm_ref0::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref3::rotationOutputE, stm_ref0::rdiff|}|]
@@ -4360,10 +4360,10 @@ module SegwayANN
 								stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 								stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 								stm_ref0::angleOutputE <- angleOutputE,
-								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
 								stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								stm_ref0::disableInterruptsCall <- disableInterruptsCall,
-								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								stm_ref0::enableInterruptsCall <- enableInterruptsCall,
+								stm_ref0::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref3::rotationOutputE, stm_ref0::rdiff|}|]
@@ -4581,10 +4581,10 @@ module SegwayANN
 								SegwayController::rightMotorVelocity <- rightMotorVelocity,
 								SegwayController::angleOutputE.in <- AnglePIDANN::angleOutputE.out,
 								SegwayController::angleOutputE.out <- AnglePIDANN::angleOutputE.in,
-								SegwayController::enableInterruptsCall <- enableInterruptsCall,
 								SegwayController::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								SegwayController::disableInterruptsCall <- disableInterruptsCall,
-								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								SegwayController::enableInterruptsCall <- enableInterruptsCall,
+								SegwayController::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, SegwayController::anewError, AnglePIDANN::angleOutputE, SegwayController::adiff|}|]
@@ -4671,10 +4671,10 @@ module SegwayANN
 								SegwayController::rightMotorVelocity <- rightMotorVelocity,
 								SegwayController::angleOutputE.in <- AnglePIDANN::angleOutputE.out,
 								SegwayController::angleOutputE.out <- AnglePIDANN::angleOutputE.in,
-								SegwayController::enableInterruptsCall <- enableInterruptsCall,
 								SegwayController::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								SegwayController::disableInterruptsCall <- disableInterruptsCall,
-								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								SegwayController::enableInterruptsCall <- enableInterruptsCall,
+								SegwayController::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, SegwayController::anewError, AnglePIDANN::angleOutputE, SegwayController::adiff|}|]
@@ -4761,10 +4761,10 @@ module SegwayANN
 								SegwayController::rightMotorVelocity <- rightMotorVelocity,
 								SegwayController::angleOutputE.in <- AnglePIDANN::angleOutputE.out,
 								SegwayController::angleOutputE.out <- AnglePIDANN::angleOutputE.in,
-								SegwayController::enableInterruptsCall <- enableInterruptsCall,
 								SegwayController::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								SegwayController::disableInterruptsCall <- disableInterruptsCall,
-								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								SegwayController::enableInterruptsCall <- enableInterruptsCall,
+								SegwayController::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, SegwayController::anewError, AnglePIDANN::angleOutputE, SegwayController::adiff|}|]
@@ -4852,10 +4852,10 @@ module SegwayANN
 								SegwayController::rightMotorVelocity <- rightMotorVelocity,
 								SegwayController::angleOutputE.in <- AnglePIDANN::angleOutputE.out,
 								SegwayController::angleOutputE.out <- AnglePIDANN::angleOutputE.in,
-								SegwayController::enableInterruptsCall <- enableInterruptsCall,
 								SegwayController::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								SegwayController::disableInterruptsCall <- disableInterruptsCall,
-								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								SegwayController::enableInterruptsCall <- enableInterruptsCall,
+								SegwayController::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, SegwayController::anewError, AnglePIDANN::angleOutputE, SegwayController::adiff|}|]
@@ -4943,10 +4943,10 @@ module SegwayANN
 								SegwayController::rightMotorVelocity <- rightMotorVelocity,
 								SegwayController::angleOutputE.in <- AnglePIDANN::angleOutputE.out,
 								SegwayController::angleOutputE.out <- AnglePIDANN::angleOutputE.in,
-								SegwayController::enableInterruptsCall <- enableInterruptsCall,
 								SegwayController::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
-								SegwayController::disableInterruptsCall <- disableInterruptsCall,
-								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall
+								SegwayController::setRightMotorSpeedCall <- setRightMotorSpeedCall,
+								SegwayController::enableInterruptsCall <- enableInterruptsCall,
+								SegwayController::disableInterruptsCall <- disableInterruptsCall
 							]]
 						)
 							[|{|terminate, SegwayController::anewError, AnglePIDANN::angleOutputE, SegwayController::adiff|}|]

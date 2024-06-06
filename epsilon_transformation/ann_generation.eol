@@ -138,7 +138,7 @@ operation RC!ANNController Collator() : Z!ActionPara {
   
   var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
-  var varList1 = createVarDecl(Set{"l, n, i"}, "int");
+  var varList1 = createVarDecl(Set{"l", "n", "i"}, "int");
   var varList2 = createVarDecl(Set{"sum"}, "real");
   
   var declList = Set{varList1, varList2}.createDeclList();
@@ -160,7 +160,7 @@ operation RC!ANNController NodeIn() : Z!ActionPara {
   
   var basicAction = nodeInActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
-  var varList = createVarDecl(Set{"l, n, i"}, "int");
+  var varList = createVarDecl(Set{"l", "n", "i"}, "int");
   
   var declList = Set{varList}.createDeclList();
   
@@ -179,7 +179,7 @@ operation RC!ANNController Node() : Z!ActionPara {
   
   var basicAction = nodeActions.flatten().asSequence().createSequenceAsExtchoiceAction();
     
-  var varList = createVarDecl(Set{"l, n, inpSize"}, "int");
+  var varList = createVarDecl(Set{"l", "n", "inpSize"}, "int");
   
   var declList = Set{varList}.createDeclList();
   
@@ -197,7 +197,7 @@ operation RC!ANNController HiddenLayer() : Z!ActionPara {
   
   var basicAction = hiddenLayerAction.flatten().asSequence().createSequenceAsExtchoiceAction();
     
-  var varList = createVarDecl(Set{"l, s, inpSize"}, "int");
+  var varList = createVarDecl(Set{"l", "s", "inpSize"}, "int");
   
   var declList = Set{varList}.createDeclList();
   
@@ -372,24 +372,30 @@ operation RC!ANNController NodeInExp(l, n, i : Integer) : Z!CircusAction {
 
 //Guard creation helper.
 operation createGuard(l, n, i : Integer) : Z!Pred {
-  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
-  var nPred = createNumEqualityPred("n".createRefExpr(false, false), n);
-  var iPred = createNumEqualityPred("i".createRefExpr(false, false), i);
   
-  return Sequence{lPred, nPred, iPred}.createSequenceAsAndPred();
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
+  var nPred = createEqualsExpr("n".createRefExpr(false, false), n.createNumExpr());
+  var iPred = createEqualsExpr("i".createRefExpr(false, false), i.createNumExpr());
+  
+  var andPred = createAndExpr(lPred, nPred);
+  var andPred2 = createAndExpr(andPred, iPred);
+  
+  return andPred2.createMemPredEquality();
 }
 
 operation createGuard(l, n : Integer) : Z!Pred {
-  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
-  var nPred = createNumEqualityPred("n".createRefExpr(false, false), n);
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
+  var nPred = createEqualsExpr("n".createRefExpr(false, false), n.createNumExpr());
   
-  return Sequence{lPred, nPred}.createSequenceAsAndPred();
+  var andPred = createAndExpr(lPred, nPred);
+  
+  return andPred.createMemPredEquality();
 }
 
 operation createGuard(l : Integer) : Z!Pred {
-  var lPred = createNumEqualityPred("l".createRefExpr(false, false), l);
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
   
-  return lPred;
+  return lPred.createMemPredEquality();
 }
 
 
