@@ -1,0 +1,87 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 05-08-2024 18:25:50
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "defs/file_AnglePID_defs.csp"
+include "defs/file_SegwayANN_defs.csp"
+include "defs/state_timed_defs.csp"
+include "defs/core_defs.csp"
+include "defs/sequence_toolkit_defs.csp"
+include "defs/file_SpeedPID_defs.csp"
+include "defs/file_BalanceSTM_defs.csp"
+include "defs/file_SimplestModule_defs.csp"
+include "defs/file_RotationPID_defs.csp"
+include "defs/function_toolkit_defs.csp"
+include "defs/robochart_defs.csp"
+include "defs/core_timed_defs.csp"
+include "defs/set_toolkit_defs.csp"
+include "instantiations.csp"
+include "defs/relation_toolkit_defs.csp"
+include "defs/file_SegwayRP_defs.csp"
+include "defs/SegwayANN.csp"
+
+channel r__
+
+SegwayRPEvents = {| 
+		SegwayANN::angle.in,
+		SegwayANN::gyroX.in,
+		SegwayANN::gyroY.in,
+		SegwayANN::gyroZ.in,
+		SegwayANN::leftMotorVelocity.in,
+		SegwayANN::rightMotorVelocity.in,
+		SegwayANN::setLeftMotorSpeedCall,
+		SegwayANN::setRightMotorSpeedCall,
+		SegwayANN::disableInterruptsCall,
+		SegwayANN::enableInterruptsCall
+	|}
+
+Timed(OneStep) {
+  	Spec = 
+  		([] e : diff(SegwayRPEvents, {| SegwayANN::leftMotorVelocity |}) @ e -> Spec)
+  		[]
+  		(SegwayANN::leftMotorVelocity.in?x -> Deadline(SegwayANN::rightMotorVelocity.in?x -> SKIP, 0) ; Spec)
+  	SequenceMotorVelocity = timed_priority(Spec)
+  	
+  }
+
+-- SequenceMotorVelocity - refinement
+assert SequenceMotorVelocity [T= let 
+	id__ = 0
+	
+	
+	
+	const_SegwayANN_SegwayController_stm_ref2_P = 0 
+	const_SegwayANN_SegwayController_stm_ref2_I = 0 
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
+	const_SegwayANN_SegwayController_stm_ref3_D = 0 
+	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
+	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
+	const_SegwayANN_SegwayController_stm_ref0_startupDelay = const_BalanceSTM_startupDelay
+	const_SegwayANN_SegwayController_stm_ref0_speedUpdate = const_BalanceSTM_speedUpdate
+	const_SegwayANN_SegwayController_stm_ref0_rotationUpdate = const_BalanceSTM_rotationUpdate
+	const_SegwayANN_SegwayController_stm_ref0_motorBudget = const_BalanceSTM_motorBudget
+	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
+	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
+	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
+		
+within
+	SegwayANN::D__(id__,
+			    const_SegwayANN_SegwayController_stm_ref0_maxAngle,
+			    const_SegwayANN_SegwayController_stm_ref0_loopTime,
+			    const_SegwayANN_SegwayController_stm_ref0_startupDelay,
+			    const_SegwayANN_SegwayController_stm_ref0_speedUpdate,
+			    const_SegwayANN_SegwayController_stm_ref0_rotationUpdate,
+			    const_SegwayANN_SegwayController_stm_ref0_motorBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_angleBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_speedBudget,
+			    const_SegwayANN_SegwayController_stm_ref0_rotationBudget,
+			    const_SegwayANN_SegwayController_stm_ref2_P,
+			    const_SegwayANN_SegwayController_stm_ref2_I,
+			    const_SegwayANN_SegwayController_stm_ref2_maxIntegral,
+			    const_SegwayANN_SegwayController_stm_ref3_D)
+

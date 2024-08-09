@@ -1,0 +1,15 @@
+anncontroller AnglePIDANN {
+		params {
+			inputcontext {
+				uses ANNInput
+			}
+			outputcontext {
+				uses ANNOutput
+			}
+			layerstructure <1,1>
+			weights << < 1.22838 , 0.132874 > > , < < 0.744636 > > >
+			biases <<0.125424>, < -0.107753>>
+			activationfunction relu
+			
+		}
+}

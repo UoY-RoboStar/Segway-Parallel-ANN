@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 06-06-2024 16:20:38
+-- Automatically generated on 05-08-2024 18:25:50
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -14,6 +14,7 @@ include "defs/core_defs.csp"
 include "defs/sequence_toolkit_defs.csp"
 include "defs/file_SpeedPID_defs.csp"
 include "defs/file_BalanceSTM_defs.csp"
+include "defs/file_SimplestModule_defs.csp"
 include "defs/file_RotationPID_defs.csp"
 include "defs/function_toolkit_defs.csp"
 include "defs/robochart_defs.csp"
@@ -32,6 +33,9 @@ assert prioritise(let
 	
 	
 	
+	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
+	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
 	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
@@ -42,9 +46,6 @@ assert prioritise(let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
-	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
-	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
-	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 		
 within
 	SegwayANN::D__(id__,
@@ -68,6 +69,9 @@ assert let
 	
 	
 	
+	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
+	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
 	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
@@ -78,9 +82,6 @@ assert let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
-	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
-	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
-	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 		
 within
 	SegwayANN::D__(id__,
@@ -104,6 +105,9 @@ assert let
 	
 	
 	
+	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
+	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
+	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
 	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
 	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
@@ -114,9 +118,6 @@ assert let
 	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
 	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
 	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
-	const_SegwayANN_SegwayController_stm_ref2_P = const_SpeedPID_P
-	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
-	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 		
 within
 	SegwayANN::D__(id__,
@@ -241,22 +242,4 @@ within
 			    const_SegwayANN_SegwayController_stm_ref2_I,
 			    const_SegwayANN_SegwayController_stm_ref2_maxIntegral,
 			    const_SegwayANN_SegwayController_stm_ref3_D) :[divergence free]
-
--- A1 - timed deadlock free
-assert prioritise(let 
-	id__ = 0
-within
-	SegwayANN::AnglePIDANN::D__(id__)[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
-
--- A2 - divergence free
-assert let 
-	id__ = 0
-within
-	SegwayANN::AnglePIDANN::D__(id__) :[divergence free]
-
--- A3 - deterministic
-assert let 
-	id__ = 0
-within
-	SegwayANN::AnglePIDANN::D__(id__) :[deterministic]
 

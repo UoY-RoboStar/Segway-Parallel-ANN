@@ -1,0 +1,36 @@
+timed csp SegwayRPEvents
+csp-begin
+	SegwayRPEvents = {| 
+		SegwayANN::angle.in,
+		SegwayANN::gyroX.in,
+		SegwayANN::gyroY.in,
+		SegwayANN::gyroZ.in,
+		SegwayANN::leftMotorVelocity.in,
+		SegwayANN::rightMotorVelocity.in,
+		SegwayANN::setLeftMotorSpeedCall,
+		SegwayANN::setRightMotorSpeedCall,
+		SegwayANN::disableInterruptsCall,
+		SegwayANN::enableInterruptsCall
+	|}
+csp-end
+
+timed csp SequenceMotorVelocity 
+csp-begin
+  Timed(OneStep) {
+  	Spec = 
+  		([] e : diff(SegwayRPEvents, {| SegwayANN::leftMotorVelocity |}) @ e -> Spec)
+  		[]
+  		(SegwayANN::leftMotorVelocity.in?x -> Deadline(SegwayANN::rightMotorVelocity.in?x -> SKIP, 0) ; Spec)
+  	SequenceMotorVelocity = timed_priority(Spec)
+  	
+  }
+csp-end
+
+timed assertion SequenceMotorVelocity: SegwayANN refines SequenceMotorVelocity
+	in the traces model
+	with constant ^P of AnglePID    set to 0,
+	     constant D  of AnglePID    set to 0,
+	     constant ^P of SpeedPID    set to 0,
+	     constant I  of SpeedPID    set to 0 and
+	     constant D  of RotationPID set to 0
+	     

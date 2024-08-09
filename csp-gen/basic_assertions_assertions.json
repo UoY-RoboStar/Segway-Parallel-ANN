@@ -1,0 +1,7 @@
+[
+	{
+		"name": "untimed SegwayANN is deadlock free (A1) [failures divergences model]",
+		"type": "deadlock-free",
+		"negated": false 
+	}
+]

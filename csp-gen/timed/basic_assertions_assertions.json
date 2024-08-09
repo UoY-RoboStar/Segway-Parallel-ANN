@@ -1,0 +1,14 @@
+[
+{ "name": "timed SegwayANN is deadlock free (A0) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN::AnglePIDANN is deadlock free (A2) [failures divergences model]",
+  "type": "deadlock-free",
+  "negated": false 
+},
+{ "name": "timed SegwayANN is divergence free (A3) [failures divergences model]",
+  "type": "divergence-free",
+  "negated": false 
+}
+			]

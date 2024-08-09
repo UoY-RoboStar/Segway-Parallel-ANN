@@ -16,7 +16,7 @@ module SegwayANN {
 	sref stm_ref0 = BalanceSTM
 		connection SegwayController on leftMotorVelocity to stm_ref0 on leftMotorVelocity
 		connection SegwayController on rightMotorVelocity to stm_ref0 on rightMotorVelocity
-		connection SegwayController on angle to stm_ref0 on angle
+
 		connection SegwayController on gyroX to stm_ref0 on gyroX
 		connection SegwayController on gyroY to stm_ref0 on gyroY
 		connection SegwayController on gyroZ to stm_ref0 on gyroZ
@@ -26,44 +26,44 @@ module SegwayANN {
 		connection stm_ref2 on speedOutputE to stm_ref0 on speedOutputE
 		connection stm_ref0 on snewError to stm_ref2 on snewError
 	sref stm_ref2 = SpeedPID
-		connection stm_ref3 on rotationOutputE to stm_ref0 on rotationOutputE
+
 		connection stm_ref0 on rdiff to stm_ref3 on rdiff
 		
 	sref stm_ref3 = RotationPID
+
+		connection SegwayController on angle to stm_ref0 on angle
+		connection stm_ref3 on rotationOutputE to stm_ref0 on rotationOutputE
+
 		connection SegwayController on angleOutputE to stm_ref0 on angleOutputE
 		
 	}
 	
 	rref rp_ref0 = SegwayRP
-	
-	anncontroller AnglePIDANN {
-		params {
-			inputcontext {
-				uses ANNInput
-			}
-			outputcontext {
-				uses ANNOutput
-			}
-			layerstructure <1,1>
-			weights << < 1.22838 , 0.132874 > > , < < 0.744636 > > >
-			biases <<0.125424>, < -0.107753>>
-			activationfunction relu
-			
-		}
-	}
-	
 
-	connection rp_ref0 on angle to SegwayController on angle ( _async )
+	anncontroller AnglePIDANN {
+		params { inputcontext {
+			uses ANNInput }
+
+		outputcontext {
+			uses ANNOutput }
+
+		layerstructure < 1 , 1 > weights < < < 1.22838 , 0.132874 > > , < < 0.744636 > > > biases < < 0.125424 > , < - 0.107753 > > activationfunction relu }
+	}
 	connection rp_ref0 on gyroX to SegwayController on gyroX ( _async )
 	connection rp_ref0 on gyroY to SegwayController on gyroY ( _async )
 	connection rp_ref0 on gyroZ to SegwayController on gyroZ ( _async )
-	connection rp_ref0 on leftMotorVelocity to SegwayController on leftMotorVelocity ( _async )
-	connection rp_ref0 on rightMotorVelocity to SegwayController on rightMotorVelocity ( _async )
-
 
 	connection SegwayController on anewError to AnglePIDANN on anewError
+
 	connection AnglePIDANN on angleOutputE to SegwayController on angleOutputE
+
+	connection rp_ref0 on angle to SegwayController on angle ( _async )
+
 	connection SegwayController on adiff to AnglePIDANN on adiff
+
+	connection rp_ref0 on leftMotorVelocity to SegwayController on leftMotorVelocity ( _async )
+
+	connection rp_ref0 on rightMotorVelocity to SegwayController on rightMotorVelocity ( _async )
 
 }
 

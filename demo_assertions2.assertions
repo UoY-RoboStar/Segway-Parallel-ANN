@@ -1,0 +1,37 @@
+// assertions with all PIDs deactivated
+timed csp SegwayRPEvents2
+csp-begin
+	SegwayRPEvents = {| 
+		SegwayANN::angle.in,
+		SegwayANN::gyroX.in,
+		SegwayANN::gyroY.in,
+		SegwayANN::gyroZ.in,
+		SegwayANN::leftMotorVelocity.in,
+		SegwayANN::rightMotorVelocity.in,
+		SegwayANN::setLeftMotorSpeedCall,
+		SegwayANN::setRightMotorSpeedCall,
+		SegwayANN::disableInterruptsCall,
+		SegwayANN::enableInterruptsCall
+	|}
+csp-end
+// Doesn't work for us because ANN is cyclic, could return ANY output, given any input
+//WE could make an assertion, that says if we turn off the other components, behaves just randomly? FUTURE WORK, 
+timed csp SegwayNoPIDs
+csp-begin
+	Timed(OneStep) {
+		SegwayNoPIDs =
+			RUN(Union({
+				{tock},
+				diff(SegwayRPEvents, {|SegwayANN::setLeftMotorSpeedCall, SegwayANN::setRightMotorSpeedCall|}),
+				{SegwayANN::setLeftMotorSpeedCall.0, SegwayANN::setRightMotorSpeedCall.0}
+			}))
+	}
+csp-end
+timed assertion SegwayNoPIDs_refines: SegwayANN refines SegwayNoPIDs
+	in the traces model
+	with constant ^P of AnglePID    set to 0,
+	     constant D  of AnglePID    set to 0,
+	     constant ^P of SpeedPID    set to 0,
+	     constant I  of SpeedPID    set to 0 and
+	     constant D  of RotationPID set to 0
+	     
