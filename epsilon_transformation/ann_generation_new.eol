@@ -1,0 +1,525 @@
+/*
+  This file implements the ANNController denotational semantic rules, avaliable here: https://github.com/UoY-RoboStar/ann-circus-rules
+
+  This depends on 'RC2Circus.eol', Fang Yan's implementation of the RC to Circus M2M translation. 
+
+  This also depends on 'RoboChart2Circus_M2MExtension.eol', my custom functions that creation Circus model elements, created for those functions I found useful during
+  creating the M2M implementation.
+  Author: Ziggy Attala
+*/
+
+//import "boolean_query.eol";
+import "RC2Circus.eol";
+import "RoboChart2Circus_M2MExtension.eol";
+
+//RC!ANNController.all().at(0).println();
+
+var ann = RC!ANNController.all().at(0);
+
+//First, lets test creating functions ourselves, Z paragraphs of functions.
+
+
+ann.annSemantics();
+
+
+//RULE 1: Implementation of [c : ANNController]_ANN : Program, top-level rule, returns a Z!Spec.
+operation RC!ANNController annSemantics() : Z!Spec {
+  var channelPars = self.ANNChannelDecl();
+  var annConsts = self.ANNConstants();
+  var annProc = self.ANNProc();
+  
+  channelPars.add(annProc);
+  
+  var zSect = createZSect(self.name, channelPars, Sequence{});
+  return createSpec(zSect);
+  
+}
+
+//RULE 2: Function ANNChannelDecl().
+operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
+
+  var annChannels = new Sequence<Z!ZPara>;
+  
+  //Create arbritrary product expression: 
+  var prodexpr = new Z!ProdExpr;
+  prodexpr.exprList = new Z!ZExprList;
+  prodexpr.exprList.exprs = Sequence{"nat".createRefExpr(false, false), "nat".createRefExpr(false, false),
+  									 "real".createRefExpr(false,false)};
+  
+  var layerResPara = new Z!ChannelPara;
+	
+  layerResPara.declList = new Z!ZDeclList;
+
+  var decl = new Z!ChannelDecl;
+  
+  decl.genFormals = createNameList(Sequence{});
+	
+  //the second element is the (possibly empty) list of declared channel names
+  decl.channelNameList = createNameList(Sequence{"layerRes"});
+
+  //expr attr indicate the type of the channel, and it's a RefExpr
+  //if it's untyped, type = "SYNCH"
+  decl.expr = prodexpr;
+	
+  layerResPara.declList.decls.add(decl);
+  
+  layerResPara.name = "layerRes".createZName();
+  
+  //declare terminate channel
+  var terminateChannel = Sequence{"terminate"}.createChannelPara("terminate");
+  
+  annChannels.add(layerResPara);
+  annChannels.add(terminateChannel);
+  
+  return annChannels;
+  
+}
+
+//RULE 3: Function ANNConstants
+operation RC!ANNController ANNConstants() : Z!AxPara {
+  
+}
+
+//RULE 4: Function ANNChannels
+operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
+  if((l == 0) and (n == 1)) {
+    var chanPar = Sequence{layerRes(l, n)}.createChannelPara(layerRes(l, n), "real");
+    seq.add(chanPar);
+    return seq;
+  }
+  else {
+    var chanPar = Sequence{layerRes(l, n)}.createChannelPara(layerRes(l,n), "real");
+    
+    if(l != 0) {
+      seq.addAll(NodeOutChannels(l, n, self.LStructure((l-1)), Sequence{}));
+    }
+      
+    if(n > 1) {
+      seq.add(chanPar);
+      return self.ANNChannels(l, (n-1), seq);
+    }
+    else {
+      seq.add(chanPar);
+      return self.ANNChannels((l-1), self.LStructure((l-1)), seq);
+    }
+  }
+}
+
+//RULE 4: Function NodeOutChannels.
+operation NodeOutChannels(l : Integer, n : Integer, i : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
+  if(i == 1) {
+    seq.add(Sequence{nodeOut(l, n, i)}.createChannelPara(nodeOut(l,n,i), "real"));
+    return seq;
+  }
+  else {
+    seq.add(Sequence{nodeOut(l, n, i)}.createChannelPara(nodeOut(l,n,i), "real"));
+    return NodeOutChannels(l, n, (i-1), seq);
+  
+  }
+}
+
+//RULE 5: ANNProc
+operation RC!ANNController ANNProc() : Z!ProcessPara {
+
+  var mainAction = "ANNRenamed";
+  
+  var collatorPar = self.Collator();
+  var nodeInPar = self.NodeIn();
+  var nodePar = self.Node();
+  var hiddenLayerPar = self.HiddenLayer();
+  var hiddenLayersPar = self.HiddenLayers(self.layerNo() - 1);
+  var outputLayerPar = self.OutputLayer();
+  
+  //ANN Action Paragraph. 
+  var hiddenLayersCall = "HiddenLayers".createCallAction();
+  var outputLayerCall = "OutputLayer".createCallAction();
+
+  var annParAction = createParallelAction(self.IndexedLayerRes(self.layerNo()-1), hiddenLayersCall, outputLayerCall);
+  var hiddenEvts = createChannelSet("ANNHiddenEvts".createRefExpr(false, false));
+  var annHiddenAction = createHideAction(hiddenEvts, annParAction);
+  var annFinal = createAction2("SeqAction", annHiddenAction, "ANN".createCallAction());
+  
+  var annPara = annFinal.createActionPara("ANN");
+  
+  var annRenamedPara = self.ANNRenamed();
+  
+  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar, hiddenLayerPar, hiddenLayersPar, outputLayerPar, annPara, annRenamedPara}.createBasicProcess(mainAction);
+  
+  return annProcFull.createProcessPara("AnglePIDANN", true);
+  
+}
+
+//RULE 6: Function Collator
+operation RC!ANNController Collator() : Z!ActionPara {
+  var collatorActions = Sequence{1..(self.layerNo())}.collect(l | 
+  	Sequence{1..(self.LStructure(l))}.collect(n | 
+  		Sequence{0..self.LStructure(l-1)}.collect(i | 
+  			self.CollatorExp(l, n, i)))); 
+  
+  var basicAction = collatorActions.flatten().asSequence().createSequenceAsExtchoiceAction();
+    
+  var varList1 = createVarDecl(Sequence{"l", "n", "i"}, "int");
+  var varList2 = createVarDecl(Sequence{"sum"}, "real");
+  
+  var declList = Set{varList1, varList2}.createDeclList();
+  
+  var paramProcess = basicAction.createParamAction(declList);
+  
+  var collatorActionPar = paramProcess.createActionPara("Collator");
+  
+  return collatorActionPar;
+  
+}
+
+//Rule 7: Function NodeIn
+operation RC!ANNController NodeIn() : Z!ActionPara {
+   var nodeInActions = Sequence{1..(self.layerNo())}.collect(l | 
+  	Sequence{1..(self.LStructure(l))}.collect(n | 
+  		Sequence{1..self.LStructure(l-1)}.collect(i | 
+  			self.NodeInExp(l, n, i)))); 
+  
+  var basicAction = nodeInActions.flatten().asSequence().createSequenceAsExtchoiceAction();
+    
+  var varList = createVarDecl(Sequence{"l", "n", "i"}, "int");
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var paramProcess = basicAction.createParamAction(declList);
+  
+  var nodeInActionPar = paramProcess.createActionPara("NodeIn");
+  
+  return nodeInActionPar;
+}
+
+//Rule 8: Function Node
+operation RC!ANNController Node() : Z!ActionPara {
+   var nodeActions = Sequence{1..(self.layerNo())}.collect(l | 
+  		Sequence{1..(self.LStructure(l))}.collect(n | 
+  			self.NodeExp(l, n))); 
+  
+  var basicAction = nodeActions.flatten().asSequence().createSequenceAsExtchoiceAction();
+    
+  var varList = createVarDecl(Sequence{"l", "n", "inpSize"}, "int");
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var paramProcess = basicAction.createParamAction(declList);
+  
+  var nodePar = paramProcess.createActionPara("Node");
+  
+  return nodePar;
+}
+
+//Rule 9: Function HiddenLayer. 
+operation RC!ANNController HiddenLayer() : Z!ActionPara {
+     var hiddenLayerAction = Sequence{1..(self.layerNo())}.collect(l | 
+  			self.HiddenLayerExp(l)); 
+  
+  var basicAction = hiddenLayerAction.flatten().asSequence().createSequenceAsExtchoiceAction();
+    
+  var varList = createVarDecl(Sequence{"l", "s", "inpSize"}, "int");
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var paramProcess = basicAction.createParamAction(declList);
+  
+  var hiddenLayerPar = paramProcess.createActionPara("HiddenLayer");
+  
+  return hiddenLayerPar;
+}
+
+//Rule 10: Function HiddenLayers
+operation RC!ANNController HiddenLayers(l : Integer) : Z!ActionPara {
+    return self.HiddenLayersInt(l).createActionPara("HiddenLayers");
+}
+
+//Rule 11: Function OutputLayer
+operation RC!ANNController OutputLayer() : Z!ActionPara {
+    
+   var nodeArgs = Sequence{"l".createRefExpr(false, false), "i".createRefExpr(false, false), self.LStructure(self.layerNo()-1).createNumExpr()};
+     
+   var nodeCall = "Node".createCallAction(nodeArgs);
+     
+  var varList = createVarDecl(Sequence{"i"}, createUpToExpr(1.createNumExpr(), self.LStructure(self.layerNo()).createNumExpr()));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createParallelActionIte(self.IndexedLayerRes(self.layerNo()-1), nodeCall, declList); 
+    
+  return iteAction.createActionPara("OutputLayer");
+
+}
+
+//Rule 12: Function ANNRenamed
+
+operation RC!ANNController ANNRenamed() : Z!ActionPara {
+  var annRenamedAction = new Z!RenameAction;
+  annRenamedAction.circusAction = "ANN".createCallAction();
+  
+  //Sequence of strings, that is fine, assignment pairs will be pairs. 
+  //
+  var orderedLayerRes = Set{0, self.layerNo()}.collect(l | 
+  	Set{1..self.LStructure(l)}.collect(n | 
+  	  layerRes(l, n)
+  	));
+  	
+  var orderedLayerResS = orderedLayerRes.flatten().asSequence();
+  
+  //concatenation of all events. 
+  var eventListFull = self.annparameters.inputcontext.allEvents();
+  
+  eventListFull.addAll(self.annparameters.outputcontext.allEvents());
+  
+  var eventList = eventListFull.collect(e | e.name);
+  
+  var assignmentPairs = createAssignmentPairs(orderedLayerResS, eventList);
+  
+  annRenamedAction.assignmentPairs = assignmentPairs;
+  
+  
+  var terminateComm = new Z!Communication;
+     
+  terminateComm.channelExpr = "terminate".createRefExpr(false, false);
+     
+  var prefixAction = createPrefixingAction(terminateComm, createSkipAction());
+  
+  var circusAction = createAction2("InterruptAction", annRenamedAction, prefixAction);
+	
+  return circusAction.createActionPara("ANNRenamed");
+}
+
+
+//RULE 13: 
+operation RC!ANNController LStructure(i : Integer) : Integer {
+  if(i == 0) {
+    return self.annparameters.inputContext.allEvents().size();
+  }
+  else {
+    //0 indexing. 
+    return self.annparameters.layerstructure.values.at(i-1).value;
+  }
+}
+
+//RULE 14: layerRes Channel. Has to be a string, because of how channels are created.
+operation layerRes(l : Integer, n : Integer) : String {
+  return "layerRes" + l + "" + n;
+}
+
+//RULE 15: Function IndexedLayerRes.
+operation RC!ANNController IndexedLayerRes(l : Integer) : Z!CircusChannelSet {
+  var channelNames =  Set{1..(self.LStructure(l))}.collect(n | 
+  		layerRes(l, n));
+  var basicCSExp = createBasicChannelSetExpr(channelNames.asSet());
+  var channelSet = createChannelSet(basicCSExp);
+  return channelSet;
+}
+
+//RULE 16: nodeOut Channel. 
+operation nodeOut(l : Integer, n : Integer, i : Integer) : String {
+  return "nodeOut" + l + "" + n + "" + i;
+}
+
+//RULE 17: Function layerNo.
+operation RC!ANNController layerNo() : Integer {
+  var layerstructure = self.annparameters.layerstructure;
+  var lSize = layerstructure.values.size();
+  return lSize;
+}
+
+//RULE 18: Function weight
+operation RC!ANNController weight(l, n, i : Integer) : Real {
+  var layerindex = self.annparameters.weights.values.at(l-1);
+  var nodeindex = layerindex.values.at(n-1);
+  var index = nodeindex.values.at(i-1);
+  return index.negExtract();
+}
+
+//RULE 19: Function bias
+operation RC!ANNController bias(l, n : Integer) : Real {
+  var layerindex = self.annparameters.biases.values.at(l-1);
+  var node = layerindex.values.at(n-1);
+  return node.negExtract();
+}
+
+//RULE 20: Function AllNodeOut.
+operation RC!ANNController AllNodeOut() : Z!CircusChannelSet {
+  var channelNames = Set{1..(self.layerNo())}.collect(l | 
+        Set{1..(self.LStructure(l))}.collect(n | 
+          Set{1..(self.LStructure(l-1))}.collect(i | 
+            nodeOut(l, n, i))));
+  var basicCSExp = createBasicChannelSetExpr(channelNames.flatten().asSet());
+  var channelSet = createChannelSet(basicCSExp);
+  return channelSet;
+}
+
+//RULE 21: Function IndexedNodeOut
+operation RC!ANNController IndexedNodeOut(l, n : Integer) : Z!CircusChannelSet {
+  var channelNames = Set{1..(self.LStructure(l-1))}.collect(i | 
+            nodeOut(l, n, i));
+  var basicCSExp = createBasicChannelSetExpr(channelNames.flatten().asSet());
+  var channelSet = createChannelSet(basicCSExp);
+  return channelSet;
+}
+
+
+//HELPER RULES: Not in semantic rules, but helpers to implement the semantic rules: 
+
+
+//NodeIn Helper Rule:
+operation RC!ANNController NodeInExp(l, n, i : Integer) : Z!CircusAction {
+
+     var layerResEvent = createInputCommunication(layerRes(l, n), "x");
+     
+     var xExpr = "x".createRefExpr(false, false);
+     
+     var weight = self.weight(l, n, i).createFloatExpr();
+      
+     var nodeOutVal = createMultExpr(xExpr, weight);
+     
+     var nodeOutEvent = createOutputCommunication(nodeOut(l, n, i), nodeOutVal);
+     
+     //Have to make nested prefixes backwards. 
+     
+     var prefixActionEnd = createPrefixingAction(nodeOutEvent, createSkipAction());
+     
+     var prefixAction = createPrefixingAction(layerResEvent, prefixActionEnd);
+     
+     var guardedAction = createGuardedAction(createGuard(l, n, i), prefixAction);
+     
+     return guardedAction;
+   
+}
+
+//Guard creation helper.
+operation createGuard(l, n, i : Integer) : Z!Pred {
+  
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
+  var nPred = createEqualsExpr("n".createRefExpr(false, false), n.createNumExpr());
+  var iPred = createEqualsExpr("i".createRefExpr(false, false), i.createNumExpr());
+  
+  var andPred = createAndExpr(lPred, nPred);
+  var andPred2 = createAndExpr(andPred, iPred);
+  
+  return andPred2.createMemPredEquality();
+}
+
+operation createGuard(l, n : Integer) : Z!Pred {
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
+  var nPred = createEqualsExpr("n".createRefExpr(false, false), n.createNumExpr());
+  
+  var andPred = createAndExpr(lPred, nPred);
+  
+  return andPred.createMemPredEquality();
+}
+
+operation createGuard(l : Integer) : Z!Pred {
+  var lPred = createEqualsExpr("l".createRefExpr(false, false), l.createNumExpr());
+  
+  return lPred.createMemPredEquality();
+}
+
+
+operation RC!ANNController CollatorExp(l, n, i : Integer) : Z!CircusAction {
+  if(i == 0) {
+    
+     var sumRef = "sum".createRefExpr(false, false);
+	 var bias = self.bias(l, n).createFloatExpr();
+	  
+	 var sumExp = createPlusExpr(sumRef, bias);
+	  
+	 var reluExp = createReluExpr(sumExp);
+	  
+	 var layerResEvent = createOutputCommunication(layerRes(l, n), reluExp); 
+	  
+	 var prefixAction = createPrefixingAction(layerResEvent, createSkipAction());
+	 
+	 var guardedAction = createGuardedAction(createGuard(l, n, i), prefixAction);
+	 
+	 return guardedAction;
+	 
+  } else {
+     var nodeOutEvent = createInputCommunication(nodeOut(l, n, i), "x");
+     
+     var lExpr = "l".createRefExpr(false, false);
+     var nExpr = "n".createRefExpr(false, false);
+     var i1Expr = createMinusExpr("i".createRefExpr(false, false), 1.createNumExpr());
+     
+     var plusExpr = createPlusExpr("sum".createRefExpr(false, false), "x".createRefExpr(false, false));
+     
+     var collatorArgs = Sequence{lExpr, nExpr, i1Expr, plusExpr};
+     
+     var callEvent = "Collator".createCallAction(collatorArgs);
+     
+     var prefixAction = createPrefixingAction(nodeOutEvent, callEvent);
+     
+     var guardedAction = createGuardedAction(createGuard(l, n, i), prefixAction);
+     
+     return guardedAction;
+  }
+}
+
+//Node Helper Rule:
+operation RC!ANNController NodeExp(l : Integer, n : Integer) : Z!CircusAction {
+  
+   var nodeInArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "i".createRefExpr(false, false)};
+     
+   var nodeInCall = "NodeIn".createCallAction(nodeInArgs);
+     
+  var varList = createVarDecl(Sequence{"i"}, createUpToExpr(1.createNumExpr(), "inpSize".createRefExpr(false, false)));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createInterleaveIteAction(nodeInCall, declList); 
+  
+  //Parallel, synchronising on indexednodeout. 
+  
+  //CallACtion, 
+  
+  //HideAction, 
+  
+  var collatorArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "inpSize".createRefExpr(false, false), 0.createNumExpr()};
+  
+  var collatorCall = "Collator".createCallAction(collatorArgs);
+  
+  var collatorHideAction = createHideAction(self.IndexedNodeOut(l, n), collatorCall);
+  
+  var parNode = createParallelAction(self.IndexedNodeOut(l, n), iteAction, collatorHideAction);
+  
+  var guardedAction = createGuardedAction(createGuard(l, n), parNode);
+  
+  
+  return guardedAction;
+}
+
+
+//HiddenLayer Helper Rule:
+operation RC!ANNController HiddenLayerExp(l : Integer) : Z!CircusAction {
+  
+   var nodeArgs = Sequence{"l".createRefExpr(false, false), "i".createRefExpr(false, false), "inpSize".createRefExpr(false, false)};
+     
+   var nodeCall = "Node".createCallAction(nodeArgs);
+     
+  var varList = createVarDecl(Sequence{"i"}, createUpToExpr(1.createNumExpr(), "s".createRefExpr(false, false)));
+  
+  var declList = Set{varList}.createDeclList();
+  
+  var iteAction = createParallelActionIte(self.IndexedLayerRes(l), nodeCall, declList); 
+  
+  var guardedAction = createGuardedAction(createGuard(l), iteAction);
+  
+  return guardedAction;
+}
+
+//Internal behaviour of HiddenLayers, that returns a CircusAction.
+operation RC!ANNController HiddenLayersInt(l : Integer) : Z!CircusAction {
+  var hiddenLayerArgs = Sequence{l.createNumExpr(), self.LStructure(l).createNumExpr(), self.LStructure(l-1).createNumExpr()};
+  var hiddenLayerCall = "HiddenLayer".createCallAction(hiddenLayerArgs);
+  
+  if(l == 1) {
+    return hiddenLayerCall;
+  }
+  
+  else {
+    return createParallelAction(self.IndexedLayerRes(l-1), self.HiddenLayersInt(l-1), hiddenLayerCall);
+  }
+}

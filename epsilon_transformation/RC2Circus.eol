@@ -4493,10 +4493,10 @@ operation createParallelProcessFromProcSet(
 }
 
 /*
-channel set to be synchronized in a parallel action/process is shown as ‘Enumerated channel set’ in CZT tool.
+channel set to be synchronized in a parallel action/process is shown as ï¿½Enumerated channel setï¿½ in CZT tool.
 It is BaiscChannelSetExpr in CZT AST, which contains a set of communications. 
 So it is not a channelset, but an expr.
-So in the channel set, it’s a list of communications, instead of a list of channels
+So in the channel set, itï¿½s a list of communications, instead of a list of channels
 */
 //to create BasicChannelSetExpr used in channel set declaration
 operation createBasicChannelSetExpr(channel_names:Sequence<String>): Z!BasicChannelSetExpr{
