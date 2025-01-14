@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 05-08-2024 18:25:49
+-- Automatically generated on 14-01-2025 13:24:09
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -77,11 +77,11 @@ exports
 	localClockResets = {||}
 	
 	
-	channel get_CLID_Read : core_clock_type 
 	channel get_CLID_UpdateOutput : core_clock_type 
+	channel get_CLID_Read : core_clock_type 
 	--channel increment__
 	
-	CLID_Read_clock_type(id__,
+	CLID_UpdateOutput_clock_type(id__,
 			          const_RotationPID_D) = 
 		let
 			max = (clock_type_max(Union({
@@ -90,7 +90,7 @@ exports
 	within
 		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
-	CLID_UpdateOutput_clock_type(id__,
+	CLID_Read_clock_type(id__,
 			          const_RotationPID_D) = 
 		let
 			max = (clock_type_max(Union({
@@ -305,7 +305,7 @@ exports
 	
 		-- STM processes
 		STM(id__,
-				    const_RotationPID_D) = prioritise(-- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+				    const_RotationPID_D) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
 		( 
 			(
 				(
@@ -320,10 +320,9 @@ exports
 			dbisim(sharedVarMemory(id__,
 					    const_RotationPID_D))
 		)\sharedVarHide
-		,<{terminate},{tock}>)
 		
 		STM_VS_O(id__,
-				    const_RotationPID_D) = prioritise(-- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+				    const_RotationPID_D) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
 		( 
 			(
 				(
@@ -338,7 +337,6 @@ exports
 			dbisim(sharedVarMemory(id__,
 					    const_RotationPID_D))
 		)\sharedVarHide
-		,<{terminate},{tock}>)
 		
 		-- Transitions
 		Transitions(id__,
@@ -436,7 +434,7 @@ exports
 		Behaviour(id__,
 				    const_RotationPID_D) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
+				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered|}
 			 within
 				(MachineBody(id__,
 						    const_RotationPID_D) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
@@ -447,7 +445,7 @@ exports
 		IteratedBehaviour(id__,
 				    const_RotationPID_D) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
+				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -455,15 +453,15 @@ exports
 							sbisim(
 								MachineBody(id__,
 										    const_RotationPID_D)
-								[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
-								dbisim(Clock_CLID_UpdateOutput(id__,0,
+								[| {|get_CLID_Read,Read::entered,terminate|} |]
+								dbisim(Clock_CLID_Read(id__,0,
 										          const_RotationPID_D))
-							)\{|get_CLID_UpdateOutput|}
+							)\{|get_CLID_Read|}
 						)
-						[| {|get_CLID_Read,Read::entered,terminate|} |]
-						dbisim(Clock_CLID_Read(id__,0,
+						[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
+						dbisim(Clock_CLID_UpdateOutput(id__,0,
 								          const_RotationPID_D))
-					)\{|get_CLID_Read|}
+					)\{|get_CLID_UpdateOutput|}
 				)
 				) \ union(stateClockSync,enteredSS)
 			)
@@ -578,7 +576,7 @@ exports
 		Behaviour_VS_O(id__,
 				    const_RotationPID_D) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
+				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered|}
 			 within
 				(MachineBody_VS_O(id__,
 						    const_RotationPID_D) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
@@ -589,7 +587,7 @@ exports
 		IteratedBehaviour_VS_O(id__,
 				    const_RotationPID_D) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
+				stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -597,15 +595,15 @@ exports
 							sbisim(
 								MachineBody_VS_O(id__,
 										    const_RotationPID_D)
-								[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
-								dbisim(Clock_CLID_UpdateOutput(id__,0,
+								[| {|get_CLID_Read,Read::entered,terminate|} |]
+								dbisim(Clock_CLID_Read(id__,0,
 										          const_RotationPID_D))
-							)\{|get_CLID_UpdateOutput|}
+							)\{|get_CLID_Read|}
 						)
-						[| {|get_CLID_Read,Read::entered,terminate|} |]
-						dbisim(Clock_CLID_Read(id__,0,
+						[| {|get_CLID_UpdateOutput,UpdateOutput::entered,terminate|} |]
+						dbisim(Clock_CLID_UpdateOutput(id__,0,
 								          const_RotationPID_D))
-					)\{|get_CLID_Read|}
+					)\{|get_CLID_UpdateOutput|}
 				)
 				) \ diff(union(stateClockSync,enteredSS),enteredSS)
 			)
@@ -705,18 +703,6 @@ exports
 		
 		clockSync = {||}
 		
-		Clock_CLID_Read(id__,x__,
-				          const_RotationPID_D) = 
-			TimeOut_1(
-				Read::entered -> Clock_CLID_Read(id__,0,
-						          const_RotationPID_D)
-				[]
-				get_CLID_Read!x__ -> Clock_CLID_Read(id__,x__,
-						          const_RotationPID_D)
-				[]
-				terminate -> SKIP,Clock_CLID_Read(id__,clock_type_plus(x__,1,CLID_Read_clock_type(id__,
-						          const_RotationPID_D)),
-						          const_RotationPID_D))
 		Clock_CLID_UpdateOutput(id__,x__,
 				          const_RotationPID_D) = 
 			TimeOut_1(
@@ -729,16 +715,28 @@ exports
 				terminate -> SKIP,Clock_CLID_UpdateOutput(id__,clock_type_plus(x__,1,CLID_UpdateOutput_clock_type(id__,
 						          const_RotationPID_D)),
 						          const_RotationPID_D))
+		Clock_CLID_Read(id__,x__,
+				          const_RotationPID_D) = 
+			TimeOut_1(
+				Read::entered -> Clock_CLID_Read(id__,0,
+						          const_RotationPID_D)
+				[]
+				get_CLID_Read!x__ -> Clock_CLID_Read(id__,x__,
+						          const_RotationPID_D)
+				[]
+				terminate -> SKIP,Clock_CLID_Read(id__,clock_type_plus(x__,1,CLID_Read_clock_type(id__,
+						          const_RotationPID_D)),
+						          const_RotationPID_D))
 		
 		StateClocks(id__,
-				          const_RotationPID_D) = dbisim(Clock_CLID_Read(id__,0,
+				          const_RotationPID_D) = dbisim(Clock_CLID_UpdateOutput(id__,0,
 				          const_RotationPID_D))
 		[| { terminate } |] (
-		dbisim(Clock_CLID_UpdateOutput(id__,0,
+		dbisim(Clock_CLID_Read(id__,0,
 				          const_RotationPID_D))
 		)
 		
-		stateClockSync = {|get_CLID_Read,Read::entered,get_CLID_UpdateOutput,UpdateOutput::entered|}
+		stateClockSync = {|get_CLID_UpdateOutput,UpdateOutput::entered,get_CLID_Read,Read::entered|}
 		
 		-- Shared memory
 		-- Shared memory variables

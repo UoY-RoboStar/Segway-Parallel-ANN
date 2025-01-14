@@ -7,7 +7,7 @@
     <intAttribute key="generateTo" value="2"/>
     <stringAttribute key="implementation_name" value="Sequential EGX"/>
     <listAttribute key="models">
-        <listEntry value="aliases=&#10;reuseUnmodifiedFileBasedMetamodels=true&#10;modelFile=/Segway-Parallel-ANN/epsilon_transformation/output.model&#10;metamodelUri=http\://www.robocalc.circus/Circus&#10;concurrent=false&#10;type=EMF&#10;readOnLoad=true&#10;storeOnDisposal=false&#10;expand=true&#10;fileBasedMetamodelUri=&#10;metamodelFile=&#10;cached=true&#10;name=Z&#10;modelUri=platform\:/resource/Segway-Parallel-ANN/epsilon_transformation/output.model&#10;isMetamodelFileBased=false&#10;validate=false"/>
+        <listEntry value="aliases=&#10;reuseUnmodifiedFileBasedMetamodels=true&#10;modelFile=/Segway-Parallel-ANN/epsilon_transformation/SegwayANN_Z.model&#10;metamodelUri=http\://www.robocalc.circus/Circus&#10;concurrent=false&#10;type=EMF&#10;readOnLoad=true&#10;storeOnDisposal=false&#10;expand=true&#10;fileBasedMetamodelUri=&#10;metamodelFile=&#10;cached=true&#10;name=Z&#10;modelUri=platform\:/resource/Segway-Parallel-ANN/epsilon_transformation/SegwayANN_Z.model&#10;isMetamodelFileBased=false&#10;validate=false"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>

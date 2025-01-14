@@ -234,7 +234,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Freetype" eSuperTypes="#//Term">
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//ZName"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="branchList" eType="#//BranchList"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="branchList" eType="#//ZBranchList"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FreetypeList" abstract="true" eSuperTypes="#//Term"/>
@@ -630,6 +630,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ExtChoiceProcessImpl" eSuperTypes="#//Process2"/>
   <eClassifiers xsi:type="ecore:EClass" name="IntChoiceProcess" eSuperTypes="#//Process2"/>
   <eClassifiers xsi:type="ecore:EClass" name="SeqProcess" eSuperTypes="#//Process2"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExtChoiceProcess" eSuperTypes="#//Process2"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParProcess" abstract="true" eSuperTypes="#//Process2"/>
   <eClassifiers xsi:type="ecore:EClass" name="AlphabetisedParallelProcess" eSuperTypes="#//ParProcess">
     <eStructuralFeatures xsi:type="ecore:EReference" name="leftAlpha" eType="#//ChannelSet"
@@ -940,6 +941,9 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RefExpr" eSuperTypes="#//Expr">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="C.6.21 - Generic Operator Application. For example: S \rel T.  mixfix and explicit are  true; C.6.28 - Reference. For example: \arithmos, mixfix and explicit are false; C.6.29 - Generic Instantiation. For example: \emptyset[T], mixfix is always false"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="explicit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprList" eType="#//ZExprList"
         containment="true"/>
@@ -954,7 +958,10 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchExpr" eSuperTypes="#//Expr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schText" eType="#//SchText"
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A schema construction expression C.6.34"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schText" eType="#//ZSchText"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expr1" abstract="true" eSuperTypes="#//Expr">
@@ -1040,7 +1047,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TupleExpr" eSuperTypes="#//Expr2N"/>
   <eClassifiers xsi:type="ecore:EClass" name="ApplExpr" eSuperTypes="#//Expr2">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Function Operator Application: mixFox = true, Application: mixFix = false"/>
+      <details key="documentation" value="Function Operator Application: mixFix = true, Application: mixFix = false"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mixFix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>

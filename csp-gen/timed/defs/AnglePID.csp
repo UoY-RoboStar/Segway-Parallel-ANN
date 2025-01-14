@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 05-08-2024 18:25:48
+-- Automatically generated on 14-01-2025 13:24:09
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -317,7 +317,7 @@ exports
 		-- STM processes
 		STM(id__,
 				    const_AnglePID_P,
-				    const_AnglePID_D) = prioritise(-- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+				    const_AnglePID_D) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
 		( 
 			(
 				(
@@ -334,11 +334,10 @@ exports
 					    const_AnglePID_P,
 					    const_AnglePID_D))
 		)\sharedVarHide
-		,<{terminate},{tock}>)
 		
 		STM_VS_O(id__,
 				    const_AnglePID_P,
-				    const_AnglePID_D) = prioritise(-- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+				    const_AnglePID_D) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
 		( 
 			(
 				(
@@ -355,7 +354,6 @@ exports
 					    const_AnglePID_P,
 					    const_AnglePID_D))
 		)\sharedVarHide
-		,<{terminate},{tock}>)
 		
 		-- Transitions
 		Transitions(id__,

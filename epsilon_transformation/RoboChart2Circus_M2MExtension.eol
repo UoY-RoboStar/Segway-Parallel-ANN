@@ -87,7 +87,7 @@ operation Set<Z!VarDecl> createDeclList() : Z!ZDeclList {
 
 
 //Creates a VarDecl, using a reference expression to the string type, and a ZNameList formed out of the set of strings namelist. 
-operation createVarDecl(nameList : Set<String>, type : String) : Z!VarDecl {
+operation createVarDecl(nameList : Sequence<String>, type : String) : Z!VarDecl {
   var varDecl = new Z!VarDecl;
   varDecl.expr = type.createRefExpr(false, false);
   varDecl.nameList = createNameList(nameList);
@@ -96,7 +96,7 @@ operation createVarDecl(nameList : Set<String>, type : String) : Z!VarDecl {
 }
 
 //Create a variable declaration, where the expression is an arbritrary expression.
-operation createVarDecl(nameList : Set<String>, expr : Z!Expr) : Z!VarDecl {
+operation createVarDecl(nameList : Sequence<String>, expr : Z!Expr) : Z!VarDecl {
   var varDecl = new Z!VarDecl;
   varDecl.expr = expr;
   varDecl.nameList = createNameList(nameList);

@@ -1,9 +1,0 @@
-//A circusM2T rule, where the output directory is parameterised, by ann_validation_ant.xml, by the TARGET value. 
-
-rule circusM2T
-transform z: Z!Spec {
-
-template : "circusM2T.egl"
-target : TARGET
-
-}

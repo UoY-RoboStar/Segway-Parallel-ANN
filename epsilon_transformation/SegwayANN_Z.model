@@ -746,9 +746,9 @@
                       <name word="int"/>
                     </expr>
                     <nameList>
-                      <names word="i"/>
                       <names word="l"/>
                       <names word="n"/>
+                      <names word="i"/>
                     </nameList>
                   </decls>
                   <decls xsi:type="circus:VarDecl">
@@ -1114,9 +1114,9 @@
                       <name word="int"/>
                     </expr>
                     <nameList>
-                      <names word="i"/>
                       <names word="l"/>
                       <names word="n"/>
+                      <names word="i"/>
                     </nameList>
                   </decls>
                 </declList>
@@ -1421,9 +1421,9 @@
                       <name word="int"/>
                     </expr>
                     <nameList>
-                      <names word="inpSize"/>
                       <names word="l"/>
                       <names word="n"/>
+                      <names word="inpSize"/>
                     </nameList>
                   </decls>
                 </declList>
@@ -1592,9 +1592,9 @@
                       <name word="int"/>
                     </expr>
                     <nameList>
+                      <names word="l"/>
                       <names word="s"/>
                       <names word="inpSize"/>
-                      <names word="l"/>
                     </nameList>
                   </decls>
                 </declList>
