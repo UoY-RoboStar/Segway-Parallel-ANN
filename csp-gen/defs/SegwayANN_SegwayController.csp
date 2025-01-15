@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 14-01-2025 13:47:29
+-- Automatically generated on 15-01-2025 14:27:25
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -31,10 +31,10 @@
 		
 		
 		-- declaring call and ret events for undefined operations
-		channel disableInterruptsCall
 		channel enableInterruptsCall
-		channel setRightMotorSpeedCall: core_real
 		channel setLeftMotorSpeedCall: core_real
+		channel disableInterruptsCall
+		channel setRightMotorSpeedCall: core_real
 		
 		-- declaring controller termination channel
 		channel terminate
@@ -51,10 +51,10 @@
 			anewError,
 			adiff,
 			angleOutputE
-		,	disableInterruptsCall,
-			enableInterruptsCall,
-			setRightMotorSpeedCall,
-			setLeftMotorSpeedCall
+		,	enableInterruptsCall,
+			setLeftMotorSpeedCall,
+			disableInterruptsCall,
+			setRightMotorSpeedCall
 		|}
 
 		-- defined operations
@@ -141,10 +141,10 @@
 			channel rotationOutputE: InOut.core_real
 			
 			-- Declaring call and ret events for undefined operations
-			channel disableInterruptsCall
 			channel enableInterruptsCall
-			channel setRightMotorSpeedCall: core_real
 			channel setLeftMotorSpeedCall: core_real
+			channel disableInterruptsCall
+			channel setRightMotorSpeedCall: core_real
 			
 			enterSS = {|
 			i0::enter,
@@ -193,10 +193,10 @@
 				speedOutputE,
 				rdiff,
 				rotationOutputE
-			,	disableInterruptsCall,
-				enableInterruptsCall,
-				setRightMotorSpeedCall,
-				setLeftMotorSpeedCall
+			,	enableInterruptsCall,
+				setLeftMotorSpeedCall,
+				disableInterruptsCall,
+				setRightMotorSpeedCall
 				|}
 		
 			-- Nodes --
@@ -906,7 +906,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -918,7 +918,7 @@
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -955,7 +955,7 @@
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -967,7 +967,7 @@
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_speedOutput?speedOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1181,16 +1181,6 @@
 			-- If it is in the context of a controller, the required operations not provided by the
 			-- controller will be declared here, and the defined operations will be defined in the
 			-- context of the Controller module, and therefore within scope of the state machine module.
-			CALL__disableInterrupts(id__,
-					    const_BalanceSTM_maxAngle,
-					    const_BalanceSTM_loopTime,
-					    const_BalanceSTM_startupDelay,
-					    const_BalanceSTM_speedUpdate,
-					    const_BalanceSTM_rotationUpdate,
-					    const_BalanceSTM_motorBudget,
-					    const_BalanceSTM_angleBudget,
-					    const_BalanceSTM_speedBudget,
-					    const_BalanceSTM_rotationBudget) 	= disableInterruptsCall -> SKIP
 			CALL__enableInterrupts(id__,
 					    const_BalanceSTM_maxAngle,
 					    const_BalanceSTM_loopTime,
@@ -1201,17 +1191,6 @@
 					    const_BalanceSTM_angleBudget,
 					    const_BalanceSTM_speedBudget,
 					    const_BalanceSTM_rotationBudget) 	= enableInterruptsCall -> SKIP
-			CALL__setRightMotorSpeed(id__,
-					    const_BalanceSTM_maxAngle,
-					    const_BalanceSTM_loopTime,
-					    const_BalanceSTM_startupDelay,
-					    const_BalanceSTM_speedUpdate,
-					    const_BalanceSTM_rotationUpdate,
-					    const_BalanceSTM_motorBudget,
-					    const_BalanceSTM_angleBudget,
-					    const_BalanceSTM_speedBudget,
-					    const_BalanceSTM_rotationBudget,
-						param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
 			CALL__setLeftMotorSpeed(id__,
 					    const_BalanceSTM_maxAngle,
 					    const_BalanceSTM_loopTime,
@@ -1223,6 +1202,27 @@
 					    const_BalanceSTM_speedBudget,
 					    const_BalanceSTM_rotationBudget,
 						param_speed) 	= setLeftMotorSpeedCall.param_speed -> SKIP
+			CALL__disableInterrupts(id__,
+					    const_BalanceSTM_maxAngle,
+					    const_BalanceSTM_loopTime,
+					    const_BalanceSTM_startupDelay,
+					    const_BalanceSTM_speedUpdate,
+					    const_BalanceSTM_rotationUpdate,
+					    const_BalanceSTM_motorBudget,
+					    const_BalanceSTM_angleBudget,
+					    const_BalanceSTM_speedBudget,
+					    const_BalanceSTM_rotationBudget) 	= disableInterruptsCall -> SKIP
+			CALL__setRightMotorSpeed(id__,
+					    const_BalanceSTM_maxAngle,
+					    const_BalanceSTM_loopTime,
+					    const_BalanceSTM_startupDelay,
+					    const_BalanceSTM_speedUpdate,
+					    const_BalanceSTM_rotationUpdate,
+					    const_BalanceSTM_motorBudget,
+					    const_BalanceSTM_angleBudget,
+					    const_BalanceSTM_speedBudget,
+					    const_BalanceSTM_rotationBudget,
+						param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
 			
 			-- END of Operation calls --
 			
@@ -1320,7 +1320,7 @@
 					    const_BalanceSTM_angleBudget,
 					    const_BalanceSTM_speedBudget,
 					    const_BalanceSTM_rotationBudget) = ((let
-				Trans = share__choice(get_angleSent?angleSent -> get_speedCount?speedCount -> get_rotationCount?rotationCount -> get_angleReceived?angleReceived -> get_speedSent?speedSent -> get_currAngle?currAngle -> get_rotationSent?rotationSent -> (
+				Trans = share__choice(get_rotationSent?rotationSent -> get_angleReceived?angleReceived -> get_speedCount?speedCount -> get_speedSent?speedSent -> get_angleSent?angleSent -> get_rotationCount?rotationCount -> get_currAngle?currAngle -> (
 					((share__ -> SKIP
 					 [] dbisim((((((((angleReceived==true)) and ((speedSent==false))) and ((rotationSent==false))) and ((((speedCount==0)) or ((speedCount<const_BalanceSTM_speedUpdate))))) and ((((rotationCount==0)) or ((rotationCount<const_BalanceSTM_rotationUpdate))))))&(internal__!NID_ReceiveInput -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; j2::enter -> SKIP)))
 					 	 [] dbisim((angleOutputE__!NID_ReceiveInput.in?angleOutput:{angleOutput|angleOutput <- core_real, (((angleSent==true) and (angleReceived==false)))} -> share__choice(set_angleOutput!angleOutput -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(true & (share__choice(set_angleSent!false -> SKIP)));share__choice(true & (share__choice(set_angleReceived!true -> SKIP))) ; ReceiveInput::enter -> SKIP)))
@@ -1551,20 +1551,20 @@
 							 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 							 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 							 )
-							  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-							  [[set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,set_rotationCount <- setL_rotationCount,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_currAngle <- setL_currAngle,set_rotationSent <- setL_rotationSent]]
+							  [[ share__ <- x__ | x__ <- {| share__,setR_angleOutput,setR_speedOutput,setR_rotationOutput |} ]] 
+							  [[set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived,set_speedCount <- setL_speedCount,set_speedSent <- setL_speedSent,set_angleSent <- setL_angleSent,set_rotationCount <- setL_rotationCount,set_currAngle <- setL_currAngle]]
 							 )
 							 [| union(union(union(flowevts,transSync),{terminate}),{|share__
-							 			,setL_angleSent
-							 			,setL_speedCount
-							 			,setL_rotationCount
-							 			,setL_angleReceived
-							 			,setL_speedSent
-							 			,setL_currAngle
 							 			,setL_rotationSent
-							 			,setR_rotationOutput
+							 			,setL_angleReceived
+							 			,setL_speedCount
+							 			,setL_speedSent
+							 			,setL_angleSent
+							 			,setL_rotationCount
+							 			,setL_currAngle
+							 			,setR_angleOutput
 							 			 			,setR_speedOutput
-							 			 			,setR_angleOutput
+							 			 			,setR_rotationOutput
 							 			|}) |]
 							 ((i0::enter -> Transitions(id__,
 							 		    const_BalanceSTM_maxAngle,
@@ -1576,11 +1576,11 @@
 							 		    const_BalanceSTM_angleBudget,
 							 		    const_BalanceSTM_speedBudget,
 							 		    const_BalanceSTM_rotationBudget))
-							  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_speedCount,setL_rotationCount,setL_angleReceived,setL_speedSent,setL_currAngle,setL_rotationSent |} ]]
-							  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
+							  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleReceived,setL_speedCount,setL_speedSent,setL_angleSent,setL_rotationCount,setL_currAngle |} ]]
+							  [[set_angleOutput <- setR_angleOutput,set_speedOutput <- setR_speedOutput,set_rotationOutput <- setR_rotationOutput]]
 							 )
-							)[[setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,setL_rotationCount <- set_rotationCount,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_currAngle <- set_currAngle,setL_rotationSent <- set_rotationSent]]
-							 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
+							)[[setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived,setL_speedCount <- set_speedCount,setL_speedSent <- set_speedSent,setL_angleSent <- set_angleSent,setL_rotationCount <- set_rotationCount,setL_currAngle <- set_currAngle]]
+							 [[setR_angleOutput <- set_angleOutput,setR_speedOutput <- set_speedOutput,setR_rotationOutput <- set_rotationOutput]]
 							)
 						)
 						 \ hideSet)
@@ -1986,20 +1986,20 @@
 							 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 							 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 							 )
-							  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-							  [[set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,set_rotationCount <- setL_rotationCount,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_currAngle <- setL_currAngle,set_rotationSent <- setL_rotationSent]]
+							  [[ share__ <- x__ | x__ <- {| share__,setR_angleOutput,setR_speedOutput,setR_rotationOutput |} ]] 
+							  [[set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived,set_speedCount <- setL_speedCount,set_speedSent <- setL_speedSent,set_angleSent <- setL_angleSent,set_rotationCount <- setL_rotationCount,set_currAngle <- setL_currAngle]]
 							 )
 							 [| union(union(union(flowevts,transSync),{terminate}),{|share__
-							 			,setL_angleSent
-							 			,setL_speedCount
-							 			,setL_rotationCount
-							 			,setL_angleReceived
-							 			,setL_speedSent
-							 			,setL_currAngle
 							 			,setL_rotationSent
-							 			,setR_rotationOutput
+							 			,setL_angleReceived
+							 			,setL_speedCount
+							 			,setL_speedSent
+							 			,setL_angleSent
+							 			,setL_rotationCount
+							 			,setL_currAngle
+							 			,setR_angleOutput
 							 			 			,setR_speedOutput
-							 			 			,setR_angleOutput
+							 			 			,setR_rotationOutput
 							 			|}) |]
 							 ((i0::enter -> Transitions(id__,
 							 		    const_BalanceSTM_maxAngle,
@@ -2011,11 +2011,11 @@
 							 		    const_BalanceSTM_angleBudget,
 							 		    const_BalanceSTM_speedBudget,
 							 		    const_BalanceSTM_rotationBudget))
-							  [[ share__ <- x__ | x__ <- {| share__,setL_angleSent,setL_speedCount,setL_rotationCount,setL_angleReceived,setL_speedSent,setL_currAngle,setL_rotationSent |} ]]
-							  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
+							  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleReceived,setL_speedCount,setL_speedSent,setL_angleSent,setL_rotationCount,setL_currAngle |} ]]
+							  [[set_angleOutput <- setR_angleOutput,set_speedOutput <- setR_speedOutput,set_rotationOutput <- setR_rotationOutput]]
 							 )
-							)[[setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,setL_rotationCount <- set_rotationCount,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_currAngle <- set_currAngle,setL_rotationSent <- set_rotationSent]]
-							 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
+							)[[setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived,setL_speedCount <- set_speedCount,setL_speedSent <- set_speedSent,setL_angleSent <- set_angleSent,setL_rotationCount <- set_rotationCount,setL_currAngle <- set_currAngle]]
+							 [[setR_angleOutput <- set_angleOutput,setR_speedOutput <- set_speedOutput,setR_rotationOutput <- set_rotationOutput]]
 							)
 						)
 						 \ hideSet)
@@ -3915,12 +3915,12 @@
 		endmodule
 		
 			-- undefined operations
-			CALL__disableInterrupts(id__) 	= disableInterruptsCall -> SKIP
 			CALL__enableInterrupts(id__) 	= enableInterruptsCall -> SKIP
-			CALL__setRightMotorSpeed(id__,
-					    param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
 			CALL__setLeftMotorSpeed(id__,
 					    param_speed) 	= setLeftMotorSpeedCall.param_speed -> SKIP
+			CALL__disableInterrupts(id__) 	= disableInterruptsCall -> SKIP
+			CALL__setRightMotorSpeed(id__,
+					    param_speed) 	= setRightMotorSpeedCall.param_speed -> SKIP
 			
 			-- declaring controller memory
 			Memory(id__) = SKIP
@@ -3975,10 +3975,10 @@
 							stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 							stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 							stm_ref0::angleOutputE <- angleOutputE,
-							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
 							stm_ref0::enableInterruptsCall <- enableInterruptsCall,
-							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
-							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall
+							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
+							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
+							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
 						]]
 					)
 						[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref0::rdiff, stm_ref3::rotationOutputE|}|]
@@ -4089,10 +4089,10 @@
 							stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 							stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 							stm_ref0::angleOutputE <- angleOutputE,
-							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
 							stm_ref0::enableInterruptsCall <- enableInterruptsCall,
-							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
-							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall
+							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
+							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
+							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
 						]]
 					)
 						[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref0::rdiff, stm_ref3::rotationOutputE|}|]
@@ -4203,10 +4203,10 @@
 							stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 							stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 							stm_ref0::angleOutputE <- angleOutputE,
-							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
 							stm_ref0::enableInterruptsCall <- enableInterruptsCall,
-							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
-							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall
+							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
+							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
+							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
 						]]
 					)
 						[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref0::rdiff, stm_ref3::rotationOutputE|}|]
@@ -4318,10 +4318,10 @@
 							stm_ref0::rotationOutputE.in <- stm_ref3::rotationOutputE.out,
 							stm_ref0::rotationOutputE.out <- stm_ref3::rotationOutputE.in,
 							stm_ref0::angleOutputE <- angleOutputE,
-							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
 							stm_ref0::enableInterruptsCall <- enableInterruptsCall,
-							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall,
-							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall
+							stm_ref0::setLeftMotorSpeedCall <- setLeftMotorSpeedCall,
+							stm_ref0::disableInterruptsCall <- disableInterruptsCall,
+							stm_ref0::setRightMotorSpeedCall <- setRightMotorSpeedCall
 						]]
 					)
 						[|{|terminate, stm_ref2::speedOutputE, stm_ref0::snewError, stm_ref0::rdiff, stm_ref3::rotationOutputE|}|]

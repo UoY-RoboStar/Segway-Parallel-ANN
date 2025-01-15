@@ -28,6 +28,8 @@ operation RC!ANNController annSemantics() : Z!Spec {
   var annConsts = self.ANNConstants();
   var annProc = self.ANNProc();
   
+  
+  channelPars.add(annConsts);
   channelPars.add(annProc);
   
   var zSect = createZSect(self.name, channelPars, Sequence{});
@@ -35,50 +37,107 @@ operation RC!ANNController annSemantics() : Z!Spec {
   
 }
 
-//RULE 2: Function ANNChannelDecl().
-operation RC!ANNController ANNChannelDecl() : Sequence<Z!ZPara> {
-
-  var annChannels = new Sequence<Z!ZPara>;
-  
+//Helper Rule: Create a channel para with a product type. 
+operation createProdChanPar(name : String, type_expr : Sequence<Z!Expr>) : Z!Para {
   //Create arbritrary product expression: 
   var prodexpr = new Z!ProdExpr;
   prodexpr.exprList = new Z!ZExprList;
-  prodexpr.exprList.exprs = Sequence{"nat".createRefExpr(false, false), "nat".createRefExpr(false, false),
-  									 "real".createRefExpr(false,false)};
+  prodexpr.exprList.exprs = type_expr;
   
-  var layerResPara = new Z!ChannelPara;
+  var para = new Z!ChannelPara;
 	
-  layerResPara.declList = new Z!ZDeclList;
+  para.declList = new Z!ZDeclList;
 
   var decl = new Z!ChannelDecl;
   
   decl.genFormals = createNameList(Sequence{});
 	
   //the second element is the (possibly empty) list of declared channel names
-  decl.channelNameList = createNameList(Sequence{"layerRes"});
+  decl.channelNameList = createNameList(Sequence{name});
 
-  //expr attr indicate the type of the channel, and it's a RefExpr
-  //if it's untyped, type = "SYNCH"
   decl.expr = prodexpr;
 	
-  layerResPara.declList.decls.add(decl);
+  para.declList.decls.add(decl);
   
-  layerResPara.name = "layerRes".createZName();
+  para.name = name.createZName();
+  
+  return para;
+  
+}
+
+
+//RULE 2: Function ANNChannelDecl().
+operation RC!ANNController ANNChannelDecl() : Sequence<Z!Para> {
+
+  var annChannels = new Sequence<Z!Para>;
+  
+  var layerRes = createProdChanPar("layerRes", Sequence{"nat".createRefExpr(false, false), "nat".createRefExpr(false, false), "real".createRefExpr(false, false)});
+  
+  var nodeOut = createProdChanPar("nodeOut", Sequence{"nat".createRefExpr(false, false), "nat".createRefExpr(false, false), "nat".createRefExpr(false, false), "real".createRefExpr(false, false)});
+  
+  var inputEvents = self.sortedInputEvents();
+  
+  var outputEvents = self.sortedOutputEvents();  
+
+  for(chan : RC!Event in inputEvents) {
+     annChannels.add(Sequence{chan.name}.createChannelPara(chan.name, chan.type.ref.name));
+  }
+  
+  for(chan : RC!Event in outputEvents) {
+     annChannels.add(Sequence{chan.name}.createChannelPara(chan.name, chan.type.ref.name));
+  }
   
   //declare terminate channel
   var terminateChannel = Sequence{"terminate"}.createChannelPara("terminate");
   
-  annChannels.add(layerResPara);
+  annChannels.add(layerRes);
+  annChannels.add(nodeOut);
   annChannels.add(terminateChannel);
   
   return annChannels;
   
 }
 
-//RULE 3: Function ANNConstants
-operation RC!ANNController ANNConstants() : Z!AxPara {
-  
+//Helper operation, returns the sorted input events
+operation RC!ANNController sortedInputEvents() : Sequence<Z!Events> {
+  return self.annparameters.inputcontext.allEvents().sortBy(it | it.index);
 }
+
+operation RC!ANNController sortedOutputEvents() : Sequence<Z!Events> {
+  return self.annparameters.outputcontext.allEvents().sortBy(it | it.index);
+}
+
+
+//RULE 3: Function ANNConstants
+//Defines all the constants in an axiom, in an AxPara.
+operation RC!ANNController ANNConstants() : Z!Para {
+		var constDecl = new Z!AxPara;
+		constDecl.box = Z!Box#AxBox;
+		constDecl.zSchText = new Z!ZSchText;
+			
+		var declList = new Z!ZDeclList;
+		declList.decls.add(generateVarDecl(Sequence{"weights"}, "real list list list"));
+		declList.decls.add(generateVarDecl(Sequence{"biases"}, "real list list"));
+		declList.decls.add(generateVarDecl(Sequence{"inRanges"}, "real x real list"));
+		declList.decls.add(generateVarDecl(Sequence{"outRanges"}, "real x real list"));
+		
+		constDecl.zSchText.declList = declList;
+		var predicate = new Z!ExprPred;
+		predicate.expr = self.annparameters.weights.createSeqExpr();
+		constDecl.zSchText.pred = predicate;
+		
+		return constDecl;
+		
+}
+
+operation generateVarDecl(nameList : Sequence<String>, type : String):Z!VarDecl {
+	var varDecl = new Z!VarDecl;
+	varDecl.nameList = createNameList(nameList);
+	varDecl.expr = type.createRefExpr(false, false);
+
+	return varDecl;
+}
+
 
 //RULE 4: Function ANNChannels
 operation RC!ANNController ANNChannels(l : Integer, n : Integer, seq : Sequence<Z!Para>) : Sequence<Z!Para> {
