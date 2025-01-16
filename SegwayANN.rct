@@ -1,4 +1,4 @@
-diagram Segway
+diagram SegwayANN
 
 interface ANNInput {
 	event anewError:real

@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 15-01-2025 14:27:24
+-- Automatically generated on 16-01-2025 10:30:42
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -13,7 +13,6 @@ include "defs/state_timed_defs.csp"
 include "defs/core_defs.csp"
 include "defs/sequence_toolkit_defs.csp"
 include "defs/file_SpeedPID_defs.csp"
-include "defs/file_BalanceSTM_defs.csp"
 include "defs/file_RotationPID_defs.csp"
 include "defs/function_toolkit_defs.csp"
 include "defs/robochart_defs.csp"
@@ -36,27 +35,9 @@ assert prioritise(let
 	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
 	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
-	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
-	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
-	const_SegwayANN_SegwayController_stm_ref0_startupDelay = const_BalanceSTM_startupDelay
-	const_SegwayANN_SegwayController_stm_ref0_speedUpdate = const_BalanceSTM_speedUpdate
-	const_SegwayANN_SegwayController_stm_ref0_rotationUpdate = const_BalanceSTM_rotationUpdate
-	const_SegwayANN_SegwayController_stm_ref0_motorBudget = const_BalanceSTM_motorBudget
-	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
-	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
-	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
 		
 within
 	SegwayANN::D__(id__,
-			    const_SegwayANN_SegwayController_stm_ref0_maxAngle,
-			    const_SegwayANN_SegwayController_stm_ref0_loopTime,
-			    const_SegwayANN_SegwayController_stm_ref0_startupDelay,
-			    const_SegwayANN_SegwayController_stm_ref0_speedUpdate,
-			    const_SegwayANN_SegwayController_stm_ref0_rotationUpdate,
-			    const_SegwayANN_SegwayController_stm_ref0_motorBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_angleBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_speedBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_rotationBudget,
 			    const_SegwayANN_SegwayController_stm_ref2_P,
 			    const_SegwayANN_SegwayController_stm_ref2_I,
 			    const_SegwayANN_SegwayController_stm_ref2_maxIntegral,
@@ -79,27 +60,9 @@ assert let
 	const_SegwayANN_SegwayController_stm_ref2_I = const_SpeedPID_I
 	const_SegwayANN_SegwayController_stm_ref2_maxIntegral = const_SpeedPID_maxIntegral
 	const_SegwayANN_SegwayController_stm_ref3_D = const_RotationPID_D
-	const_SegwayANN_SegwayController_stm_ref0_maxAngle = const_BalanceSTM_maxAngle
-	const_SegwayANN_SegwayController_stm_ref0_loopTime = const_BalanceSTM_loopTime
-	const_SegwayANN_SegwayController_stm_ref0_startupDelay = const_BalanceSTM_startupDelay
-	const_SegwayANN_SegwayController_stm_ref0_speedUpdate = const_BalanceSTM_speedUpdate
-	const_SegwayANN_SegwayController_stm_ref0_rotationUpdate = const_BalanceSTM_rotationUpdate
-	const_SegwayANN_SegwayController_stm_ref0_motorBudget = const_BalanceSTM_motorBudget
-	const_SegwayANN_SegwayController_stm_ref0_angleBudget = const_BalanceSTM_angleBudget
-	const_SegwayANN_SegwayController_stm_ref0_speedBudget = const_BalanceSTM_speedBudget
-	const_SegwayANN_SegwayController_stm_ref0_rotationBudget = const_BalanceSTM_rotationBudget
 		
 within
 	SegwayANN::D__(id__,
-			    const_SegwayANN_SegwayController_stm_ref0_maxAngle,
-			    const_SegwayANN_SegwayController_stm_ref0_loopTime,
-			    const_SegwayANN_SegwayController_stm_ref0_startupDelay,
-			    const_SegwayANN_SegwayController_stm_ref0_speedUpdate,
-			    const_SegwayANN_SegwayController_stm_ref0_rotationUpdate,
-			    const_SegwayANN_SegwayController_stm_ref0_motorBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_angleBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_speedBudget,
-			    const_SegwayANN_SegwayController_stm_ref0_rotationBudget,
 			    const_SegwayANN_SegwayController_stm_ref2_P,
 			    const_SegwayANN_SegwayController_stm_ref2_I,
 			    const_SegwayANN_SegwayController_stm_ref2_maxIntegral,

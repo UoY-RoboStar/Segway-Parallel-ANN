@@ -95,9 +95,13 @@ We will need the usedVariablesModel again and modify it to implement the FQN rep
 
 
 //var pkg =  RC!RCPackage.all().selectOne(p|p.name = "Chemical");
-var pkg =  RC!RCPackage.all().selectOne(p|p.name = "pkg0" or p.name = "Chemical");
+RC!RCPackage.all().println();
+var pkg =  RC!RCPackage.all().selectOne(p|p.name = "pkg0" or p.name = "Chemical" or p.name = "BalanceSTM");
 pkg.println();
 
+for(stm in RC!StateMachineDef.all()){
+	createStateMachineDefAsActionPara(stm);
+}
 //for(stm in RC!StateMachineDef.all().selectOne(s|s.name = "stm0" or s.name = "GasAnalysis_stm")){
 //	stm.nodes.println();
 ////	for(nd in stm.nodes){
@@ -137,16 +141,16 @@ pkg.println();
 //}
 
 
-for(c in RC!ControllerDef.all().selectOne(c|c.name = "C1")){
-//	for(op in c.lOperations){
-//		("line 87, op = " + op).println();
-//		if(op.nodes.size()>0){
-//			createOperationDefAsActionPara(op);
-//		}
-//	}
-
-	createControllerAsProcessPara(c);
-}
+//for(c in RC!ControllerDef.all().selectOne(c|c.name = "SegwayController")){
+////	for(op in c.lOperations){
+////		("line 87, op = " + op).println();
+////		if(op.nodes.size()>0){
+////			createOperationDefAsActionPara(op);
+////		}
+////	}
+//
+//	createControllerAsProcessPara(c);
+//}
 replaceRef();
 
 //To transform RoboChart user defined types
@@ -1489,6 +1493,7 @@ operation createControllerAsProcessPara(c: RC!ControllerDef): Z!ProcessPara{
 	var actionParaSeq = new Sequence<Z!ActionPara>;
 	
 	//to create operation sematics for defined ops
+	c.lOperations.println();
 	for(op in c.lOperations){
 		if(op.nodes.isDefined()){
 //			actionParaSeq.add(createOperationDefAsActionPara(op));

@@ -101,7 +101,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']"/>
         <target xmi:type="robochart:RCPackage" href="Segway.rct#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_-pnQ4LX6Ee6jvOvSsLms5A" name="SegwayANN.rct" repPath="#_-pmCwLX6Ee6jvOvSsLms5A" changeId="9ef4e251-e953-4b50-abe3-fc2a87914702">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_-pnQ4LX6Ee6jvOvSsLms5A" name="SegwayANN.rct" repPath="#_-pmCwLX6Ee6jvOvSsLms5A" changeId="7a939142-d049-485c-a2ea-b3a2dce4c3ef">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']"/>
         <target xmi:type="robochart:RCPackage" href="SegwayANN.rct#/"/>
       </ownedRepresentationDescriptors>
@@ -7032,7 +7032,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='ActivationFunctionID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAXWQdKTEe-9abOj96w-pg" name="&lt;1, 1>">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAXWQdKTEe-9abOj96w-pg" name="&lt; 1 , 1 >">
               <target xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@layerstructure"/>
               <semanticElements xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@layerstructure"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAXWQtKTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/ann-layer-structure.png" labelAlignment="LEFT" labelPosition="node">
@@ -7040,7 +7040,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='LayerStructureID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAX9UNKTEe-9abOj96w-pg" name="&lt;&lt;&lt;1.22838, 0.132874>>, &lt;&lt;0.744636>>>">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAX9UNKTEe-9abOj96w-pg" name="&lt; &lt; &lt; 1.22838 , 0.132874 > > , &lt; &lt; 0.744636 > > >">
               <target xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@weights"/>
               <semanticElements xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@weights"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAX9UdKTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/ann-weights.png" labelAlignment="LEFT" labelPosition="node">
@@ -7048,7 +7048,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='WeightsID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAYkYNKTEe-9abOj96w-pg" name="&lt;&lt;0.125424>, &lt;-0.107753>>">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAYkYNKTEe-9abOj96w-pg" name="&lt; &lt; 0.125424 > , &lt; - 0.107753 > >">
               <target xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@biases"/>
               <semanticElements xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@biases"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAYkYdKTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/ann-biases.png" labelAlignment="LEFT" labelPosition="node">
@@ -7056,7 +7056,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='BiasesID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZLcNKTEe-9abOj96w-pg" name="&lt;(|-30.0, 30.0|), (|-250.0, 250.0|)>">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZLcNKTEe-9abOj96w-pg" name="&lt; (| - 30.0 , 30.0 |) , (| - 250.0 , 250.0 |) >">
               <target xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@inRanges"/>
               <semanticElements xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@inRanges"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAZLcdKTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/inRanges.png" labelAlignment="LEFT" labelPosition="node">
@@ -7064,7 +7064,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='InRangesID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZLctKTEe-9abOj96w-pg" name="&lt;(|-1950.0, 1950.0|)>">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZLctKTEe-9abOj96w-pg" name="&lt; (| - 1950.0 , 1950.0 |) >">
               <target xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@outRanges"/>
               <semanticElements xmi:type="robochart:SeqExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@outRanges"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAZLc9KTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/outRanges.png" labelAlignment="LEFT" labelPosition="node">
@@ -7072,7 +7072,7 @@
               </ownedStyle>
               <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/circus.robocalc.robochart.graphical/description/robochart.odesign#//@ownedViewpoints[name='RoboChartID']/@ownedRepresentations[name='SpecificationID']/@defaultLayer/@containerMappings[name='ANNControllerDefID']/@subContainerMappings[name='ANNLayerParametersID']/@subNodeMappings[name='OutRangesID']"/>
             </ownedElements>
-            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZygNKTEe-9abOj96w-pg" name="(|0.0, 1.0|)">
+            <ownedElements xmi:type="diagram:DNodeListElement" uid="_UAZygNKTEe-9abOj96w-pg" name="(| 0.0 , 1.0 |)">
               <target xmi:type="robochart:TupleExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@annRange"/>
               <semanticElements xmi:type="robochart:TupleExp" href="SegwayANN.rct#//@modules.0/@nodes.2/@annparameters/@annRange"/>
               <ownedStyle xmi:type="diagram:Square" uid="_UAZygdKTEe-9abOj96w-pg" labelSize="10" iconPath="/circus.robocalc.robochart.graphical/icons/annRange.png" labelAlignment="LEFT" labelPosition="node">

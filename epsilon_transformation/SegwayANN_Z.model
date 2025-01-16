@@ -146,8 +146,11 @@
               </nameList>
             </decls>
           </declList>
-          <pred xsi:type="circus:ExprPred">
-            <expr xsi:type="circus:ApplExpr" mixFix="true">
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <leftExpr xsi:type="circus:RefExpr">
+              <name word="weights"/>
+            </leftExpr>
+            <rightExpr xsi:type="circus:ApplExpr" mixFix="true">
               <leftExpr xsi:type="circus:RefExpr">
                 <name word="&lt;,,>"/>
               </leftExpr>
@@ -249,7 +252,7 @@
                   </exprs>
                 </exprList>
               </rightExpr>
-            </expr>
+            </rightExpr>
           </pred>
         </zSchText>
       </paras>
