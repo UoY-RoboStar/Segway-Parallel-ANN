@@ -28,9 +28,13 @@ operation RC!ANNController annSemantics() : Z!Spec {
   var annConsts = self.ANNConstants();
   var annProc = self.ANNProc();
   
+  annConsts.println();
   
-  channelPars.add(annConsts);
+  channelPars.println();
+  channelPars.addAll(annConsts);
   channelPars.add(annProc);
+  
+  channelPars.println();
   
   var zSect = createZSect(self.name, channelPars, Sequence{});
   return createSpec(zSect);
@@ -108,37 +112,49 @@ operation RC!ANNController sortedOutputEvents() : Sequence<Z!Events> {
 }
 
 
-//RULE 3: Function ANNConstants
-//Defines all the constants in an axiom, in an AxPara.
-operation RC!ANNController ANNConstants() : Z!Para {
-		var constDecl = new Z!AxPara;
-		constDecl.box = Z!Box#AxBox;
-		constDecl.zSchText = new Z!ZSchText;
+//helper operation, creates an axiom paragraph for a constnat.
+//Given a name, a type as a string, and an expression to set this constant to with MemPred.
+operation createAxiomPara(name: String, type : String, value : Z!Expr) : Z!Para {
+	var weightsDecl = new Z!AxPara;
+		weightsDecl.box = Z!Box#AxBox;
+		weightsDecl.zSchText = new Z!ZSchText;
 			
 		var declList = new Z!ZDeclList;
-		declList.decls.add(generateVarDecl(Sequence{"weights"}, "real list list list"));
-		declList.decls.add(generateVarDecl(Sequence{"biases"}, "real list list"));
-		declList.decls.add(generateVarDecl(Sequence{"inRanges"}, "real x real list"));
-		declList.decls.add(generateVarDecl(Sequence{"outRanges"}, "real x real list"));
+		declList.decls.add(generateVarDecl(Sequence{name}, type));
 		
-		constDecl.zSchText.declList = declList;
+		weightsDecl.zSchText.declList = declList;
 		
 		
 	
 		//We are using a MEM PRED instead of applexpr. Pred that relates, on the left, the weights reference expression, on the right, the set expression created from the 
 		//seqexpr of weights. 
 		var pred =  new Z!MemPred;
-		pred.leftExpr = "weights".createRefExpr(false, false);
+		pred.leftExpr = name.createRefExpr(false, false);
 	
-		pred.rightExpr = self.annparameters.weights.createSeqExpr();
+		pred.rightExpr = value;
 		pred.mixFix = true;
 		
 		//the SET EXPRESSION, is definitely right, I'm not sure if the 
 		//we need a REFERNECE EXPRESSION on the LEFT: ref_expr: "weights2"
 		//Then the SET EXPRESSION on the RIGHT, WE ALREADY HAVE THIS, predicate.expr.setExpr is this SET EXPRESSION. 
-		constDecl.zSchText.pred = pred;
+		weightsDecl.zSchText.pred = pred;
 		
-		return constDecl;
+		return weightsDecl;
+}
+
+//RULE 3: Function ANNConstants
+//Defines all the constants in an axiom, in an AxPara.
+operation RC!ANNController ANNConstants() : Sequence<Z!Para> {
+		
+		var weightsPara = createAxiomPara("weights", "real list list list", self.annparameters.weights.createSeqExpr());
+		var biasesPara = createAxiomPara("biases", "real list list", self.annparameters.biases.createSeqExpr());
+		var inRangesPara = createAxiomPara("inRanges", "(real \\<times> real) list", self.annparameters.inRanges.createSeqExpr());
+		var outRangesPara = createAxiomPara("outRanges", "(real \\<times> real) list", self.annparameters.outRanges.createSeqExpr());
+		var annRangePara = createAxiomPara("annRange", "(real \\<times> real)", self.annparameters.annRange.createExpr());
+		//Tuples are still TODO. 
+		
+		
+		return Sequence{weightsPara, biasesPara, inRangesPara, outRangesPara, annRangePara};
 		
 }
 

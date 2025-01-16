@@ -121,30 +121,6 @@
                 <names word="weights"/>
               </nameList>
             </decls>
-            <decls xsi:type="circus:VarDecl">
-              <expr xsi:type="circus:RefExpr">
-                <name word="real list list"/>
-              </expr>
-              <nameList>
-                <names word="biases"/>
-              </nameList>
-            </decls>
-            <decls xsi:type="circus:VarDecl">
-              <expr xsi:type="circus:RefExpr">
-                <name word="real x real list"/>
-              </expr>
-              <nameList>
-                <names word="inRanges"/>
-              </nameList>
-            </decls>
-            <decls xsi:type="circus:VarDecl">
-              <expr xsi:type="circus:RefExpr">
-                <name word="real x real list"/>
-              </expr>
-              <nameList>
-                <names word="outRanges"/>
-              </nameList>
-            </decls>
           </declList>
           <pred xsi:type="circus:MemPred" mixFix="true">
             <leftExpr xsi:type="circus:RefExpr">
@@ -252,6 +228,242 @@
                   </exprs>
                 </exprList>
               </rightExpr>
+            </rightExpr>
+          </pred>
+        </zSchText>
+      </paras>
+      <paras xsi:type="circus:AxPara">
+        <zSchText>
+          <declList>
+            <decls xsi:type="circus:VarDecl">
+              <expr xsi:type="circus:RefExpr">
+                <name word="real list list"/>
+              </expr>
+              <nameList>
+                <names word="biases"/>
+              </nameList>
+            </decls>
+          </declList>
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <leftExpr xsi:type="circus:RefExpr">
+              <name word="biases"/>
+            </leftExpr>
+            <rightExpr xsi:type="circus:ApplExpr" mixFix="true">
+              <leftExpr xsi:type="circus:RefExpr">
+                <name word="&lt;,,>"/>
+              </leftExpr>
+              <rightExpr xsi:type="circus:SetExpr">
+                <exprList>
+                  <exprs xsi:type="circus:TupleExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="1"/>
+                      </exprs>
+                      <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                        <leftExpr xsi:type="circus:RefExpr">
+                          <name word="&lt;,,>"/>
+                        </leftExpr>
+                        <rightExpr xsi:type="circus:SetExpr">
+                          <exprList>
+                            <exprs xsi:type="circus:TupleExpr">
+                              <exprList>
+                                <exprs xsi:type="circus:NumExpr">
+                                  <numeral value="1"/>
+                                </exprs>
+                                <exprs xsi:type="circus:RefExpr">
+                                  <name word="0.125424"/>
+                                </exprs>
+                              </exprList>
+                            </exprs>
+                          </exprList>
+                        </rightExpr>
+                      </exprs>
+                    </exprList>
+                  </exprs>
+                  <exprs xsi:type="circus:TupleExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="2"/>
+                      </exprs>
+                      <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                        <leftExpr xsi:type="circus:RefExpr">
+                          <name word="&lt;,,>"/>
+                        </leftExpr>
+                        <rightExpr xsi:type="circus:SetExpr">
+                          <exprList>
+                            <exprs xsi:type="circus:TupleExpr">
+                              <exprList>
+                                <exprs xsi:type="circus:NumExpr">
+                                  <numeral value="1"/>
+                                </exprs>
+                                <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                                  <leftExpr xsi:type="circus:RefExpr">
+                                    <name word="-_"/>
+                                  </leftExpr>
+                                  <rightExpr xsi:type="circus:RefExpr">
+                                    <name word="0.107753"/>
+                                  </rightExpr>
+                                </exprs>
+                              </exprList>
+                            </exprs>
+                          </exprList>
+                        </rightExpr>
+                      </exprs>
+                    </exprList>
+                  </exprs>
+                </exprList>
+              </rightExpr>
+            </rightExpr>
+          </pred>
+        </zSchText>
+      </paras>
+      <paras xsi:type="circus:AxPara">
+        <zSchText>
+          <declList>
+            <decls xsi:type="circus:VarDecl">
+              <expr xsi:type="circus:RefExpr">
+                <name word="(real \&lt;times> real) list"/>
+              </expr>
+              <nameList>
+                <names word="inRanges"/>
+              </nameList>
+            </decls>
+          </declList>
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <leftExpr xsi:type="circus:RefExpr">
+              <name word="inRanges"/>
+            </leftExpr>
+            <rightExpr xsi:type="circus:ApplExpr" mixFix="true">
+              <leftExpr xsi:type="circus:RefExpr">
+                <name word="&lt;,,>"/>
+              </leftExpr>
+              <rightExpr xsi:type="circus:SetExpr">
+                <exprList>
+                  <exprs xsi:type="circus:TupleExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="1"/>
+                      </exprs>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                            <leftExpr xsi:type="circus:RefExpr">
+                              <name word="-_"/>
+                            </leftExpr>
+                            <rightExpr xsi:type="circus:RefExpr">
+                              <name word="30.0"/>
+                            </rightExpr>
+                          </exprs>
+                          <exprs xsi:type="circus:RefExpr">
+                            <name word="30.0"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                    </exprList>
+                  </exprs>
+                  <exprs xsi:type="circus:TupleExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="2"/>
+                      </exprs>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                            <leftExpr xsi:type="circus:RefExpr">
+                              <name word="-_"/>
+                            </leftExpr>
+                            <rightExpr xsi:type="circus:RefExpr">
+                              <name word="250.0"/>
+                            </rightExpr>
+                          </exprs>
+                          <exprs xsi:type="circus:RefExpr">
+                            <name word="250.0"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                    </exprList>
+                  </exprs>
+                </exprList>
+              </rightExpr>
+            </rightExpr>
+          </pred>
+        </zSchText>
+      </paras>
+      <paras xsi:type="circus:AxPara">
+        <zSchText>
+          <declList>
+            <decls xsi:type="circus:VarDecl">
+              <expr xsi:type="circus:RefExpr">
+                <name word="(real \&lt;times> real) list"/>
+              </expr>
+              <nameList>
+                <names word="outRanges"/>
+              </nameList>
+            </decls>
+          </declList>
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <leftExpr xsi:type="circus:RefExpr">
+              <name word="outRanges"/>
+            </leftExpr>
+            <rightExpr xsi:type="circus:ApplExpr" mixFix="true">
+              <leftExpr xsi:type="circus:RefExpr">
+                <name word="&lt;,,>"/>
+              </leftExpr>
+              <rightExpr xsi:type="circus:SetExpr">
+                <exprList>
+                  <exprs xsi:type="circus:TupleExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="1"/>
+                      </exprs>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                            <leftExpr xsi:type="circus:RefExpr">
+                              <name word="-_"/>
+                            </leftExpr>
+                            <rightExpr xsi:type="circus:RefExpr">
+                              <name word="1950.0"/>
+                            </rightExpr>
+                          </exprs>
+                          <exprs xsi:type="circus:RefExpr">
+                            <name word="1950.0"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                    </exprList>
+                  </exprs>
+                </exprList>
+              </rightExpr>
+            </rightExpr>
+          </pred>
+        </zSchText>
+      </paras>
+      <paras xsi:type="circus:AxPara">
+        <zSchText>
+          <declList>
+            <decls xsi:type="circus:VarDecl">
+              <expr xsi:type="circus:RefExpr">
+                <name word="(real \&lt;times> real)"/>
+              </expr>
+              <nameList>
+                <names word="annRange"/>
+              </nameList>
+            </decls>
+          </declList>
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <leftExpr xsi:type="circus:RefExpr">
+              <name word="annRange"/>
+            </leftExpr>
+            <rightExpr xsi:type="circus:TupleExpr">
+              <exprList>
+                <exprs xsi:type="circus:RefExpr">
+                  <name word="0.0"/>
+                </exprs>
+                <exprs xsi:type="circus:RefExpr">
+                  <name word="1.0"/>
+                </exprs>
+              </exprList>
             </rightExpr>
           </pred>
         </zSchText>
@@ -868,20 +1080,20 @@
                 <declList>
                   <decls xsi:type="circus:VarDecl">
                     <expr xsi:type="circus:RefExpr">
+                      <name word="real"/>
+                    </expr>
+                    <nameList>
+                      <names word="sum"/>
+                    </nameList>
+                  </decls>
+                  <decls xsi:type="circus:VarDecl">
+                    <expr xsi:type="circus:RefExpr">
                       <name word="int"/>
                     </expr>
                     <nameList>
                       <names word="l"/>
                       <names word="n"/>
                       <names word="i"/>
-                    </nameList>
-                  </decls>
-                  <decls xsi:type="circus:VarDecl">
-                    <expr xsi:type="circus:RefExpr">
-                      <name word="real"/>
-                    </expr>
-                    <nameList>
-                      <names word="sum"/>
                     </nameList>
                   </decls>
                 </declList>
