@@ -131,6 +131,89 @@ operation createOutputCommunication(
 	return commu;
 }
 
+//Always creates an output field with multiple expressions
+operation createOutputCommunication(
+	chan_name: String,
+	expr:Sequence<Z!Expr>
+	): Z!Communication{
+	
+	var commu = new Z!Communication;
+
+	commu.commUsage = Z!CommUsage#Normal;
+	commu.indexed = false;
+	commu.multiSych = 0;
+	commu.channelExpr = chan_name.createRefExpr(false, false);
+
+	commu.fieldList = new Z!CircusFieldList; 
+		
+	
+	commu.commPattern = Z!CommPattern#Output;	
+	
+	var fieldList = Sequence{};
+	for(e in expr) {
+		var field = new Z!DotField;
+		field.expr = e;
+		
+    	field.outputField = true;
+    	fieldList.add(field);
+	}	
+	
+	commu.fieldList.fields = fieldList;
+	
+	return commu;
+}
+
+
+//Create an input communication with multiple fields: 
+//to create a internal input communication 
+//used in readState()
+operation createInputCommunication(
+	chan_name: String,
+	var_name:String,
+	exprs: Sequence<Z!Expr>
+	): Z!Communication{
+	
+	var commu = new Z!Communication;
+
+	commu.commUsage = Z!CommUsage#Normal;
+	commu.indexed = false;
+	commu.multiSych = 0;
+	commu.channelExpr = chan_name.createRefExpr(false,false);
+	
+	commu.commPattern = Z!CommPattern#Input;
+	commu.fieldList = new Z!CircusFieldList; 
+	
+	var fieldList = Sequence{};
+		
+	for(e in exprs) {
+	   var field = new Z!DotField;
+	   field.expr = e;
+	   
+	   fieldList.add(field);
+		
+	}
+	var field = new Z!InputField;
+	field.varialbeName = var_name.createZName();
+	
+	fieldList.add(field);
+	
+	commu.fieldList.fields = fieldList;
+	
+//	if(type = "INPUT"){ 
+//		commu.commPattern = Z!CommPattern#Input;
+//
+//		var field = new Z!InputField;
+//		field.varialbeName = var_name.createZName();
+//		commu.fieldList.fields = Sequence{field};
+//	} 
+	
+
+	
+	return commu;
+}
+
+
+
 //Modified, so it takes an arbritrary Z Expression, for the operands, and an arbritrary string for an operator.
 operation createApplExpr(operator: String, operandLeft: Z!Expr, operandRight: Z!Expr): Z!ApplExpr{
 	var expr = new Z!ApplExpr;
