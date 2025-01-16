@@ -1,0 +1,14 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:30
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "file_auv.csp"
+
+
+
+

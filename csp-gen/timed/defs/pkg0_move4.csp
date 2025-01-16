@@ -1,0 +1,31 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:31
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+module OP_pkg0_move4
+exports
+	Timed(OneStep) {
+		datatype TIDS = NULLTRANSITION__
+		-- These definitions are needed to make the structure of an incompletely defined operation compatible with that of fully defined operations.
+		MemoryTransitions(id__) = STOP -- this is STOP because MemoryTransitions is put in a choice with the state machine's MemoryTransitions. if it were SKIP, a divergence would be introduced.
+				MemoryVariablesSyncSet = {}
+				MemoryVariablesHideSet = {}
+				MachineMemorySyncSet = {}
+				MachineMemoryHidingSet = {}
+				channel internal__
+		D__(id__) = let
+			AUX = SKIP 
+				  |~|
+				  STOP 
+				  		  within 
+			AUX
+		
+		O__(id__) = D__(id__)
+		HUP__(id__) = D__(id__)
+	}
+endmodule

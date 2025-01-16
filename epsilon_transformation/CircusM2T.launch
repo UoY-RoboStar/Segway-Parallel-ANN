@@ -20,7 +20,7 @@
     <booleanAttribute key="profile_model_loading" value="false"/>
     <booleanAttribute key="profiling_enabled" value="false"/>
     <booleanAttribute key="reset_profiler" value="false"/>
-    <stringAttribute key="source" value="/Segway-Parallel-ANN/epsilon_transformation/CircusM2T.egx"/>
+    <stringAttribute key="source" value="/Segway-Parallel-ANN/epsilon_transformation/RoboChart2Circus_2024/Transformation/CircusM2T.egx"/>
     <stringAttribute key="templateFactoryType" value="org.eclipse.epsilon.egl.EglFileGeneratingTemplateFactory"/>
     <stringAttribute key="traceDestination" value=""/>
 </launchConfiguration>

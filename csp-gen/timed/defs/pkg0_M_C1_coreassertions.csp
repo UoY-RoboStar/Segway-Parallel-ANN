@@ -1,0 +1,100 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:31
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "core_timed_defs.csp"
+include "pkg0_M_C1.csp"
+include "core_defs.csp"
+include "pkg0_defs.csp"
+include "state_timed_defs.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+
+transparent wbisim
+channel r__
+-- generate pkg0_M_C1
+P_pkg0_M_C1 = let
+	id__ = 0
+	
+	
+	
+	const_pkg0_M_C1_stm0_c6 = 8
+	const_pkg0_M_C1_stm1_c6 = 8
+	const_pkg0_M_C1_stm1_c1 = const_pkg0_M_C1_stm0_c1
+		
+within
+	pkg0_M_C1::O__(id__,
+			    const_pkg0_M_C1_c2,
+			    const_pkg0_M_C1_c3,
+			    const_pkg0_M_C1_stm0_c6,
+			    const_pkg0_M_C1_stm0_c1,
+			    const_pkg0_M_C1_stm1_c6,
+			    const_pkg0_M_C1_stm1_c1)
+
+assert P_pkg0_M_C1 :[deadlock-free]	
+assert P_pkg0_M_C1;RUN({r__}) :[deadlock-free]
+assert P_pkg0_M_C1 :[deterministic]
+assert P_pkg0_M_C1 :[divergence-free]
+
+-- generate pkg0_M_C1_stm0
+P_pkg0_M_C1_stm0 = let
+	id__ = 0
+	
+	const_pkg0_M_C1_stm0_c2 = 0
+	const_pkg0_M_C1_stm0_c3 = 0
+	
+	const_pkg0_M_C1_stm0_c6 = 8
+	
+within
+	pkg0_M_C1::stm0::O__(
+		id__,
+		const_pkg0_M_C1_stm0_c2,
+		const_pkg0_M_C1_stm0_c3,
+		const_pkg0_M_C1_stm0_c6,
+		const_pkg0_M_C1_stm0_c1
+	)
+assert P_pkg0_M_C1_stm0 :[deadlock-free]	
+assert P_pkg0_M_C1_stm0;RUN({r__}) :[deadlock-free]
+assert P_pkg0_M_C1_stm0 :[deterministic]
+assert P_pkg0_M_C1_stm0 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_pkg0_M_C1_stm0[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_pkg0_M_C1_stm0
+-- generate pkg0_M_C1_stm1
+P_pkg0_M_C1_stm1 = let
+	id__ = 0
+	
+	const_pkg0_M_C1_stm0_c2 = 0
+	const_pkg0_M_C1_stm0_c3 = 0
+	
+	const_pkg0_M_C1_stm0_c6 = 8
+	
+within
+	pkg0_M_C1::stm1::O__(
+		id__,
+		const_pkg0_M_C1_stm0_c2,
+		const_pkg0_M_C1_stm0_c3,
+		const_pkg0_M_C1_stm0_c6,
+		const_pkg0_M_C1_stm0_c1
+	)
+assert P_pkg0_M_C1_stm1 :[deadlock-free]	
+assert P_pkg0_M_C1_stm1;RUN({r__}) :[deadlock-free]
+assert P_pkg0_M_C1_stm1 :[deterministic]
+assert P_pkg0_M_C1_stm1 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_pkg0_M_C1_stm1[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_pkg0_M_C1_stm1
+-- timed deadlock free
+assert prioritise(P_pkg0_M_C1[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_pkg0_M_C1

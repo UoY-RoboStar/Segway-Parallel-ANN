@@ -1,5 +1,5 @@
--- generate const_BalanceSTM_BalanceSTM_maxAngle
-const_BalanceSTM_BalanceSTM_maxAngle = 0
+-- generate Chemical2_goreq
+Chemical2_goreq(i1,i2) = true
 
 -- generate const_SegwayANN_SegwayController_stm_ref3_D
 const_SegwayANN_SegwayController_stm_ref3_D = 0
@@ -14,9 +14,6 @@ const_Segway_SegwayANN_SegwayController_stm_ref0_motorBudget = 0
 -- generate const_SegwayANN_SegwayController_stm_ref0_rotationUpdate
 const_SegwayANN_SegwayController_stm_ref0_rotationUpdate = 0
 
--- generate const_Segway_SegwayANN_SegwayController_stm_ref0_startupDelay
-const_Segway_SegwayANN_SegwayController_stm_ref0_startupDelay = 0
-
 -- generate const_BalanceSTM_angleBudget
 const_BalanceSTM_angleBudget = 0
 
@@ -29,67 +26,26 @@ const_Segway_BalanceSTM_loopTime = 0
 -- generate const_Segway_BalanceSTM_speedUpdate
 const_Segway_BalanceSTM_speedUpdate = 0
 
--- generate const_Segway_SegwayANN_SegwayController_stm_ref0_rotationUpdate
-const_Segway_SegwayANN_SegwayController_stm_ref0_rotationUpdate = 0
-
--- generate const_Segway_BalanceSTM_motorBudget
-const_Segway_BalanceSTM_motorBudget = 0
-
--- generate const_SegwayANN_SegwayController_stm_ref0_rotationBudget
-const_SegwayANN_SegwayController_stm_ref0_rotationBudget = 0
-
--- generate Plus
-Plus(e1,e2,T) = if member(e1+e2,T) then e1+e2 else e1
-
--- generate --
-
--- MODULE CONSTANTS
-
--- CONTROLLER CONSTANTS
-
--- STATEMACHINE CONSTANTS
+-- generate const_Chemical_GasAnalysis_stm_thr
+const_Chemical_GasAnalysis_stm_thr = 0
 
 -- generate nat
 nametype core_nat = union({0..2},{calc_type_min(Union(
-			{{0},{0},{Plus(rotationCount, 1, {0..2})|rotationCount <- {0..2}},{Plus(speedCount, 1, {0..2})|speedCount <- {0..2}},{0},{0},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0},{0}}))..calc_type_max(Union({{0},{0},{Plus(rotationCount, 1, {0..2})|rotationCount <- {0..2}},{Plus(speedCount, 1, {0..2})|speedCount <- {0..2}},{0},{0},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0},{0}}))})
+			{{3},{3},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))..calc_type_max(Union({{3},{3},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))})
 
 -- generate core_clock_type
 nametype core_clock_type = {0..10}
 
 -- BASIC FUNCTIONS
 
--- generate const_BalanceSTM_BalanceSTM_loopTime
-const_BalanceSTM_BalanceSTM_loopTime = 0
-
--- generate const_SpeedPID_I
-const_SpeedPID_I = 0
-
--- generate const_Segway_SegwayANN_SegwayController_stm_ref0_speedUpdate
-const_Segway_SegwayANN_SegwayController_stm_ref0_speedUpdate = 0
+-- generate Intensity
+nametype Chemical2_Intensity = {0,1}
 
 -- generate const_BalanceSTM_startupDelay
 const_BalanceSTM_startupDelay = 0
 
--- generate const_BalanceSTM_BalanceSTM_angleBudget
-const_BalanceSTM_BalanceSTM_angleBudget = 0
-
--- generate real
-nametype core_real = union({ -2..2},{calc_type_min(Union(
-			{{currAngleOut|currAngleOut <- { -2..2}},{(Plus(currLeftVel, currRightVel, { -2..2}))|currRightVel <- { -2..2},currLeftVel <- { -2..2}},{currAngle|currAngle <- { -2..2}},{currGyroX|currGyroX <- { -2..2}},{currGyroZ|currGyroZ <- { -2..2}},{currSpeedOutput|currSpeedOutput <- { -2..2}},{currRotationOut|currRotationOut <- { -2..2}},{Plus(Mult(currNewError, P, { -2..2}), Mult(currDiff, D, { -2..2}), { -2..2})|currDiff <- { -2..2},currNewError <- { -2..2},D <- { -2..2},P <- { -2..2}},{0},{0},{Plus(rotationCount, 1, core_nat)|rotationCount <- {0..2}},{Plus(speedCount, 1, core_nat)|speedCount <- {0..2}},{0},{0},{Plus(speedIntegral, currNewError, { -2..2})|speedIntegral <- { -2..2},currNewError <- { -2..2}},{(if (speedIntegral>maxIntegral) then maxIntegral else (if (speedIntegral<Neg(maxIntegral, { -2..2})) then Neg(maxIntegral, { -2..2}) else speedIntegral))|speedIntegral <- { -2..2},maxIntegral <- { -2..2}},{Plus(Mult(currNewError, P, { -2..2}), Mult(speedIntegral, I, { -2..2}), { -2..2})|speedIntegral <- { -2..2},currNewError <- { -2..2},P <- { -2..2},I <- { -2..2}},{Mult(D, currDiff, { -2..2})|D <- { -2..2},currDiff <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{0},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{0},{0},{Minus(Plus(angleOutput, speedOutput, { -2..2}), rotationOutput, { -2..2})|angleOutput <- { -2..2},speedOutput <- { -2..2},rotationOutput <- { -2..2}},{Plus(Plus(angleOutput, speedOutput, { -2..2}), rotationOutput, { -2..2})|angleOutput <- { -2..2},speedOutput <- { -2..2},rotationOutput <- { -2..2}}}))..calc_type_max(Union({{currAngleOut|currAngleOut <- { -2..2}},{(Plus(currLeftVel, currRightVel, { -2..2}))|currRightVel <- { -2..2},currLeftVel <- { -2..2}},{currAngle|currAngle <- { -2..2}},{currGyroX|currGyroX <- { -2..2}},{currGyroZ|currGyroZ <- { -2..2}},{currSpeedOutput|currSpeedOutput <- { -2..2}},{currRotationOut|currRotationOut <- { -2..2}},{Plus(Mult(currNewError, P, { -2..2}), Mult(currDiff, D, { -2..2}), { -2..2})|currDiff <- { -2..2},currNewError <- { -2..2},D <- { -2..2},P <- { -2..2}},{0},{0},{Plus(rotationCount, 1, core_nat)|rotationCount <- {0..2}},{Plus(speedCount, 1, core_nat)|speedCount <- {0..2}},{0},{0},{Plus(speedIntegral, currNewError, { -2..2})|speedIntegral <- { -2..2},currNewError <- { -2..2}},{(if (speedIntegral>maxIntegral) then maxIntegral else (if (speedIntegral<Neg(maxIntegral, { -2..2})) then Neg(maxIntegral, { -2..2}) else speedIntegral))|speedIntegral <- { -2..2},maxIntegral <- { -2..2}},{Plus(Mult(currNewError, P, { -2..2}), Mult(speedIntegral, I, { -2..2}), { -2..2})|speedIntegral <- { -2..2},currNewError <- { -2..2},P <- { -2..2},I <- { -2..2}},{Mult(D, currDiff, { -2..2})|D <- { -2..2},currDiff <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{0},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{0},{0},{Minus(Plus(angleOutput, speedOutput, { -2..2}), rotationOutput, { -2..2})|angleOutput <- { -2..2},speedOutput <- { -2..2},rotationOutput <- { -2..2}},{Plus(Plus(angleOutput, speedOutput, { -2..2}), rotationOutput, { -2..2})|angleOutput <- { -2..2},speedOutput <- { -2..2},rotationOutput <- { -2..2}}}))}) 
-
--- VECTOR TYPES AND OPERATIONS
-
-
--- CLOCKS
-
--- generate const_BalanceSTM_BalanceSTM_rotationBudget
-const_BalanceSTM_BalanceSTM_rotationBudget = 0
-
--- generate const_Segway_BalanceSTM_speedBudget
-const_Segway_BalanceSTM_speedBudget = 0
-
--- generate const_SegwayANN_SegwayController_stm_ref0_maxAngle
-const_SegwayANN_SegwayController_stm_ref0_maxAngle = 0
+-- generate Chemical2_card
+Chemical2_card(A) = 0
 
 -- generate const_Segway_BalanceSTM_startupDelay
 const_Segway_BalanceSTM_startupDelay = 0
@@ -106,9 +62,6 @@ const_BalanceSTM_rotationBudget = 0
 -- generate Modulus
 Modulus(e1,e2,T) = if member(e1%e2,T) then e1%e2 else e1
 
--- generate const_AnglePID_P
-const_AnglePID_P = 0
-
 -- generate const_BalanceSTM_BalanceSTM_motorBudget
 const_BalanceSTM_BalanceSTM_motorBudget = 0
 
@@ -118,46 +71,27 @@ const_Segway_SegwayANN_SegwayController_stm_ref2_I = 0
 -- generate const_Segway_SegwayANN_SegwayController_stm_ref0_rotationBudget
 const_Segway_SegwayANN_SegwayController_stm_ref0_rotationBudget = 0
 
--- generate const_SpeedPID_P
-const_SpeedPID_P = 0
-
--- generate const_SegwayANN_SegwayController_stm_ref0_speedUpdate
-const_SegwayANN_SegwayController_stm_ref0_speedUpdate = 0
-
 -- generate Minus
 Minus(e1,e2,T) = if member(e1-e2,T) then e1-e2 else e1
 
 -- generate const_SegwayANN_SegwayController_stm_ref0_loopTime
 const_SegwayANN_SegwayController_stm_ref0_loopTime = 0
 
--- generate string
-nametype core_string = LSeq(Char,2)
-
 -- generate const_AnglePID_D
 const_AnglePID_D = 0
-
--- generate const_SegwayANN_SegwayController_stm_ref0_motorBudget
-const_SegwayANN_SegwayController_stm_ref0_motorBudget = 0
 
 -- generate const_BalanceSTM_maxAngle
 const_BalanceSTM_maxAngle = 0
 
--- generate const_BalanceSTM_motorBudget
-const_BalanceSTM_motorBudget = 0
-
--- generate const_Segway_BalanceSTM_maxAngle
-const_Segway_BalanceSTM_maxAngle = 0
-
--- generate -- OPERATION BOUNDS
-
--- MODULE CONSTANTS
-
--- CONTROLLER CONSTANTS
-
--- STATEMACHINE CONSTANTS
-
 -- generate const_Segway_BalanceSTM_angleBudget
 const_Segway_BalanceSTM_angleBudget = 0
+
+-- generate const_pkg0_M_C1_stm1_c1
+const_pkg0_M_C1_stm1_c1 = 0
+
+-- OPERATION CONSTANTS
+
+-- BASIC TYPES
 
 -- generate const_BalanceSTM_BalanceSTM_startupDelay
 const_BalanceSTM_BalanceSTM_startupDelay = 0
@@ -174,6 +108,14 @@ const_Segway_SegwayANN_SegwayController_stm_ref0_maxAngle = 0
 -- generate const_Segway_BalanceSTM_rotationUpdate
 const_Segway_BalanceSTM_rotationUpdate = 0
 
+-- generate const_pkg0_M_P1_c3
+const_pkg0_M_P1_c3 = 0
+
+-- CONTROLLER CONSTANTS
+
+-- generate const_pkg0_M_P1_c2
+const_pkg0_M_P1_c2 = 0
+
 -- generate const_SegwayANN_SegwayController_stm_ref0_speedBudget
 const_SegwayANN_SegwayController_stm_ref0_speedBudget = 0
 
@@ -183,27 +125,155 @@ const_BalanceSTM_speedBudget = 0
 -- generate const_SegwayANN_SegwayController_stm_ref2_I
 const_SegwayANN_SegwayController_stm_ref2_I = 0
 
+-- generate Chemical_location
+Chemical_location(gs) = Chemical_Angle_Left
+
 -- generate const_SegwayANN_SegwayController_stm_ref2_maxIntegral
 const_SegwayANN_SegwayController_stm_ref2_maxIntegral = 0
+
+-- generate Chemical_analysis
+Chemical_analysis(gs) = Chemical_Status_noGas
+
+-- generate Div
+Div(e1,e2,T) = if member(e1/e2,T) then e1/e2 else e1
+
+-- generate Chemical2_location
+Chemical2_location(gs) = Chemical2_Angle_Left
+
+-- generate Neg
+Neg(e1,T) = if member(-e1,T) then -e1 else e1
+
+-- generate Mult
+Mult(e1,e2,T) = if member(e1*e2,T) then e1*e2 else e1
+
+-- generate const_Segway_SegwayANN_SegwayController_stm_ref0_angleBudget
+const_Segway_SegwayANN_SegwayController_stm_ref0_angleBudget = 0
+
+-- generate const_BalanceSTM_BalanceSTM_speedUpdate
+const_BalanceSTM_BalanceSTM_speedUpdate = 0
+
+-- generate const_BalanceSTM_BalanceSTM_maxAngle
+const_BalanceSTM_BalanceSTM_maxAngle = 0
+
+-- generate const_pkg0_M_C1_c3
+const_pkg0_M_C1_c3 = 0
+
+-- STATEMACHINE CONSTANTS
+
+-- generate const_Chemical2_GasAnalysis_stm_thr
+const_Chemical2_GasAnalysis_stm_thr = 0
+
+-- generate const_Segway_SegwayANN_SegwayController_stm_ref0_startupDelay
+const_Segway_SegwayANN_SegwayController_stm_ref0_startupDelay = 0
+
+-- generate Chemical2_angle
+Chemical2_angle(x) = Chemical2_Angle_Left
+
+-- generate const_Segway_SegwayANN_SegwayController_stm_ref0_rotationUpdate
+const_Segway_SegwayANN_SegwayController_stm_ref0_rotationUpdate = 0
+
+-- generate const_Segway_BalanceSTM_motorBudget
+const_Segway_BalanceSTM_motorBudget = 0
+
+-- generate const_SegwayANN_SegwayController_stm_ref0_rotationBudget
+const_SegwayANN_SegwayController_stm_ref0_rotationBudget = 0
+
+-- generate Plus
+Plus(e1,e2,T) = if member(e1+e2,T) then e1+e2 else e1
+
+-- generate const_pkg0_M_C1_c2
+const_pkg0_M_C1_c2 = 0
+
+-- generate --
+
+-- MODULE CONSTANTS
+
+-- generate const_BalanceSTM_BalanceSTM_loopTime
+const_BalanceSTM_BalanceSTM_loopTime = 0
+
+-- generate const_SpeedPID_I
+const_SpeedPID_I = 0
+
+-- generate const_Segway_SegwayANN_SegwayController_stm_ref0_speedUpdate
+const_Segway_SegwayANN_SegwayController_stm_ref0_speedUpdate = 0
+
+-- generate const_BalanceSTM_BalanceSTM_angleBudget
+const_BalanceSTM_BalanceSTM_angleBudget = 0
+
+-- generate real
+nametype core_real = union({ -2..2},{calc_type_min(Union(
+			{{(Plus(Plus(a3, c2, core_int), c3, core_int))|a3 <- { -2..2},c3 <- { -2..2},c2 <- { -2..2}},{3},{3},{a1|a1 <- { -2..2}},{3},{Plus(m, c1, core_int)|c1 <- { -2..2},m <- { -2..2}},{Plus(Plus(a3, l, core_int), 1, core_int)|a3 <- { -2..2},l <- { -2..2}},{Plus(Plus(a1, l, core_int), 1, core_int)|a1 <- { -2..2},l <- { -2..2}},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{8},{ -2..2},{c6|c6 <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))..calc_type_max(Union({{(Plus(Plus(a3, c2, core_int), c3, core_int))|a3 <- { -2..2},c3 <- { -2..2},c2 <- { -2..2}},{3},{3},{a1|a1 <- { -2..2}},{3},{Plus(m, c1, core_int)|c1 <- { -2..2},m <- { -2..2}},{Plus(Plus(a3, l, core_int), 1, core_int)|a3 <- { -2..2},l <- { -2..2}},{Plus(Plus(a1, l, core_int), 1, core_int)|a1 <- { -2..2},l <- { -2..2}},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{8},{ -2..2},{c6|c6 <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))}) 
+
+-- VECTOR TYPES AND OPERATIONS
+
+
+-- CLOCKS
+
+-- generate Chemical_goreq
+Chemical_goreq(i1,i2) = true
+
+-- generate const_BalanceSTM_BalanceSTM_rotationBudget
+const_BalanceSTM_BalanceSTM_rotationBudget = 0
+
+-- generate const_Segway_BalanceSTM_speedBudget
+const_Segway_BalanceSTM_speedBudget = 0
+
+-- generate const_SegwayANN_SegwayController_stm_ref0_maxAngle
+const_SegwayANN_SegwayController_stm_ref0_maxAngle = 0
+
+-- generate const_AnglePID_P
+const_AnglePID_P = 0
+
+-- generate const_SpeedPID_P
+const_SpeedPID_P = 0
+
+-- generate const_SegwayANN_SegwayController_stm_ref0_speedUpdate
+const_SegwayANN_SegwayController_stm_ref0_speedUpdate = 0
+
+-- generate Chemical2_analysis
+Chemical2_analysis(gs) = Chemical2_Status_noGas
+
+-- generate string
+nametype core_string = LSeq(Char,2)
+
+-- generate const_SegwayANN_SegwayController_stm_ref0_motorBudget
+const_SegwayANN_SegwayController_stm_ref0_motorBudget = 0
+
+-- generate const_BalanceSTM_motorBudget
+const_BalanceSTM_motorBudget = 0
+
+-- generate const_Segway_BalanceSTM_maxAngle
+const_Segway_BalanceSTM_maxAngle = 0
+
+-- generate Chem
+nametype Chemical2_Chem = {0,1}
+
+-- generate -- OPERATION BOUNDS
+
+-- MODULE CONSTANTS
+
+-- CONTROLLER CONSTANTS
+
+-- STATEMACHINE CONSTANTS
 
 -- generate const_SegwayANN_SegwayController_stm_ref0_startupDelay
 const_SegwayANN_SegwayController_stm_ref0_startupDelay = 0
 
+-- generate Chemical_angle
+Chemical_angle(x) = Chemical_Angle_Left
+
 -- generate const_SegwayANN_SegwayController_stm_ref0_angleBudget
 const_SegwayANN_SegwayController_stm_ref0_angleBudget = 0
+
+-- generate int
+nametype core_int = union({ -2..2},{calc_type_min(Union(
+			{{(Plus(Plus(a3, c2, { -2..2}), c3, { -2..2}))|a3 <- { -2..2},c3 <- { -2..2},c2 <- { -2..2}},{3},{3},{a1|a1 <- { -2..2}},{3},{Plus(m, c1, { -2..2})|c1 <- { -2..2},m <- { -2..2}},{Plus(Plus(a3, l, { -2..2}), 1, { -2..2})|a3 <- { -2..2},l <- { -2..2}},{Plus(Plus(a1, l, { -2..2}), 1, { -2..2})|a1 <- { -2..2},l <- { -2..2}},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{8},{ -2..2},{c6|c6 <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))..calc_type_max(Union({{(Plus(Plus(a3, c2, { -2..2}), c3, { -2..2}))|a3 <- { -2..2},c3 <- { -2..2},c2 <- { -2..2}},{3},{3},{a1|a1 <- { -2..2}},{3},{Plus(m, c1, { -2..2})|c1 <- { -2..2},m <- { -2..2}},{Plus(Plus(a3, l, { -2..2}), 1, { -2..2})|a3 <- { -2..2},l <- { -2..2}},{Plus(Plus(a1, l, { -2..2}), 1, { -2..2})|a1 <- { -2..2},l <- { -2..2}},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{8},{ -2..2},{c6|c6 <- { -2..2}},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{ -2..2},{x|x <- {0..2}},{5},{2},{1},{2},{x|x <- {0..2}},{4},{5},{2}}))})
 
 -- generate const_BalanceSTM_loopTime
 const_BalanceSTM_loopTime = 0
 
--- generate int
-nametype core_int = union({ -2..2},{calc_type_min(Union(
-			{{0},{0},{Plus(rotationCount, 1, core_nat)|rotationCount <- {0..2}},{Plus(speedCount, 1, core_nat)|speedCount <- {0..2}},{0},{0},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0},{0}}))..calc_type_max(Union({{0},{0},{Plus(rotationCount, 1, core_nat)|rotationCount <- {0..2}},{Plus(speedCount, 1, core_nat)|speedCount <- {0..2}},{0},{0},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0..2},{0},{0}}))})
-
 -- generate const_RotationPID_D
 const_RotationPID_D = 0
-
--- generate Div
-Div(e1,e2,T) = if member(e1/e2,T) then e1/e2 else e1
 
 -- generate const_Segway_BalanceSTM_rotationBudget
 const_Segway_BalanceSTM_rotationBudget = 0
@@ -211,17 +281,26 @@ const_Segway_BalanceSTM_rotationBudget = 0
 -- generate const_Segway_SegwayANN_SegwayController_stm_ref2_maxIntegral
 const_Segway_SegwayANN_SegwayController_stm_ref2_maxIntegral = 0
 
--- generate Neg
-Neg(e1,T) = if member(-e1,T) then -e1 else e1
+-- generate const_pkg0_M_C1_stm0_c1
+const_pkg0_M_C1_stm0_c1 = 0
+
+-- generate Chemical_card
+Chemical_card(A) = 0
+
+-- generate Chemical2_intensity
+Chemical2_intensity(gs) = 0
 
 -- generate const_Segway_SegwayANN_SegwayController_stm_ref0_loopTime
 const_Segway_SegwayANN_SegwayController_stm_ref0_loopTime = 0
 
+-- generate const_pkg0_M_C1_stm0_c2
+const_pkg0_M_C1_stm0_c2 = 0
+
+-- generate const_pkg0_M_C1_stm0_c3
+const_pkg0_M_C1_stm0_c3 = 0
+
 -- generate boolean
 nametype core_boolean = Bool
-
--- generate Mult
-Mult(e1,e2,T) = if member(e1*e2,T) then e1*e2 else e1
 
 -- generate const_BalanceSTM_speedUpdate
 const_BalanceSTM_speedUpdate = 0
@@ -229,11 +308,11 @@ const_BalanceSTM_speedUpdate = 0
 -- generate const_BalanceSTM_BalanceSTM_rotationUpdate
 const_BalanceSTM_BalanceSTM_rotationUpdate = 0
 
--- generate const_Segway_SegwayANN_SegwayController_stm_ref0_angleBudget
-const_Segway_SegwayANN_SegwayController_stm_ref0_angleBudget = 0
+-- generate const_pkg1_C1_stm0_const1
+const_pkg1_C1_stm0_const1 = 0
 
--- generate const_BalanceSTM_BalanceSTM_speedUpdate
-const_BalanceSTM_BalanceSTM_speedUpdate = 0
+-- generate Chemical_intensity
+Chemical_intensity(gs) = 0
 
 -- generate const_Segway_SegwayANN_SegwayController_stm_ref0_speedBudget
 const_Segway_SegwayANN_SegwayController_stm_ref0_speedBudget = 0

@@ -1,0 +1,4079 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:31
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+module pkg0
+exports
+
+module M
+	exports
+	
+	transparent diamond
+	transparent sbisim
+	transparent dbisim
+	transparent chase
+	
+	-- declaring channels
+	-- declaring robotic platform events
+	
+	channel move2Call: core_real.core_int
+	channel move4Call
+	channel move1Call: core_int
+	channel move5Call: core_real.core_int
+	
+	-- declaring module termination channel
+	channel terminate
+	
+	-- declaring robotic platform variables
+	channel get_pv1, set_pv1: core_int
+	channel get_a1, set_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+	channel get_a3, set_a3: core_int
+	channel get_m, set_m: core_int
+	
+	-- channel set with all visible events
+	sem__events = {|
+		move2Call,
+		move4Call,
+		move1Call,
+		move5Call
+	|}
+	
+	-- declaring controller
+		module C1
+			shared_variable_events = {|
+				set_EXT_m,
+				set_EXT_a1,
+				set_EXT_a3
+			|}
+			
+		exports
+			transparent diamond
+			transparent sbisim
+			transparent dbisim
+			transparent chase
+	
+			-- declaring controller events
+			channel evta: InOut.core_int
+			
+			channel set_cv1: core_int
+			channel get_cv1: core_int
+			channel set_x: core_int
+			channel get_x: core_int
+			channel set_m: core_int
+			channel get_m: core_int
+			channel set_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+			channel get_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+			channel set_a3: core_int
+			channel get_a3: core_int
+			
+			channel set_EXT_m: core_int
+			channel set_EXT_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+			channel set_EXT_a3: core_int
+			
+			-- declaring call and ret events for undefined operations
+			channel move2Call: core_real.core_int
+			channel move5Call: core_real.core_int
+			channel move4Call
+			
+			-- declaring controller termination channel
+			channel terminate
+			
+			-- channel set with all visible events
+			sem__events = {|
+				terminate
+			,	evta
+			,	set_EXT_m, set_m,
+				set_EXT_a1, set_a1,
+				set_EXT_a3, set_a3
+			,	move2Call,
+				move5Call,
+				move4Call
+			|}
+			
+			-- set of visible memory events
+			visibleMemoryEvents = {|get_cv1,set_cv1,get_x,set_x,get_m,set_m,get_a1,set_a1,get_a3,set_a3|}
+	
+			-- defined operations
+			-- compileOperationDef
+			module OP_move
+			exports
+				transparent diamond
+				transparent sbisim
+				transparent dbisim
+				transparent chase
+				
+				-- Transition identifiers
+				-- declaring identifiers of transitions
+				datatype NIDS = 
+				              NID_i0|
+				              NID_f0
+				
+				channel internal__ : NIDS
+				
+				-- Flow channels		
+				channel interrupt
+				channel exited
+				channel exit
+				channel terminate
+				
+				-- Variable channels
+				channel get_mv_var1, set_mv_var1, setL_mv_var1, setR_mv_var1: core_int
+				channel get_mv_var2, set_mv_var2, setL_mv_var2, setR_mv_var2: core_int
+				
+				-- Shared variable channels
+				
+				-- Local variable channels for defined operations that are required by the state machine
+				
+				-- Declaring state machine events
+				channel mv_evt1__: NIDS.InOut.core_int
+				channel mv_evt1: InOut.core_int
+				
+				-- Declaring call and ret events for undefined operations
+				
+				enterSS = {|
+				i0::enter,
+				f0::enter
+				|}
+				
+				enteredSS = 	{|
+				f0::entered
+				|}
+				
+				internal_events = union(enteredSS,union(enterSS,{|interrupt,exited|}))
+				
+				shared_variable_events = {|
+				|}
+				
+				-- channel set with all visible events
+				sem__events = {|
+					terminate
+				,	mv_evt1
+					, share__
+					|}
+				
+				channel clockReset, clockResetL, clockResetR 
+				
+				localClockResets = {||}
+				
+				
+				channel get_CLID_f0 : core_clock_type 
+				--channel increment__
+				
+				CLID_f0_clock_type(id__) = 
+					let
+						max = (clock_type_max(Union({
+				}))+1)
+					ctype = {0..max}
+				within
+					if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+				
+				
+				
+					-- Nodes --
+					-- declaring all nodes
+					
+					----------------------------------------------------------------------
+					-- Initial: i0
+					module i0
+					exports
+					
+						channel enter, interrupt
+						
+						Timed(OneStep) {
+							D__(id__,
+										param_lv,
+										param_a) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+									
+									Termination = terminate -> SKIP
+									
+									Active 		= share__choice(interrupt -> SKIP) ; Inactive
+								within
+									Inactive [| {terminate} |> SKIP)
+							
+							VS_O__(id__,
+										param_lv,
+										param_a) = D__(id__,
+										param_lv,
+										param_a)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					
+					----------------------------------------------------------------------
+					-- Final state: f0
+					module f0
+					
+					exports
+					
+						channel enter, entered, interrupt
+						channel enteredL, enteredR
+						
+						Timed(OneStep) {
+							--	Rule: behaviours(Node)
+							D__(id__,
+										param_lv,
+										param_a) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Entering
+									
+									Entering 	= entered -> SKIP ; Active
+									Active		= share__choice(terminate -> SKIP [] interrupt -> SKIP) ; Interrupted
+									Interrupted	= share__choice(exit -> exited -> Inactive)
+								within
+									Inactive [| {terminate} |> SKIP)
+								
+							VS_O__(id__,
+										param_lv,
+										param_a) = D__(id__,
+										param_lv,
+										param_a)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					-- END of Nodes --
+					
+					Timed(OneStep) {
+					-- Operation calls --
+					-- Only the undefined operations are declared here.
+					-- If the state machine is in isolation, all required operations will be undefined.
+					-- If it is in the context of a controller, the required operations not provided by the
+					-- controller will be declared here, and the defined operations will be defined in the
+					-- context of the Controller module, and therefore within scope of the state machine module.
+					
+					-- END of Operation calls --
+				
+					-- STM processes
+					STM(id__,
+								param_lv,
+								param_a) = -- RULE: [[stm:OperationDef]]_STM^nops : CSPProcess
+					Stateful(id__,
+								param_lv,
+								param_a) \ {terminate}
+					
+					STM_VS_O(id__,
+								param_lv,
+								param_a) = -- RULE: [[stm:OperationDef]]_STM^nops : CSPProcess
+					Stateful(id__,
+								param_lv,
+								param_a) \ {terminate}
+					
+					-- Transitions
+					Transitions(id__,
+								param_lv,
+								param_a) = ((let
+						Trans = TimeOut_1(
+							 (share__ -> SKIP
+							 [] dbisim((true)&(internal__!NID_i0 -> SKIP ;  ((true&(share__choice(mv_evt1.out!3 -> SKIP));true&CALL__move1(
+							 			id__,
+							 			2
+							 		) ; f0::enter -> SKIP))))
+							 []
+							 (interrupt -> share__choice(exit -> SKIP) ; share__choice(exited -> terminate -> SKIP))
+							 []
+							 terminate -> SKIP
+							 )
+						,SKIP);Trans
+					within
+						Trans [|{terminate}|> SKIP
+					)
+					)
+					
+					-- Stateful
+					-- RULE: Stateful(stm:StateMachineBody) : CSPProcess
+					
+					-- Named process definitions
+					MachineBody(id__,
+								param_lv,
+								param_a) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::D__(id__,
+									   			param_lv,
+									   			param_a)
+									   [| { share__, terminate } |] (
+									   f0::D__(id__,
+									   			param_lv,
+									   			param_a)
+									   )
+									 )
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__ |} ]] 
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 			param_lv,
+									 			param_a))
+									  [[ share__ <- x__ | x__ <- {| share__ |} ]]
+									 )
+									)
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour(id__,
+								param_lv,
+								param_a) = 
+						dbisim((let
+							stateClockSync = {||}
+						 within
+							(MachineBody(id__,
+										param_lv,
+										param_a) [| union(stateClockSync,{terminate}) |] StateClocks(id__)) \ union(stateClockSync,enteredSS)
+						)
+						)
+					
+					
+					Stateful(id__,
+								param_lv,
+								param_a) = 
+						((let
+							getsetLocalChannels = {|get_mv_var1,set_mv_var1,
+							get_mv_var2,set_mv_var2|}
+							clockSync = {||}
+						within
+							(Behaviour(id__,
+										param_lv,
+										param_a) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 			param_lv,
+							 			param_a) [| {terminate} |] Clocks(id__))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					
+					-- Visible counterparts
+					MachineBody_VS_O(id__,
+								param_lv,
+								param_a) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::VS_O__(id__,
+									   			param_lv,
+									   			param_a)
+									   [| { share__, terminate } |] (
+									   f0::VS_O__(id__,
+									   			param_lv,
+									   			param_a)
+									   )
+									 )
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__ |} ]] 
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 			param_lv,
+									 			param_a))
+									  [[ share__ <- x__ | x__ <- {| share__ |} ]]
+									 )
+									)
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour_VS_O(id__,
+								param_lv,
+								param_a) = 
+						dbisim((let
+							stateClockSync = {||}
+						 within
+							(MachineBody_VS_O(id__,
+										param_lv,
+										param_a) [| union(stateClockSync,{terminate}) |] StateClocks(id__)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+						)
+						)
+					
+					
+					Stateful_VS_O(id__,
+								param_lv,
+								param_a) = 
+						dbisim((let
+							getsetLocalChannels = {|get_mv_var1,set_mv_var1,
+							get_mv_var2,set_mv_var2|}
+							clockSync = {||}
+						within
+							(Behaviour_VS_O(id__,
+										param_lv,
+										param_a) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 			param_lv,
+							 			param_a) [| {terminate} |] Clocks(id__))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					
+					-- END
+					
+					-- Memory
+					-- Memory variables
+					Memory_mv_var1(mv_var1) =
+						get_mv_var1!mv_var1 -> Memory_mv_var1(mv_var1)
+						[]
+						set_mv_var1?x__ -> Memory_mv_var1(x__)
+						[]
+						terminate -> SKIP
+					Memory_mv_var2(mv_var2) =
+						get_mv_var2!mv_var2 -> Memory_mv_var2(mv_var2)
+						[]
+						set_mv_var2?x__ -> Memory_mv_var2(x__)
+						[]
+						terminate -> SKIP
+					
+					-- varMemory process
+					varMemory(id__,
+								param_lv,
+								param_a) = Memory_mv_var1(0)
+					[| { terminate } |] (
+					Memory_mv_var2(0)
+					)
+					
+					getsetLocalChannels = {|get_mv_var1,set_mv_var1,get_mv_var2,set_mv_var2|}
+					
+					-- Definition of the behaviour of state machines (default, optimised, visible, visible and optimised)
+					FVS__(id__,
+								param_lv,
+								param_a) = STM_VS_O(id__,
+								param_lv,
+								param_a) \ localClockResets
+					D__(id__,
+								param_lv,
+								param_a) = timed_priority(STM(id__,
+								param_lv,
+								param_a) \ union(internal_events,localClockResets))
+					O__(id__,
+								param_lv,
+								param_a) = dbisim(D__(id__,
+								param_lv,
+								param_a))
+					VS__(id__,
+								param_lv,
+								param_a) = FVS__(id__,
+								param_lv,
+								param_a)
+					VS_O__(id__,
+								param_lv,
+								param_a) = dbisim(FVS__(id__,
+								param_lv,
+								param_a))
+					HEXT__(id__,
+								param_lv,
+								param_a) = O__(id__,
+								param_lv,
+								param_a) [|shared_variable_events|] SKIP
+					FVS_C__(id__,
+								param_lv,
+								param_a) = dbisim(timed_priority(STM(id__,
+								param_lv,
+								param_a) \ internal_events))
+					HUP__(id__,
+								param_lv,
+								param_a) = timed_priority(O__(id__,
+								param_lv,
+								param_a) [|{share__}|] SKIP)
+					
+					-- Clocks
+					
+					Clocks(id__) = terminate -> SKIP
+					
+					clockSync = {||}
+					
+					
+					StateClocks(id__) = terminate -> SKIP
+					
+					stateClockSync = {||}
+					}
+						endmodule
+		
+			-- declaring machines
+			module stm0
+			exports
+				transparent diamond
+				transparent sbisim
+				transparent dbisim
+				transparent chase
+			
+				-- Transition identifiers
+				-- declaring identifiers of transitions
+				datatype NIDS = 
+				              NID_i0|
+				              NID_s0|
+				              NID_f0
+				
+				channel internal__ : NIDS
+				
+				-- Flow channels		
+				channel interrupt
+				channel exited
+				channel exit
+				channel terminate
+				
+				-- Variable channels
+				channel get_l, set_l, setL_l, setR_l: core_int
+				channel get_a, set_a, setL_a, setR_a: core_int
+				channel get_m, set_m, setL_m, setR_m: core_int
+				channel get_a1, set_a1, setL_a1, setR_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel get_a3, set_a3, setL_a3, setR_a3: core_int
+				
+				-- Shared variable channels
+				channel set_EXT_m: core_int
+				channel set_EXT_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel set_EXT_a3: core_int
+				
+				-- Local variable channels for defined operations that are required by the state machine
+				channel get_move_mv_var1, set_move_mv_var1: core_int
+				channel get_move_mv_var2, set_move_mv_var2: core_int
+				
+				-- Declaring state machine events
+				channel mv_evt1__: NIDS.InOut.core_int
+				channel mv_evt1: InOut.core_int
+				channel stop__: NIDS.InOut
+				channel stop: InOut
+				channel event1__: NIDS.InOut.{(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel event1: InOut.{(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel event2__: NIDS.InOut.core_int
+				channel event2: InOut.core_int
+				channel trigger1__: NIDS.InOut.core_int
+				channel trigger1: InOut.core_int
+				
+				-- Declaring call and ret events for undefined operations
+				channel move2Call: core_real.core_int
+				channel move5Call: core_real.core_int
+				channel move4Call
+				
+				enterSS = {|
+				i0::enter,
+				s0::enter,
+				f0::enter
+				|}
+				
+				enteredSS = 	{|
+				s0::entered,
+				f0::entered
+				|}
+				
+				internal_events = union(enteredSS,union(enterSS,{|interrupt,exited|}))
+				
+				shared_variable_events = {|
+					set_EXT_m,
+					set_EXT_a1,
+					set_EXT_a3
+				|}
+				
+				-- channel set with all visible events
+				sem__events = {|
+					terminate
+				,	set_EXT_m, set_m,
+					set_EXT_a1, set_a1,
+					set_EXT_a3, set_a3
+				,	mv_evt1,
+					stop,
+					event1,
+					event2,
+					trigger1
+				,	move2Call,
+					move5Call,
+					move4Call
+					|}
+				
+				channel clockReset, clockResetL, clockResetR 
+				
+				localClockResets = {||}
+				
+				
+				channel get_CLID_s0 : core_clock_type 
+				channel get_CLID_f0 : core_clock_type 
+				--channel increment__
+				
+				CLID_s0_clock_type(id__,
+						          const_pkg0_M_C1_stm0_c2,
+						          const_pkg0_M_C1_stm0_c3,
+						          const_pkg0_M_C1_stm0_c6,
+						          const_pkg0_M_C1_stm0_c1) = 
+					let
+						max = (clock_type_max(Union({
+				{}
+				}))+1)
+					ctype = {0..max}
+				within
+					if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+				
+				CLID_f0_clock_type(id__,
+						          const_pkg0_M_C1_stm0_c2,
+						          const_pkg0_M_C1_stm0_c3,
+						          const_pkg0_M_C1_stm0_c6,
+						          const_pkg0_M_C1_stm0_c1) = 
+					let
+						max = (clock_type_max(Union({
+				{}
+				}))+1)
+					ctype = {0..max}
+				within
+					if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+				
+				
+			
+					-- Nodes --
+					-- declaring all nodes
+					
+					----------------------------------------------------------------------
+					-- Initial: i0
+					module i0
+					exports
+					
+						channel enter, interrupt
+						
+						Timed(OneStep) {
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+									
+									Termination = terminate -> SKIP
+									
+									Active 		= share__choice(interrupt -> SKIP) ; Inactive
+								within
+									Inactive [| {terminate} |> SKIP)
+							
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					
+					----------------------------------------------------------------------
+					-- State: s0
+					module s0
+					
+					enterSS = {}
+					
+					enteredSS = {}
+					
+					exports
+					
+						--  Declarations
+						
+						channel enter, entered, interrupt
+						channel enteredL, enteredR
+						
+										
+						
+						--channel increment__
+						
+						
+						--	Nodes
+						-- declaring all nodes
+						
+						
+						Timed(OneStep) {
+							--	Rule: behaviours(Node)
+							--  Note that FDR has problems with efficiently compiling the process below
+							-- 	if using a different recursion pattern.
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+							dbisim(let
+								-- IMPLEMENTATION NOTE: 
+								-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+								-- however FDR struggles with that form in certain cases. So we use the exception operator
+								-- instead to 'terminate'.
+								
+								Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+								
+								Termination = terminate -> SKIP
+								
+								Active 		= share__choice(true & (share__choice(set_a!3 -> SKIP)));true&CALL__move4(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1
+										);true&(share__choice(event1.in?a1 -> (SStop /\ set_a1!a1 -> SKIP)));true&(share__choice(event2.in?a3 -> (SStop /\ set_a3!a3 -> SKIP)));share__choice(share__choice(get_m?m -> true & (share__choice(set_m!Plus(m, const_pkg0_M_C1_stm0_c1, core_int) -> SKIP)))) ; 
+										 	  Behaviour ; 
+										 	  share__choice(exit -> SKIP) ; true&CALL__move1(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			5
+										 	  		);true&CALL__move(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			1,
+										 	  			2
+										 	  		) ; 
+										 	  share__choice(exited -> SKIP) ; Inactive
+							
+								Behaviour 	= entered -> During
+								During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1,
+											4,
+											5
+										) ; SStop) /\ interrupt -> SKIP)
+							within
+								Inactive [| {terminate} |> SKIP)
+								
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+							dbisim(let
+								Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+								
+								Termination = terminate -> SKIP
+								
+								Active 		= share__choice(true & (share__choice(set_a!3 -> SKIP)));true&CALL__move4(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1
+										);true&(share__choice(event1.in?a1 -> (SStop /\ set_a1!a1 -> SKIP)));true&(share__choice(event2.in?a3 -> (SStop /\ set_a3!a3 -> SKIP)));share__choice(share__choice(get_m?m -> true & (share__choice(set_m!Plus(m, const_pkg0_M_C1_stm0_c1, core_int) -> SKIP)))) ; 
+										 	  Behaviour ; 
+										 	  share__choice(exit -> SKIP) ; true&CALL__move1(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			5
+										 	  		);true&CALL__move(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			1,
+										 	  			2
+										 	  		) ; 
+										 	  share__choice(exited -> SKIP) ; Inactive
+							
+								Behaviour 	= entered -> During
+								During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1,
+											4,
+											5
+										) ; SStop) /\ interrupt -> SKIP)
+							within
+								Inactive [| {terminate} |> SKIP)
+							
+							
+							-- Clocks
+							
+							StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1) = terminate -> SKIP
+							
+							stateClockSync = {||}
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					
+					----------------------------------------------------------------------
+					-- Final state: f0
+					module f0
+					
+					exports
+					
+						channel enter, entered, interrupt
+						channel enteredL, enteredR
+						
+						Timed(OneStep) {
+							--	Rule: behaviours(Node)
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Entering
+									
+									Entering 	= entered -> SKIP ; Active
+									Active		= share__choice(terminate -> SKIP [] interrupt -> SKIP) ; Interrupted
+									Interrupted	= share__choice(exit -> exited -> Inactive)
+								within
+									Inactive [| {terminate} |> SKIP)
+								
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					-- END of Nodes --
+					
+					Timed(OneStep) {
+					-- Operation calls --
+					-- Only the undefined operations are declared here.
+					-- If the state machine is in isolation, all required operations will be undefined.
+					-- If it is in the context of a controller, the required operations not provided by the
+					-- controller will be declared here, and the defined operations will be defined in the
+					-- context of the Controller module, and therefore within scope of the state machine module.
+					CALL__move2(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move2Call.param_lv.param_a,0)
+					CALL__move5(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move5Call.param_lv.param_a,0)
+					CALL__move4(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = EDeadline(move4Call,0)
+					
+					CALL__move(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = (OP_move::O__(id__,
+								param_lv,
+								param_a))
+					[[
+						OP_move::mv_evt1 <- mv_evt1
+					]]
+					-- END of Operation calls --
+				
+					-- STM processes
+					STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+					( 
+						(
+							(
+								(IteratedStateful(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1) \ {terminate} ; share__choice(terminate -> SKIP))
+							 	[[ share__ <- x__ | x__ <- {|set_EXT_m,set_EXT_a1,set_EXT_a3|} ]]
+							)
+						[| {share__} |]
+						SKIP
+						)
+						[| union(sharedVarSync,{terminate}) |]
+						dbisim(sharedVarMemory(id__,
+								    const_pkg0_M_C1_stm0_c2,
+								    const_pkg0_M_C1_stm0_c3,
+								    const_pkg0_M_C1_stm0_c6,
+								    const_pkg0_M_C1_stm0_c1))
+					)\sharedVarHide
+					
+					STM_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+					( 
+						(
+							(
+								(IteratedStateful_VS_O(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1) \ {terminate} ; share__choice(terminate -> SKIP))
+							 	[[ share__ <- x__ | x__ <- {|set_EXT_m,set_EXT_a1,set_EXT_a3|} ]]
+							)
+						[| {share__} |]
+						SKIP
+						)
+						[| union(sharedVarSync,{terminate}) |]
+						dbisim(sharedVarMemory(id__,
+								    const_pkg0_M_C1_stm0_c2,
+								    const_pkg0_M_C1_stm0_c3,
+								    const_pkg0_M_C1_stm0_c6,
+								    const_pkg0_M_C1_stm0_c1))
+					)\sharedVarHide
+					
+					-- Transitions
+					Transitions(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = ((let
+						Trans = share__choice(get_a3?a3 -> TimeOut_1(
+							 (share__ -> SKIP
+							 [] dbisim((true)&(internal__!NID_i0 -> SKIP ;  ((SKIP ; s0::enter -> SKIP))))
+							 [] dbisim((true)&(stop__!NID_s0.in -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; f0::enter -> SKIP)))
+							 [] dbisim((event2__!NID_s0.in?a:{a|a <- core_int, (a3>4)} -> share__choice(set_a!a -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(get_a3?a3 -> true&(share__choice(trigger1.out!(Plus(Plus(a3, const_pkg0_M_C1_stm0_c2, core_int), const_pkg0_M_C1_stm0_c3, core_int)) -> SKIP))) ; s0::enter -> SKIP)))
+							 []
+							 (interrupt -> share__choice(exit -> SKIP) ; share__choice(exited -> terminate -> SKIP))
+							 []
+							 terminate -> SKIP
+							 )
+						,SKIP);Trans
+						)
+					within
+						Trans [|{terminate}|> SKIP
+					)
+					)
+					
+					-- Stateful
+					-- RULE: Stateful(stm:StateMachineBody) : CSPProcess
+					
+					-- Named process definitions
+					MachineBody(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								s0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0,stop__.NID_s0.in,event2__.NID_s0.in|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   s0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   f0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   )
+									   )
+									 )
+									 [[s0::interrupt <- x__ | x__ <- {|interrupt,stop__.NID_s0.in,event2__.NID_s0.in|}]]
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__,setR_a |} ]] 
+									  [[set_a3 <- setL_a3]]
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									 			,setL_a3
+									 			,setR_a
+									 			|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 		    const_pkg0_M_C1_stm0_c2,
+									 		    const_pkg0_M_C1_stm0_c3,
+									 		    const_pkg0_M_C1_stm0_c6,
+									 		    const_pkg0_M_C1_stm0_c1))
+									  [[ share__ <- x__ | x__ <- {| share__,setL_a3 |} ]]
+									  [[set_a <- setR_a]]
+									 )
+									)[[setL_a3 <- set_a3]]
+									 [[setR_a <- set_a]]
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1,
+									stop__.x____ <- stop,
+									event1__.x____ <- event1,
+									event2__.x____ <- event2,
+									trigger1__.x____ <- trigger1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(MachineBody(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)) \ union(stateClockSync,enteredSS)
+						)
+						)
+					
+					IteratedBehaviour(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(dbisim(
+								sbisim(
+									MachineBody(id__,
+											    const_pkg0_M_C1_stm0_c2,
+											    const_pkg0_M_C1_stm0_c3,
+											    const_pkg0_M_C1_stm0_c6,
+											    const_pkg0_M_C1_stm0_c1)
+									[| {|get_CLID_s0,s0::entered,terminate|} |]
+									dbisim(Clock_CLID_s0(id__,0,
+											          const_pkg0_M_C1_stm0_c2,
+											          const_pkg0_M_C1_stm0_c3,
+											          const_pkg0_M_C1_stm0_c6,
+											          const_pkg0_M_C1_stm0_c1))
+								)\{|get_CLID_s0|}
+							)
+							) \ union(stateClockSync,enteredSS)
+						)
+						)
+					
+					Stateful(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						((let
+							getsetLocalChannels = {|get_l,set_l,
+							get_a,set_a|}
+							clockSync = {||}
+						within
+							(Behaviour(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 		    const_pkg0_M_C1_stm0_c2,
+							 		    const_pkg0_M_C1_stm0_c3,
+							 		    const_pkg0_M_C1_stm0_c6,
+							 		    const_pkg0_M_C1_stm0_c1) [| {terminate} |] Clocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					IteratedStateful(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) =
+						(dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										IteratedBehaviour(id__,
+												    const_pkg0_M_C1_stm0_c2,
+												    const_pkg0_M_C1_stm0_c3,
+												    const_pkg0_M_C1_stm0_c6,
+												    const_pkg0_M_C1_stm0_c1)
+										[| {|get_a,set_a,terminate|} |]
+										Memory_a(0)
+									)\{|get_a,set_a|}
+								)
+								[| {|get_l,set_l,terminate|} |]
+								Memory_l(const_pkg0_M_C1_stm0_c6)
+							)\{|get_l,set_l|}
+						)
+						)
+					
+					-- Visible counterparts
+					MachineBody_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								s0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0,stop__.NID_s0.in,event2__.NID_s0.in|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   s0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   f0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   )
+									   )
+									 )
+									 [[s0::interrupt <- x__ | x__ <- {|interrupt,stop__.NID_s0.in,event2__.NID_s0.in|}]]
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__,setR_a |} ]] 
+									  [[set_a3 <- setL_a3]]
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									 			,setL_a3
+									 			,setR_a
+									 			|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 		    const_pkg0_M_C1_stm0_c2,
+									 		    const_pkg0_M_C1_stm0_c3,
+									 		    const_pkg0_M_C1_stm0_c6,
+									 		    const_pkg0_M_C1_stm0_c1))
+									  [[ share__ <- x__ | x__ <- {| share__,setL_a3 |} ]]
+									  [[set_a <- setR_a]]
+									 )
+									)[[setL_a3 <- set_a3]]
+									 [[setR_a <- set_a]]
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1,
+									stop__.x____ <- stop,
+									event1__.x____ <- event1,
+									event2__.x____ <- event2,
+									trigger1__.x____ <- trigger1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(MachineBody_VS_O(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+						)
+						)
+					
+					IteratedBehaviour_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(dbisim(
+								sbisim(
+									MachineBody_VS_O(id__,
+											    const_pkg0_M_C1_stm0_c2,
+											    const_pkg0_M_C1_stm0_c3,
+											    const_pkg0_M_C1_stm0_c6,
+											    const_pkg0_M_C1_stm0_c1)
+									[| {|get_CLID_s0,s0::entered,terminate|} |]
+									dbisim(Clock_CLID_s0(id__,0,
+											          const_pkg0_M_C1_stm0_c2,
+											          const_pkg0_M_C1_stm0_c3,
+											          const_pkg0_M_C1_stm0_c6,
+											          const_pkg0_M_C1_stm0_c1))
+								)\{|get_CLID_s0|}
+							)
+							) \ diff(union(stateClockSync,enteredSS),enteredSS)
+						)
+						)
+					
+					Stateful_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							getsetLocalChannels = {|get_l,set_l,
+							get_a,set_a|}
+							clockSync = {||}
+						within
+							(Behaviour_VS_O(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 		    const_pkg0_M_C1_stm0_c2,
+							 		    const_pkg0_M_C1_stm0_c3,
+							 		    const_pkg0_M_C1_stm0_c6,
+							 		    const_pkg0_M_C1_stm0_c1) [| {terminate} |] Clocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					IteratedStateful_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) =
+						(dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										IteratedBehaviour_VS_O(id__,
+												    const_pkg0_M_C1_stm0_c2,
+												    const_pkg0_M_C1_stm0_c3,
+												    const_pkg0_M_C1_stm0_c6,
+												    const_pkg0_M_C1_stm0_c1)
+										[| {|get_a,set_a,terminate|} |]
+										Memory_a(0)
+									)\{|get_a,set_a|}
+								)
+								[| {|get_l,set_l,terminate|} |]
+								Memory_l(const_pkg0_M_C1_stm0_c6)
+							)\{|get_l,set_l|}
+						)
+						)
+					
+					-- END
+					
+					-- Memory
+					-- Memory variables
+					Memory_l(l) =
+						get_l!l -> Memory_l(l)
+						[]
+						set_l?x__ -> Memory_l(x__)
+						[]
+						terminate -> SKIP
+					Memory_a(a) =
+						get_a!a -> Memory_a(a)
+						[]
+						set_a?x__ -> Memory_a(x__)
+						[]
+						terminate -> SKIP
+					
+					-- varMemory process
+					varMemory(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = Memory_l(const_pkg0_M_C1_stm0_c6)
+					[| { terminate } |] (
+					Memory_a(0)
+					)
+					
+					getsetLocalChannels = {|get_l,set_l,get_a,set_a|}
+					
+					-- Definition of the behaviour of state machines (default, optimised, visible, visible and optimised)
+					FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = STM_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ localClockResets
+					D__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = timed_priority(STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ union(internal_events,localClockResets))
+					O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(D__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1))
+					VS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1)
+					VS_O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1))
+					HEXT__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) [|shared_variable_events|] SKIP
+					FVS_C__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(timed_priority(STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ internal_events))
+					HUP__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = timed_priority(O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) [|{share__}|] SKIP)
+					
+					-- Clocks
+					
+					Clocks(id__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = terminate -> SKIP
+					
+					clockSync = {||}
+					
+					Clock_CLID_s0(id__,x__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = 
+						TimeOut_1(
+							s0::entered -> Clock_CLID_s0(id__,0,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)
+							[]
+							get_CLID_s0!x__ -> Clock_CLID_s0(id__,x__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)
+							[]
+							terminate -> SKIP,Clock_CLID_s0(id__,clock_type_plus(x__,1,CLID_s0_clock_type(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)),
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1))
+					
+					StateClocks(id__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = dbisim(Clock_CLID_s0(id__,0,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1))
+					
+					stateClockSync = {|get_CLID_s0,s0::entered|}
+					
+					-- Shared memory
+					-- Shared memory variables
+					Memory_m(m) =
+						get_m!m -> Memory_m(m)
+						[]
+						set_m?x__ -> Memory_m(x__)
+						[]
+						set_EXT_m?x__ -> Memory_m(x__)
+						[]
+						terminate -> SKIP
+					Memory_a1(a1) =
+						get_a1!a1 -> Memory_a1(a1)
+						[]
+						set_a1?x__ -> Memory_a1(x__)
+						[]
+						set_EXT_a1?x__ -> Memory_a1(x__)
+						[]
+						terminate -> SKIP
+					Memory_a3(a3) =
+						get_a3!a3 -> Memory_a3(a3)
+						[]
+						set_a3?x__ -> Memory_a3(x__)
+						[]
+						set_EXT_a3?x__ -> Memory_a3(x__)
+						[]
+						terminate -> SKIP
+					
+					-- sharedVarMemory process
+					sharedVarMemory(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = Memory_m(0)
+					[| { terminate } |] (
+					Memory_a1((0,0))
+					[| { terminate } |] (
+					Memory_a3(0)
+					)
+					)
+					
+					sharedVarSync = {|get_m,set_m,set_EXT_m,get_a1,set_a1,set_EXT_a1,get_a3,set_a3,set_EXT_a3|}
+					
+					sharedVarHide = {|get_m,get_a1,get_a3|}
+					}
+			endmodule
+			module stm1
+			exports
+				transparent diamond
+				transparent sbisim
+				transparent dbisim
+				transparent chase
+			
+				-- Transition identifiers
+				-- declaring identifiers of transitions
+				datatype NIDS = 
+				              NID_i0|
+				              NID_s0|
+				              NID_f0
+				
+				channel internal__ : NIDS
+				
+				-- Flow channels		
+				channel interrupt
+				channel exited
+				channel exit
+				channel terminate
+				
+				-- Variable channels
+				channel get_l, set_l, setL_l, setR_l: core_int
+				channel get_a, set_a, setL_a, setR_a: core_int
+				channel get_m, set_m, setL_m, setR_m: core_int
+				channel get_a1, set_a1, setL_a1, setR_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel get_a3, set_a3, setL_a3, setR_a3: core_int
+				
+				-- Shared variable channels
+				channel set_EXT_m: core_int
+				channel set_EXT_a1: {(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel set_EXT_a3: core_int
+				
+				-- Local variable channels for defined operations that are required by the state machine
+				channel get_move_mv_var1, set_move_mv_var1: core_int
+				channel get_move_mv_var2, set_move_mv_var2: core_int
+				
+				-- Declaring state machine events
+				channel mv_evt1__: NIDS.InOut.core_int
+				channel mv_evt1: InOut.core_int
+				channel stop__: NIDS.InOut
+				channel stop: InOut
+				channel event1__: NIDS.InOut.{(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel event1: InOut.{(x0__,x1__) | x0__ <- core_int,x1__ <- core_int}
+				channel event2__: NIDS.InOut.core_int
+				channel event2: InOut.core_int
+				channel trigger1__: NIDS.InOut.core_int
+				channel trigger1: InOut.core_int
+				
+				-- Declaring call and ret events for undefined operations
+				channel move2Call: core_real.core_int
+				channel move5Call: core_real.core_int
+				channel move4Call
+				
+				enterSS = {|
+				i0::enter,
+				s0::enter,
+				f0::enter
+				|}
+				
+				enteredSS = 	{|
+				s0::entered,
+				f0::entered
+				|}
+				
+				internal_events = union(enteredSS,union(enterSS,{|interrupt,exited|}))
+				
+				shared_variable_events = {|
+					set_EXT_m,
+					set_EXT_a1,
+					set_EXT_a3
+				|}
+				
+				-- channel set with all visible events
+				sem__events = {|
+					terminate
+				,	set_EXT_m, set_m,
+					set_EXT_a1, set_a1,
+					set_EXT_a3, set_a3
+				,	mv_evt1,
+					stop,
+					event1,
+					event2,
+					trigger1
+				,	move2Call,
+					move5Call,
+					move4Call
+					|}
+				
+				channel clockReset, clockResetL, clockResetR 
+				
+				localClockResets = {||}
+				
+				
+				channel get_CLID_s0 : core_clock_type 
+				channel get_CLID_f0 : core_clock_type 
+				--channel increment__
+				
+				CLID_s0_clock_type(id__,
+						          const_pkg0_M_C1_stm0_c2,
+						          const_pkg0_M_C1_stm0_c3,
+						          const_pkg0_M_C1_stm0_c6,
+						          const_pkg0_M_C1_stm0_c1) = 
+					let
+						max = (clock_type_max(Union({
+				{}
+				}))+1)
+					ctype = {0..max}
+				within
+					if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+				
+				CLID_f0_clock_type(id__,
+						          const_pkg0_M_C1_stm0_c2,
+						          const_pkg0_M_C1_stm0_c3,
+						          const_pkg0_M_C1_stm0_c6,
+						          const_pkg0_M_C1_stm0_c1) = 
+					let
+						max = (clock_type_max(Union({
+				{}
+				}))+1)
+					ctype = {0..max}
+				within
+					if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+				
+				
+			
+					-- Nodes --
+					-- declaring all nodes
+					
+					----------------------------------------------------------------------
+					-- Initial: i0
+					module i0
+					exports
+					
+						channel enter, interrupt
+						
+						Timed(OneStep) {
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+									
+									Termination = terminate -> SKIP
+									
+									Active 		= share__choice(interrupt -> SKIP) ; Inactive
+								within
+									Inactive [| {terminate} |> SKIP)
+							
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					
+					----------------------------------------------------------------------
+					-- State: s0
+					module s0
+					
+					enterSS = {}
+					
+					enteredSS = {}
+					
+					exports
+					
+						--  Declarations
+						
+						channel enter, entered, interrupt
+						channel enteredL, enteredR
+						
+										
+						
+						--channel increment__
+						
+						
+						--	Nodes
+						-- declaring all nodes
+						
+						
+						Timed(OneStep) {
+							--	Rule: behaviours(Node)
+							--  Note that FDR has problems with efficiently compiling the process below
+							-- 	if using a different recursion pattern.
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+							dbisim(let
+								-- IMPLEMENTATION NOTE: 
+								-- The following should be defined as: Inactive = share__choice(Activation [] Termination),
+								-- however FDR struggles with that form in certain cases. So we use the exception operator
+								-- instead to 'terminate'.
+								
+								Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+								
+								Termination = terminate -> SKIP
+								
+								Active 		= share__choice(true & (share__choice(set_a!3 -> SKIP)));true&CALL__move4(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1
+										);true&(share__choice(event1.in?a1 -> (SStop /\ set_a1!a1 -> SKIP)));true&(share__choice(event2.in?a3 -> (SStop /\ set_a3!a3 -> SKIP)));share__choice(share__choice(get_m?m -> true & (share__choice(set_m!Plus(m, const_pkg0_M_C1_stm0_c1, core_int) -> SKIP)))) ; 
+										 	  Behaviour ; 
+										 	  share__choice(exit -> SKIP) ; true&CALL__move1(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			5
+										 	  		);true&CALL__move(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			1,
+										 	  			2
+										 	  		) ; 
+										 	  share__choice(exited -> SKIP) ; Inactive
+							
+								Behaviour 	= entered -> During
+								During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1,
+											4,
+											5
+										) ; SStop) /\ interrupt -> SKIP)
+							within
+								Inactive [| {terminate} |> SKIP)
+								
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+							dbisim(let
+								Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+								
+								Termination = terminate -> SKIP
+								
+								Active 		= share__choice(true & (share__choice(set_a!3 -> SKIP)));true&CALL__move4(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1
+										);true&(share__choice(event1.in?a1 -> (SStop /\ set_a1!a1 -> SKIP)));true&(share__choice(event2.in?a3 -> (SStop /\ set_a3!a3 -> SKIP)));share__choice(share__choice(get_m?m -> true & (share__choice(set_m!Plus(m, const_pkg0_M_C1_stm0_c1, core_int) -> SKIP)))) ; 
+										 	  Behaviour ; 
+										 	  share__choice(exit -> SKIP) ; true&CALL__move1(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			5
+										 	  		);true&CALL__move(
+										 	  			id__,
+										 	  		    const_pkg0_M_C1_stm0_c2,
+										 	  		    const_pkg0_M_C1_stm0_c3,
+										 	  		    const_pkg0_M_C1_stm0_c6,
+										 	  		    const_pkg0_M_C1_stm0_c1,
+										 	  			1,
+										 	  			2
+										 	  		) ; 
+										 	  share__choice(exited -> SKIP) ; Inactive
+							
+								Behaviour 	= entered -> During
+								During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+											id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1,
+											4,
+											5
+										) ; SStop) /\ interrupt -> SKIP)
+							within
+								Inactive [| {terminate} |> SKIP)
+							
+							
+							-- Clocks
+							
+							StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1) = terminate -> SKIP
+							
+							stateClockSync = {||}
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					
+					----------------------------------------------------------------------
+					-- Final state: f0
+					module f0
+					
+					exports
+					
+						channel enter, entered, interrupt
+						channel enteredL, enteredR
+						
+						Timed(OneStep) {
+							--	Rule: behaviours(Node)
+							D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = 
+								dbisim(let
+									Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Entering
+									
+									Entering 	= entered -> SKIP ; Active
+									Active		= share__choice(terminate -> SKIP [] interrupt -> SKIP) ; Interrupted
+									Interrupted	= share__choice(exit -> exited -> Inactive)
+								within
+									Inactive [| {terminate} |> SKIP)
+								
+							VS_O__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) = D__(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1)
+						}
+					
+					endmodule
+					----------------------------------------------------------------------
+					
+					-- END of Nodes --
+					
+					Timed(OneStep) {
+					-- Operation calls --
+					-- Only the undefined operations are declared here.
+					-- If the state machine is in isolation, all required operations will be undefined.
+					-- If it is in the context of a controller, the required operations not provided by the
+					-- controller will be declared here, and the defined operations will be defined in the
+					-- context of the Controller module, and therefore within scope of the state machine module.
+					CALL__move2(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move2Call.param_lv.param_a,0)
+					CALL__move5(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move5Call.param_lv.param_a,0)
+					CALL__move4(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = EDeadline(move4Call,0)
+					
+					CALL__move(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = (OP_move::O__(id__,
+								param_lv,
+								param_a))
+					[[
+						OP_move::mv_evt1 <- mv_evt1
+					]]
+					-- END of Operation calls --
+				
+					-- STM processes
+					STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+					( 
+						(
+							(
+								(IteratedStateful(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1) \ {terminate} ; share__choice(terminate -> SKIP))
+							 	[[ share__ <- x__ | x__ <- {|set_EXT_m,set_EXT_a1,set_EXT_a3|} ]]
+							)
+						[| {share__} |]
+						SKIP
+						)
+						[| union(sharedVarSync,{terminate}) |]
+						dbisim(sharedVarMemory(id__,
+								    const_pkg0_M_C1_stm0_c2,
+								    const_pkg0_M_C1_stm0_c3,
+								    const_pkg0_M_C1_stm0_c6,
+								    const_pkg0_M_C1_stm0_c1))
+					)\sharedVarHide
+					
+					STM_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = -- RULE: [[stm:StateMachineDef]]_STM^nops : CSPProcess
+					( 
+						(
+							(
+								(IteratedStateful_VS_O(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1) \ {terminate} ; share__choice(terminate -> SKIP))
+							 	[[ share__ <- x__ | x__ <- {|set_EXT_m,set_EXT_a1,set_EXT_a3|} ]]
+							)
+						[| {share__} |]
+						SKIP
+						)
+						[| union(sharedVarSync,{terminate}) |]
+						dbisim(sharedVarMemory(id__,
+								    const_pkg0_M_C1_stm0_c2,
+								    const_pkg0_M_C1_stm0_c3,
+								    const_pkg0_M_C1_stm0_c6,
+								    const_pkg0_M_C1_stm0_c1))
+					)\sharedVarHide
+					
+					-- Transitions
+					Transitions(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = ((let
+						Trans = share__choice(get_a3?a3 -> TimeOut_1(
+							 (share__ -> SKIP
+							 [] dbisim((true)&(internal__!NID_i0 -> SKIP ;  ((SKIP ; s0::enter -> SKIP))))
+							 [] dbisim((true)&(stop__!NID_s0.in -> SKIP ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; SKIP ; f0::enter -> SKIP)))
+							 [] dbisim((event2__!NID_s0.in?a:{a|a <- core_int, (a3>4)} -> share__choice(set_a!a -> SKIP) ;  share__choice(exit -> SKIP) ; (share__choice(exited -> SKIP) ; share__choice(get_a3?a3 -> true&(share__choice(trigger1.out!(Plus(Plus(a3, const_pkg0_M_C1_stm0_c2, core_int), const_pkg0_M_C1_stm0_c3, core_int)) -> SKIP))) ; s0::enter -> SKIP)))
+							 []
+							 (interrupt -> share__choice(exit -> SKIP) ; share__choice(exited -> terminate -> SKIP))
+							 []
+							 terminate -> SKIP
+							 )
+						,SKIP);Trans
+						)
+					within
+						Trans [|{terminate}|> SKIP
+					)
+					)
+					
+					-- Stateful
+					-- RULE: Stateful(stm:StateMachineBody) : CSPProcess
+					
+					-- Named process definitions
+					MachineBody(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								s0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0,stop__.NID_s0.in,event2__.NID_s0.in|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   s0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   f0::D__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   )
+									   )
+									 )
+									 [[s0::interrupt <- x__ | x__ <- {|interrupt,stop__.NID_s0.in,event2__.NID_s0.in|}]]
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__,setR_a |} ]] 
+									  [[set_a3 <- setL_a3]]
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									 			,setL_a3
+									 			,setR_a
+									 			|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 		    const_pkg0_M_C1_stm0_c2,
+									 		    const_pkg0_M_C1_stm0_c3,
+									 		    const_pkg0_M_C1_stm0_c6,
+									 		    const_pkg0_M_C1_stm0_c1))
+									  [[ share__ <- x__ | x__ <- {| share__,setL_a3 |} ]]
+									  [[set_a <- setR_a]]
+									 )
+									)[[setL_a3 <- set_a3]]
+									 [[setR_a <- set_a]]
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1,
+									stop__.x____ <- stop,
+									event1__.x____ <- event1,
+									event2__.x____ <- event2,
+									trigger1__.x____ <- trigger1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(MachineBody(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)) \ union(stateClockSync,enteredSS)
+						)
+						)
+					
+					IteratedBehaviour(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(dbisim(
+								sbisim(
+									MachineBody(id__,
+											    const_pkg0_M_C1_stm0_c2,
+											    const_pkg0_M_C1_stm0_c3,
+											    const_pkg0_M_C1_stm0_c6,
+											    const_pkg0_M_C1_stm0_c1)
+									[| {|get_CLID_s0,s0::entered,terminate|} |]
+									dbisim(Clock_CLID_s0(id__,0,
+											          const_pkg0_M_C1_stm0_c2,
+											          const_pkg0_M_C1_stm0_c3,
+											          const_pkg0_M_C1_stm0_c6,
+											          const_pkg0_M_C1_stm0_c1))
+								)\{|get_CLID_s0|}
+							)
+							) \ union(stateClockSync,enteredSS)
+						)
+						)
+					
+					Stateful(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						((let
+							getsetLocalChannels = {|get_l,set_l,
+							get_a,set_a|}
+							clockSync = {||}
+						within
+							(Behaviour(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 		    const_pkg0_M_C1_stm0_c2,
+							 		    const_pkg0_M_C1_stm0_c3,
+							 		    const_pkg0_M_C1_stm0_c6,
+							 		    const_pkg0_M_C1_stm0_c1) [| {terminate} |] Clocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					IteratedStateful(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) =
+						(dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										IteratedBehaviour(id__,
+												    const_pkg0_M_C1_stm0_c2,
+												    const_pkg0_M_C1_stm0_c3,
+												    const_pkg0_M_C1_stm0_c6,
+												    const_pkg0_M_C1_stm0_c1)
+										[| {|get_a,set_a,terminate|} |]
+										Memory_a(0)
+									)\{|get_a,set_a|}
+								)
+								[| {|get_l,set_l,terminate|} |]
+								Memory_l(const_pkg0_M_C1_stm0_c6)
+							)\{|get_l,set_l|}
+						)
+						)
+					
+					-- Visible counterparts
+					MachineBody_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((
+						let
+							finalNodesEntered = {|f0::entered|}
+						within
+							(dbisim((dbisim((let
+								-- IMPLEMENTATION NOTE:
+								-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+								-- modules for defining the semantics of each node.
+								enterSS = {|
+								i0::enter,
+								s0::enter,
+								f0::enter
+								|}
+								hideSet = union(enterSS,{|exit,exited,internal__|})
+							within 
+								((let
+									-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+									-- because CSPM modules are used for the semantics of Node.
+									flowevts = union(enterSS,{|exit,exited,interrupt|})
+									transSync = {|internal__.NID_i0,stop__.NID_s0.in,event2__.NID_s0.in|}
+								within
+									((
+									 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+									   i0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   s0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   [| { share__, terminate } |] (
+									   f0::VS_O__(id__,
+									   		    const_pkg0_M_C1_stm0_c2,
+									   		    const_pkg0_M_C1_stm0_c3,
+									   		    const_pkg0_M_C1_stm0_c6,
+									   		    const_pkg0_M_C1_stm0_c1)
+									   )
+									   )
+									 )
+									 [[s0::interrupt <- x__ | x__ <- {|interrupt,stop__.NID_s0.in,event2__.NID_s0.in|}]]
+									 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+									 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+									 )
+									  [[ share__ <- x__ | x__ <- {| share__,setR_a |} ]] 
+									  [[set_a3 <- setL_a3]]
+									 )
+									 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+									 			,setL_a3
+									 			,setR_a
+									 			|}) |]
+									 ((i0::enter -> Transitions(id__,
+									 		    const_pkg0_M_C1_stm0_c2,
+									 		    const_pkg0_M_C1_stm0_c3,
+									 		    const_pkg0_M_C1_stm0_c6,
+									 		    const_pkg0_M_C1_stm0_c1))
+									  [[ share__ <- x__ | x__ <- {| share__,setL_a3 |} ]]
+									  [[set_a <- setR_a]]
+									 )
+									)[[setL_a3 <- set_a3]]
+									 [[setR_a <- set_a]]
+									)
+								)
+								 \ hideSet)
+								[[
+									mv_evt1__.x____ <- mv_evt1,
+									stop__.x____ <- stop,
+									event1__.x____ <- event1,
+									event2__.x____ <- event2,
+									trigger1__.x____ <- trigger1
+									| x____ <- NIDS
+								]]
+							)
+							)
+							 [| union(stateClockSync,{terminate}) |]
+							 StateClocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1)
+							)\diff(stateClockSync,enteredSS))
+							 [| {| interrupt |} |] SKIP)
+						)
+						)
+					
+					Behaviour_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(MachineBody_VS_O(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) [| union(stateClockSync,{terminate}) |] StateClocks(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+						)
+						)
+					
+					IteratedBehaviour_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							stateClockSync = {|get_CLID_s0,s0::entered|}
+						 within
+							(dbisim(
+								sbisim(
+									MachineBody_VS_O(id__,
+											    const_pkg0_M_C1_stm0_c2,
+											    const_pkg0_M_C1_stm0_c3,
+											    const_pkg0_M_C1_stm0_c6,
+											    const_pkg0_M_C1_stm0_c1)
+									[| {|get_CLID_s0,s0::entered,terminate|} |]
+									dbisim(Clock_CLID_s0(id__,0,
+											          const_pkg0_M_C1_stm0_c2,
+											          const_pkg0_M_C1_stm0_c3,
+											          const_pkg0_M_C1_stm0_c6,
+											          const_pkg0_M_C1_stm0_c1))
+								)\{|get_CLID_s0|}
+							)
+							) \ diff(union(stateClockSync,enteredSS),enteredSS)
+						)
+						)
+					
+					Stateful_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = 
+						dbisim((let
+							getsetLocalChannels = {|get_l,set_l,
+							get_a,set_a|}
+							clockSync = {||}
+						within
+							(Behaviour_VS_O(id__,
+									    const_pkg0_M_C1_stm0_c2,
+									    const_pkg0_M_C1_stm0_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1) 
+							 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+							 (varMemory(id__,
+							 		    const_pkg0_M_C1_stm0_c2,
+							 		    const_pkg0_M_C1_stm0_c3,
+							 		    const_pkg0_M_C1_stm0_c6,
+							 		    const_pkg0_M_C1_stm0_c1) [| {terminate} |] Clocks(id__,
+							 		          const_pkg0_M_C1_stm0_c2,
+							 		          const_pkg0_M_C1_stm0_c3,
+							 		          const_pkg0_M_C1_stm0_c6,
+							 		          const_pkg0_M_C1_stm0_c1))
+						 	)\union(getsetLocalChannels,clockSync)
+						)
+						)
+					
+					IteratedStateful_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) =
+						(dbisim(
+							sbisim(
+								dbisim(
+									sbisim(
+										IteratedBehaviour_VS_O(id__,
+												    const_pkg0_M_C1_stm0_c2,
+												    const_pkg0_M_C1_stm0_c3,
+												    const_pkg0_M_C1_stm0_c6,
+												    const_pkg0_M_C1_stm0_c1)
+										[| {|get_a,set_a,terminate|} |]
+										Memory_a(0)
+									)\{|get_a,set_a|}
+								)
+								[| {|get_l,set_l,terminate|} |]
+								Memory_l(const_pkg0_M_C1_stm0_c6)
+							)\{|get_l,set_l|}
+						)
+						)
+					
+					-- END
+					
+					-- Memory
+					-- Memory variables
+					Memory_l(l) =
+						get_l!l -> Memory_l(l)
+						[]
+						set_l?x__ -> Memory_l(x__)
+						[]
+						terminate -> SKIP
+					Memory_a(a) =
+						get_a!a -> Memory_a(a)
+						[]
+						set_a?x__ -> Memory_a(x__)
+						[]
+						terminate -> SKIP
+					
+					-- varMemory process
+					varMemory(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = Memory_l(const_pkg0_M_C1_stm0_c6)
+					[| { terminate } |] (
+					Memory_a(0)
+					)
+					
+					getsetLocalChannels = {|get_l,set_l,get_a,set_a|}
+					
+					-- Definition of the behaviour of state machines (default, optimised, visible, visible and optimised)
+					FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = STM_VS_O(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ localClockResets
+					D__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = timed_priority(STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ union(internal_events,localClockResets))
+					O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(D__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1))
+					VS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1)
+					VS_O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(FVS__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1))
+					HEXT__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) [|shared_variable_events|] SKIP
+					FVS_C__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = dbisim(timed_priority(STM(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) \ internal_events))
+					HUP__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = timed_priority(O__(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) [|{share__}|] SKIP)
+					
+					-- Clocks
+					
+					Clocks(id__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = terminate -> SKIP
+					
+					clockSync = {||}
+					
+					Clock_CLID_s0(id__,x__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = 
+						TimeOut_1(
+							s0::entered -> Clock_CLID_s0(id__,0,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)
+							[]
+							get_CLID_s0!x__ -> Clock_CLID_s0(id__,x__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)
+							[]
+							terminate -> SKIP,Clock_CLID_s0(id__,clock_type_plus(x__,1,CLID_s0_clock_type(id__,
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1)),
+									          const_pkg0_M_C1_stm0_c2,
+									          const_pkg0_M_C1_stm0_c3,
+									          const_pkg0_M_C1_stm0_c6,
+									          const_pkg0_M_C1_stm0_c1))
+					
+					StateClocks(id__,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1) = dbisim(Clock_CLID_s0(id__,0,
+							          const_pkg0_M_C1_stm0_c2,
+							          const_pkg0_M_C1_stm0_c3,
+							          const_pkg0_M_C1_stm0_c6,
+							          const_pkg0_M_C1_stm0_c1))
+					
+					stateClockSync = {|get_CLID_s0,s0::entered|}
+					
+					-- Shared memory
+					-- Shared memory variables
+					Memory_m(m) =
+						get_m!m -> Memory_m(m)
+						[]
+						set_m?x__ -> Memory_m(x__)
+						[]
+						set_EXT_m?x__ -> Memory_m(x__)
+						[]
+						terminate -> SKIP
+					Memory_a1(a1) =
+						get_a1!a1 -> Memory_a1(a1)
+						[]
+						set_a1?x__ -> Memory_a1(x__)
+						[]
+						set_EXT_a1?x__ -> Memory_a1(x__)
+						[]
+						terminate -> SKIP
+					Memory_a3(a3) =
+						get_a3!a3 -> Memory_a3(a3)
+						[]
+						set_a3?x__ -> Memory_a3(x__)
+						[]
+						set_EXT_a3?x__ -> Memory_a3(x__)
+						[]
+						terminate -> SKIP
+					
+					-- sharedVarMemory process
+					sharedVarMemory(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1) = Memory_m(0)
+					[| { terminate } |] (
+					Memory_a1((0,0))
+					[| { terminate } |] (
+					Memory_a3(0)
+					)
+					)
+					
+					sharedVarSync = {|get_m,set_m,set_EXT_m,get_a1,set_a1,set_EXT_a1,get_a3,set_a3,set_EXT_a3|}
+					
+					sharedVarHide = {|get_m,get_a1,get_a3|}
+					}
+			endmodule
+			
+			Timed(OneStep) {
+					-- undefined operations
+					CALL__move2(id__,
+							    param_lv,
+							    param_a) 	= move2Call.param_lv.param_a -> SKIP
+					CALL__move5(id__,
+							    param_lv,
+							    param_a) 	= move5Call.param_lv.param_a -> SKIP
+					CALL__move4(id__) 	= move4Call -> SKIP
+					
+					-- declaring controller memory
+					Memory(id__, cv1, x, m, a1, a3, c2, c3) = (
+						set_cv1?x__ -> 
+						Memory(id__,x__,x,m,a1,a3,c2,c3)
+						  []
+						set_x?x__ -> 
+						Memory(id__,cv1,x__,m,a1,a3,c2,c3)
+					[]
+					set_EXT_m?x__ -> stm0::set_EXT_m!x__ -> stm1::set_EXT_m!x__ -> 
+					Memory(id__,cv1,x,x__,a1,a3,c2,c3)
+					 []
+					set_EXT_a1?x__ -> stm0::set_EXT_a1!x__ -> stm1::set_EXT_a1!x__ -> 
+					Memory(id__,cv1,x,m,x__,a3,c2,c3)
+					 []
+					set_EXT_a3?x__ -> stm0::set_EXT_a3!x__ -> stm1::set_EXT_a3!x__ -> 
+					Memory(id__,cv1,x,m,a1,x__,c2,c3)
+					)
+					
+					D__(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) = prioritise(	((
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm0::D__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm0::terminate <- terminate,
+									stm0::set_m <- set_m,
+									stm0::get_m <- get_m,
+									stm0::set_a1 <- set_a1,
+									stm0::get_a1 <- get_a1,
+									stm0::set_a3 <- set_a3,
+									stm0::get_a3 <- get_a3,
+									stm0::move2Call <- move2Call,
+									stm0::move5Call <- move5Call,
+									stm0::move4Call <- move4Call
+								]]
+								\ {|
+									stm0::mv_evt1,
+									stm0::stop,
+									stm0::event1,
+									stm0::event2,
+									stm0::trigger1
+								|}
+							)
+								[|{|terminate|}|]
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c1 = const_pkg0_M_C1_stm1_c1
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm1::D__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm1::terminate <- terminate,
+									stm1::set_m <- set_m,
+									stm1::get_m <- get_m,
+									stm1::set_a1 <- set_a1,
+									stm1::get_a1 <- get_a1,
+									stm1::set_a3 <- set_a3,
+									stm1::get_a3 <- get_a3,
+									stm1::move2Call <- move2Call,
+									stm1::move5Call <- move5Call,
+									stm1::move4Call <- move4Call
+								]]
+								\ {|
+									stm1::mv_evt1,
+									stm1::stop,
+									stm1::event1,
+									stm1::event2,
+									stm1::trigger1
+								|}
+							)
+						)
+						\diff(
+							{|terminate|},
+							{|terminate|}
+						)
+							[|
+								union(
+									{|
+										set_cv1,
+										set_x
+									|},
+									{|
+										stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+										stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+									|}
+								)
+							|]
+						Memory(id__, 0, 0, 0, (0,0), 0, const_pkg0_M_C1_c2, const_pkg0_M_C1_c3)
+					)
+					\ union(
+						{|
+							set_cv1, get_cv1,
+							set_x, get_x
+						|},
+						{|
+							stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+							stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+						|}
+					)
+					[|{|terminate|}|>SKIP
+					,<visibleMemoryEvents,{tock}>)
+					
+					-- VS version
+					VS__(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) = prioritise(	((
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm0::VS__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm0::terminate <- terminate,
+									stm0::set_m <- set_m,
+									stm0::get_m <- get_m,
+									stm0::set_a1 <- set_a1,
+									stm0::get_a1 <- get_a1,
+									stm0::set_a3 <- set_a3,
+									stm0::get_a3 <- get_a3,
+									stm0::move2Call <- move2Call,
+									stm0::move5Call <- move5Call,
+									stm0::move4Call <- move4Call
+								]]
+								\ {|
+									stm0::mv_evt1,
+									stm0::stop,
+									stm0::event1,
+									stm0::event2,
+									stm0::trigger1
+								|}
+							)
+								[|{|terminate|}|]
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c1 = const_pkg0_M_C1_stm1_c1
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm1::VS__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm1::terminate <- terminate,
+									stm1::set_m <- set_m,
+									stm1::get_m <- get_m,
+									stm1::set_a1 <- set_a1,
+									stm1::get_a1 <- get_a1,
+									stm1::set_a3 <- set_a3,
+									stm1::get_a3 <- get_a3,
+									stm1::move2Call <- move2Call,
+									stm1::move5Call <- move5Call,
+									stm1::move4Call <- move4Call
+								]]
+								\ {|
+									stm1::mv_evt1,
+									stm1::stop,
+									stm1::event1,
+									stm1::event2,
+									stm1::trigger1
+								|}
+							)
+						)
+						\diff(
+							{|terminate|},
+							{|terminate|}
+						)
+							[|
+								union(
+									{|
+										set_cv1,
+										set_x
+									|},
+									{|
+										stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+										stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+									|}
+								)
+							|]
+						Memory(id__, 0, 0, 0, (0,0), 0, const_pkg0_M_C1_c2, const_pkg0_M_C1_c3)
+					)
+					\ union(
+						{|
+							set_cv1, get_cv1,
+							set_x, get_x
+						|},
+						{|
+							stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+							stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+						|}
+					)
+					[|{|terminate|}|>SKIP
+					,<visibleMemoryEvents,{tock}>)
+				
+					-- O version (optimised) THESE TWO PROCESSES SHOULD BE KEPT IN SYNC WITH THE ABOVE TWO
+					O__(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) = dbisim(prioritise(	((
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm0::O__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm0::terminate <- terminate,
+									stm0::set_m <- set_m,
+									stm0::get_m <- get_m,
+									stm0::set_a1 <- set_a1,
+									stm0::get_a1 <- get_a1,
+									stm0::set_a3 <- set_a3,
+									stm0::get_a3 <- get_a3,
+									stm0::move2Call <- move2Call,
+									stm0::move5Call <- move5Call,
+									stm0::move4Call <- move4Call
+								]]
+								\ {|
+									stm0::mv_evt1,
+									stm0::stop,
+									stm0::event1,
+									stm0::event2,
+									stm0::trigger1
+								|}
+							)
+								[|{|terminate|}|]
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c1 = const_pkg0_M_C1_stm1_c1
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm1::O__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm1::terminate <- terminate,
+									stm1::set_m <- set_m,
+									stm1::get_m <- get_m,
+									stm1::set_a1 <- set_a1,
+									stm1::get_a1 <- get_a1,
+									stm1::set_a3 <- set_a3,
+									stm1::get_a3 <- get_a3,
+									stm1::move2Call <- move2Call,
+									stm1::move5Call <- move5Call,
+									stm1::move4Call <- move4Call
+								]]
+								\ {|
+									stm1::mv_evt1,
+									stm1::stop,
+									stm1::event1,
+									stm1::event2,
+									stm1::trigger1
+								|}
+							)
+						)
+						\diff(
+							{|terminate|},
+							{|terminate|}
+						)
+							[|
+								union(
+									{|
+										set_cv1,
+										set_x
+									|},
+									{|
+										stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+										stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+									|}
+								)
+							|]
+						dbisim(Memory(id__, 0, 0, 0, (0,0), 0, const_pkg0_M_C1_c2, const_pkg0_M_C1_c3))
+					)
+					\ union(
+						{|
+							set_cv1, get_cv1,
+							set_x, get_x
+						|},
+						{|
+							stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+							stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+						|}
+					)
+					[|{|terminate|}|>SKIP
+					,<visibleMemoryEvents,{tock}>))
+									
+					-- VS_O version
+					VS_O__(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) = dbisim(prioritise(	((
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm0::VS_O__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm0::terminate <- terminate,
+									stm0::set_m <- set_m,
+									stm0::get_m <- get_m,
+									stm0::set_a1 <- set_a1,
+									stm0::get_a1 <- get_a1,
+									stm0::set_a3 <- set_a3,
+									stm0::get_a3 <- get_a3,
+									stm0::move2Call <- move2Call,
+									stm0::move5Call <- move5Call,
+									stm0::move4Call <- move4Call
+								]]
+								\ {|
+									stm0::mv_evt1,
+									stm0::stop,
+									stm0::event1,
+									stm0::event2,
+									stm0::trigger1
+								|}
+							)
+								[|{|terminate|}|]
+							(
+								let
+									const_pkg0_M_C1_stm0_c6 = 8
+									const_pkg0_M_C1_stm0_c1 = const_pkg0_M_C1_stm1_c1
+									const_pkg0_M_C1_stm0_c2 = const_pkg0_M_C1_c2
+									const_pkg0_M_C1_stm0_c3 = const_pkg0_M_C1_c3
+								within 
+								stm1::VS_O__(id__,
+										    const_pkg0_M_C1_stm0_c2,
+										    const_pkg0_M_C1_stm0_c3,
+										    const_pkg0_M_C1_stm0_c6,
+										    const_pkg0_M_C1_stm0_c1)[[
+									stm1::terminate <- terminate,
+									stm1::set_m <- set_m,
+									stm1::get_m <- get_m,
+									stm1::set_a1 <- set_a1,
+									stm1::get_a1 <- get_a1,
+									stm1::set_a3 <- set_a3,
+									stm1::get_a3 <- get_a3,
+									stm1::move2Call <- move2Call,
+									stm1::move5Call <- move5Call,
+									stm1::move4Call <- move4Call
+								]]
+								\ {|
+									stm1::mv_evt1,
+									stm1::stop,
+									stm1::event1,
+									stm1::event2,
+									stm1::trigger1
+								|}
+							)
+						)
+						\diff(
+							{|terminate|},
+							{|terminate|}
+						)
+							[|
+								union(
+									{|
+										set_cv1,
+										set_x
+									|},
+									{|
+										stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+										stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+									|}
+								)
+							|]
+						dbisim(Memory(id__, 0, 0, 0, (0,0), 0, const_pkg0_M_C1_c2, const_pkg0_M_C1_c3))
+					)
+					\ union(
+						{|
+							set_cv1, get_cv1,
+							set_x, get_x
+						|},
+						{|
+							stm0::set_EXT_m,stm0::set_EXT_a1,stm0::set_EXT_a3,
+							stm1::set_EXT_m,stm1::set_EXT_a1,stm1::set_EXT_a3
+						|}
+					)
+					[|{|terminate|}|>SKIP
+					,<visibleMemoryEvents,{tock}>))
+				
+					HEXT(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) = O__(id__,
+							    const_pkg0_M_C1_c2,
+							    const_pkg0_M_C1_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+							    const_pkg0_M_C1_stm1_c6,
+							    const_pkg0_M_C1_stm1_c1) [|shared_variable_events|] SKIP			
+			}
+	
+		endmodule
+	
+	Timed(OneStep) {
+		visibleMemoryEvents = {|get_pv1,set_pv1,get_a1,set_a1,get_a3,set_a3,get_m,set_m|}
+		
+		-- declaring module memory
+		Memory(id__, pv1, a1, a3, m, c2, c3) = (
+						set_pv1?x__ -> 
+						Memory(id__,x__,a1,a3,m,c2,c3)
+						  []
+						set_a1?x__ -> 
+						C1::set_EXT_a1!x__ -> 
+						Memory(id__,pv1,x__,a3,m,c2,c3)
+						  []
+						set_a3?x__ -> 
+						C1::set_EXT_a3!x__ -> 
+						Memory(id__,pv1,a1,x__,m,c2,c3)
+						  []
+						set_m?x__ -> 
+						C1::set_EXT_m!x__ -> 
+						Memory(id__,pv1,a1,a3,x__,c2,c3)
+						)
+		
+		D__(id__,
+				    const_pkg0_M_P1_c2,
+				    const_pkg0_M_P1_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+				    const_pkg0_M_C1_stm1_c6,
+				    const_pkg0_M_C1_stm1_c1) = prioritise(	(
+				(
+					(SKIP)
+						[|{||}|]
+					(
+						(
+							let
+								const_pkg0_M_C1_c2 = const_pkg0_M_P1_c2
+								const_pkg0_M_C1_c3 = const_pkg0_M_P1_c3
+							within 
+							C1::D__(id__,
+									    const_pkg0_M_C1_c2,
+									    const_pkg0_M_C1_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1,
+									    const_pkg0_M_C1_stm1_c6,
+									    const_pkg0_M_C1_stm1_c1)[[
+								C1::terminate <- terminate,
+								C1::set_a1 <- set_a1,
+								C1::get_a1 <- get_a1,
+								C1::set_a3 <- set_a3,
+								C1::get_a3 <- get_a3,
+								C1::set_m <- set_m,
+								C1::get_m <- get_m,
+								C1::move2Call <- move2Call,
+								C1::move5Call <- move5Call,
+								C1::move4Call <- move4Call
+							]]
+							\ {|
+								C1::evta
+							|}
+						)
+							[|
+								union(
+									{|
+										set_pv1,
+										set_a1,
+										set_a3,
+										set_m
+									|},
+									{|
+										C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+									|}
+								)
+							|]
+						Memory(id__, 0, (0,0), 0, 0, const_pkg0_M_P1_c2, const_pkg0_M_P1_c3)
+					)
+				)
+				\ Union({
+					{|
+					|},
+					{|
+						C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+					|},
+					{|
+						get_pv1, set_pv1,
+						get_a1, set_a1,
+						get_a3, set_a3,
+						get_m, set_m
+					|}
+				})
+				[|{|terminate|}|>SKIP
+			)
+			\{|terminate|}
+		,<visibleMemoryEvents,{tock}>)
+		
+		-- visible state equivalent
+		
+		VS__(id__,
+				    const_pkg0_M_P1_c2,
+				    const_pkg0_M_P1_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+				    const_pkg0_M_C1_stm1_c6,
+				    const_pkg0_M_C1_stm1_c1) = prioritise(	(
+				(
+					(SKIP)
+						[|{||}|]
+					(
+						(
+							let
+								const_pkg0_M_C1_c2 = const_pkg0_M_P1_c2
+								const_pkg0_M_C1_c3 = const_pkg0_M_P1_c3
+							within 
+							C1::VS__(id__,
+									    const_pkg0_M_C1_c2,
+									    const_pkg0_M_C1_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1,
+									    const_pkg0_M_C1_stm1_c6,
+									    const_pkg0_M_C1_stm1_c1)[[
+								C1::terminate <- terminate,
+								C1::set_a1 <- set_a1,
+								C1::get_a1 <- get_a1,
+								C1::set_a3 <- set_a3,
+								C1::get_a3 <- get_a3,
+								C1::set_m <- set_m,
+								C1::get_m <- get_m,
+								C1::move2Call <- move2Call,
+								C1::move5Call <- move5Call,
+								C1::move4Call <- move4Call
+							]]
+							\ {|
+								C1::evta
+							|}
+						)
+							[|
+								union(
+									{|
+										set_pv1,
+										set_a1,
+										set_a3,
+										set_m
+									|},
+									{|
+										C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+									|}
+								)
+							|]
+						Memory(id__, 0, (0,0), 0, 0, const_pkg0_M_P1_c2, const_pkg0_M_P1_c3)
+					)
+				)
+				\ Union({
+					{|
+					|},
+					{|
+						C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+					|},
+					{|
+						get_pv1, set_pv1,
+						get_a1, set_a1,
+						get_a3, set_a3,
+						get_m, set_m
+					|}
+				})
+				[|{|terminate|}|>SKIP
+			)
+			\{|terminate|}
+		,<visibleMemoryEvents,{tock}>)
+		
+		-- O version (optimised)
+		
+		O__(id__,
+				    const_pkg0_M_P1_c2,
+				    const_pkg0_M_P1_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+				    const_pkg0_M_C1_stm1_c6,
+				    const_pkg0_M_C1_stm1_c1) = dbisim(prioritise(	(
+				(
+					(SKIP)
+						[|{||}|]
+					(
+						(
+							let
+								const_pkg0_M_C1_c2 = const_pkg0_M_P1_c2
+								const_pkg0_M_C1_c3 = const_pkg0_M_P1_c3
+							within 
+							C1::O__(id__,
+									    const_pkg0_M_C1_c2,
+									    const_pkg0_M_C1_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1,
+									    const_pkg0_M_C1_stm1_c6,
+									    const_pkg0_M_C1_stm1_c1)[[
+								C1::terminate <- terminate,
+								C1::set_a1 <- set_a1,
+								C1::get_a1 <- get_a1,
+								C1::set_a3 <- set_a3,
+								C1::get_a3 <- get_a3,
+								C1::set_m <- set_m,
+								C1::get_m <- get_m,
+								C1::move2Call <- move2Call,
+								C1::move5Call <- move5Call,
+								C1::move4Call <- move4Call
+							]]
+							\ {|
+								C1::evta
+							|}
+						)
+							[|
+								union(
+									{|
+										set_pv1,
+										set_a1,
+										set_a3,
+										set_m
+									|},
+									{|
+										C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+									|}
+								)
+							|]
+						dbisim(Memory(id__, 0, (0,0), 0, 0, const_pkg0_M_P1_c2, const_pkg0_M_P1_c3))
+					)
+				)
+				\ Union({
+					{|
+					|},
+					{|
+						C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+					|},
+					{|
+						get_pv1, set_pv1,
+						get_a1, set_a1,
+						get_a3, set_a3,
+						get_m, set_m
+					|}
+				})
+				[|{|terminate|}|>SKIP
+			)
+			\{|terminate|}
+		,<visibleMemoryEvents,{tock}>))
+		
+		-- visible state optimised equivalent
+		
+		VS_O__(id__,
+				    const_pkg0_M_P1_c2,
+				    const_pkg0_M_P1_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+				    const_pkg0_M_C1_stm1_c6,
+				    const_pkg0_M_C1_stm1_c1) = dbisim(prioritise(	(
+				(
+					(SKIP)
+						[|{||}|]
+					(
+						(
+							let
+								const_pkg0_M_C1_c2 = const_pkg0_M_P1_c2
+								const_pkg0_M_C1_c3 = const_pkg0_M_P1_c3
+							within 
+							C1::VS_O__(id__,
+									    const_pkg0_M_C1_c2,
+									    const_pkg0_M_C1_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1,
+									    const_pkg0_M_C1_stm1_c6,
+									    const_pkg0_M_C1_stm1_c1)[[
+								C1::terminate <- terminate,
+								C1::set_a1 <- set_a1,
+								C1::get_a1 <- get_a1,
+								C1::set_a3 <- set_a3,
+								C1::get_a3 <- get_a3,
+								C1::set_m <- set_m,
+								C1::get_m <- get_m,
+								C1::move2Call <- move2Call,
+								C1::move5Call <- move5Call,
+								C1::move4Call <- move4Call
+							]]
+							\ {|
+								C1::evta
+							|}
+						)
+							[|
+								union(
+									{|
+										set_pv1,
+										set_a1,
+										set_a3,
+										set_m
+									|},
+									{|
+										C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+									|}
+								)
+							|]
+						dbisim(Memory(id__, 0, (0,0), 0, 0, const_pkg0_M_P1_c2, const_pkg0_M_P1_c3))
+					)
+				)
+				\ Union({
+					{|
+					|},
+					{|
+						C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+					|},
+					{|
+						get_pv1, set_pv1,
+						get_a1, set_a1,
+						get_a3, set_a3,
+						get_m, set_m
+					|}
+				})
+				[|{|terminate|}|>SKIP
+			)
+			\{|terminate|}
+		,<visibleMemoryEvents,{tock}>))
+		
+		-- O version (optimised) with visible assignments
+		
+		AS_O__(id__,
+				    const_pkg0_M_P1_c2,
+				    const_pkg0_M_P1_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+				    const_pkg0_M_C1_stm1_c6,
+				    const_pkg0_M_C1_stm1_c1) = dbisim(	(
+				(
+					(SKIP)
+						[|{||}|]
+					(
+						(
+							let
+								const_pkg0_M_C1_c2 = const_pkg0_M_P1_c2
+								const_pkg0_M_C1_c3 = const_pkg0_M_P1_c3
+							within 
+							C1::O__(id__,
+									    const_pkg0_M_C1_c2,
+									    const_pkg0_M_C1_c3,
+									    const_pkg0_M_C1_stm0_c6,
+									    const_pkg0_M_C1_stm0_c1,
+									    const_pkg0_M_C1_stm1_c6,
+									    const_pkg0_M_C1_stm1_c1)[[
+								C1::terminate <- terminate,
+								C1::set_a1 <- set_a1,
+								C1::get_a1 <- get_a1,
+								C1::set_a3 <- set_a3,
+								C1::get_a3 <- get_a3,
+								C1::set_m <- set_m,
+								C1::get_m <- get_m,
+								C1::move2Call <- move2Call,
+								C1::move5Call <- move5Call,
+								C1::move4Call <- move4Call
+							]]
+							\ {|
+								C1::evta
+							|}
+						)
+							[|
+								union(
+									{|
+										set_pv1,
+										set_a1,
+										set_a3,
+										set_m
+									|},
+									{|
+										C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+									|}
+								)
+							|]
+						dbisim(Memory(id__, 0, (0,0), 0, 0, const_pkg0_M_P1_c2, const_pkg0_M_P1_c3))
+					)
+				)
+				\ Union({
+					{|
+					|},
+					{|
+						C1::set_EXT_m,C1::set_EXT_a1,C1::set_EXT_a3
+					|},
+					{|
+						get_pv1,
+						get_a1,
+						get_a3,
+						get_m
+					|}
+				})
+				[|{|terminate|}|>SKIP
+			)
+			\{|terminate|}
+		)
+	}
+	
+endmodule
+
+
+
+
+module OP_move1
+exports
+	Timed(OneStep) {
+		datatype TIDS = NULLTRANSITION__
+		-- These definitions are needed to make the structure of an incompletely defined operation compatible with that of fully defined operations.
+		MemoryTransitions(id__) = STOP -- this is STOP because MemoryTransitions is put in a choice with the state machine's MemoryTransitions. if it were SKIP, a divergence would be introduced.
+				MemoryVariablesSyncSet = {}
+				MemoryVariablesHideSet = {}
+				MachineMemorySyncSet = {}
+				MachineMemoryHidingSet = {}
+				channel internal__
+		D__(id__,
+					param_m) = let
+			AUX = SKIP 
+				  |~|
+				  STOP 
+				  		  within 
+			AUX
+		
+		O__(id__,
+					param_m) = D__(id__,
+					param_m)
+		HUP__(id__,
+					param_m) = D__(id__,
+					param_m)
+	}
+endmodule
+module OP_move4
+exports
+	Timed(OneStep) {
+		datatype TIDS = NULLTRANSITION__
+		-- These definitions are needed to make the structure of an incompletely defined operation compatible with that of fully defined operations.
+		MemoryTransitions(id__) = STOP -- this is STOP because MemoryTransitions is put in a choice with the state machine's MemoryTransitions. if it were SKIP, a divergence would be introduced.
+				MemoryVariablesSyncSet = {}
+				MemoryVariablesHideSet = {}
+				MachineMemorySyncSet = {}
+				MachineMemoryHidingSet = {}
+				channel internal__
+		D__(id__) = let
+			AUX = SKIP 
+				  |~|
+				  STOP 
+				  		  within 
+			AUX
+		
+		O__(id__) = D__(id__)
+		HUP__(id__) = D__(id__)
+	}
+endmodule
+-- compileSelfContainedOperation
+module OP_move2
+exports
+	transparent diamond
+	transparent sbisim
+	transparent dbisim
+	transparent chase
+
+	-- Transition identifiers
+	-- declaring identifiers of transitions
+	datatype NIDS = 
+	              NID_i0|
+	              NID_f0
+	
+	channel internal__ : NIDS
+	
+	-- Flow channels		
+	channel interrupt
+	channel exited
+	channel exit
+	channel terminate
+	
+	-- Variable channels
+	
+	-- Shared variable channels
+	
+	-- Local variable channels for defined operations that are required by the state machine
+	
+	-- Declaring state machine events
+	channel opevt__: NIDS.InOut.core_int
+	channel opevt: InOut.core_int
+	
+	-- Declaring call and ret events for undefined operations
+	channel move1Call: core_int
+	
+	enterSS = {|
+	i0::enter,
+	f0::enter
+	|}
+	
+	enteredSS = 	{|
+	f0::entered
+	|}
+	
+	internal_events = union(enteredSS,union(enterSS,{|interrupt,exited|}))
+	
+	shared_variable_events = {|
+	|}
+	
+	-- channel set with all visible events
+	sem__events = {|
+		terminate
+	,	opevt
+	,	move1Call
+		, share__
+		|}
+	
+	channel clockReset, clockResetL, clockResetR 
+	
+	localClockResets = {||}
+	
+	
+	channel get_CLID_f0 : core_clock_type 
+	--channel increment__
+	
+	CLID_f0_clock_type(id__) = 
+		let
+			max = (clock_type_max(Union({
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	
+	
+		-- Nodes --
+		-- declaring all nodes
+		
+		----------------------------------------------------------------------
+		-- Initial: i0
+		module i0
+		exports
+		
+			channel enter, interrupt
+			
+			Timed(OneStep) {
+				D__(id__,
+							param_lv,
+							param_a) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Active
+						
+						Termination = terminate -> SKIP
+						
+						Active 		= share__choice(interrupt -> SKIP) ; Inactive
+					within
+						Inactive [| {terminate} |> SKIP)
+				
+				VS_O__(id__,
+							param_lv,
+							param_a) = D__(id__,
+							param_lv,
+							param_a)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		
+		----------------------------------------------------------------------
+		-- Final state: f0
+		module f0
+		
+		exports
+		
+			channel enter, entered, interrupt
+			channel enteredL, enteredR
+			
+			Timed(OneStep) {
+				--	Rule: behaviours(Node)
+				D__(id__,
+							param_lv,
+							param_a) = 
+					dbisim(let
+						Inactive 	= share__choice(enter -> SKIP [] terminate -> SKIP) ; Entering
+						
+						Entering 	= entered -> SKIP ; Active
+						Active		= share__choice(terminate -> SKIP [] interrupt -> SKIP) ; Interrupted
+						Interrupted	= share__choice(exit -> exited -> Inactive)
+					within
+						Inactive [| {terminate} |> SKIP)
+					
+				VS_O__(id__,
+							param_lv,
+							param_a) = D__(id__,
+							param_lv,
+							param_a)
+			}
+		
+		endmodule
+		----------------------------------------------------------------------
+		
+		-- END of Nodes --
+		
+		Timed(OneStep) {
+		-- Operation calls --
+		-- Only the undefined operations are declared here.
+		-- If the state machine is in isolation, all required operations will be undefined.
+		-- If it is in the context of a controller, the required operations not provided by the
+		-- controller will be declared here, and the defined operations will be defined in the
+		-- context of the Controller module, and therefore within scope of the state machine module.
+		CALL__move1(id__,
+					param_m) = EDeadline(move1Call.param_m,0)
+		
+		-- END of Operation calls --
+	
+		-- STM processes
+		STM(id__,
+					param_lv,
+					param_a) = -- RULE: [[stm:OperationDef]]_STM^nops : CSPProcess
+		Stateful(id__,
+					param_lv,
+					param_a) \ {terminate}
+		
+		STM_VS_O(id__,
+					param_lv,
+					param_a) = -- RULE: [[stm:OperationDef]]_STM^nops : CSPProcess
+		Stateful(id__,
+					param_lv,
+					param_a) \ {terminate}
+		
+		-- Transitions
+		Transitions(id__,
+					param_lv,
+					param_a) = ((let
+			Trans = TimeOut_1(
+				 (share__ -> SKIP
+				 [] dbisim((true)&(internal__!NID_i0 -> SKIP ;  ((true&(share__choice(opevt.out!3 -> SKIP));true&CALL__move1(
+				 			id__,
+				 			2
+				 		) ; f0::enter -> SKIP))))
+				 []
+				 (interrupt -> share__choice(exit -> SKIP) ; share__choice(exited -> terminate -> SKIP))
+				 []
+				 terminate -> SKIP
+				 )
+			,SKIP);Trans
+		within
+			Trans [|{terminate}|> SKIP
+		)
+		)
+		
+		-- Stateful
+		-- RULE: Stateful(stm:StateMachineBody) : CSPProcess
+		
+		-- Named process definitions
+		MachineBody(id__,
+					param_lv,
+					param_a) = 
+			dbisim((
+			let
+				finalNodesEntered = {|f0::entered|}
+			within
+				(dbisim((dbisim((let
+					-- IMPLEMENTATION NOTE:
+					-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+					-- modules for defining the semantics of each node.
+					enterSS = {|
+					i0::enter,
+					f0::enter
+					|}
+					hideSet = union(enterSS,{|exit,exited,internal__|})
+				within 
+					((let
+						-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+						-- because CSPM modules are used for the semantics of Node.
+						flowevts = union(enterSS,{|exit,exited,interrupt|})
+						transSync = {|internal__.NID_i0|}
+					within
+						((
+						 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+						   i0::D__(id__,
+						   			param_lv,
+						   			param_a)
+						   [| { share__, terminate } |] (
+						   f0::D__(id__,
+						   			param_lv,
+						   			param_a)
+						   )
+						 )
+						 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+						 )
+						  [[ share__ <- x__ | x__ <- {| share__ |} ]] 
+						 )
+						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+						|}) |]
+						 ((i0::enter -> Transitions(id__,
+						 			param_lv,
+						 			param_a))
+						  [[ share__ <- x__ | x__ <- {| share__ |} ]]
+						 )
+						)
+						)
+					)
+					 \ hideSet)
+					[[
+						opevt__.x____ <- opevt
+						| x____ <- NIDS
+					]]
+				)
+				)
+				 [| union(stateClockSync,{terminate}) |]
+				 StateClocks(id__)
+				)\diff(stateClockSync,enteredSS))
+				 [| {| interrupt |} |] SKIP)
+			)
+			)
+		
+		Behaviour(id__,
+					param_lv,
+					param_a) = 
+			dbisim((let
+				stateClockSync = {||}
+			 within
+				(MachineBody(id__,
+							param_lv,
+							param_a) [| union(stateClockSync,{terminate}) |] StateClocks(id__)) \ union(stateClockSync,enteredSS)
+			)
+			)
+		
+		IteratedBehaviour(id__,
+					param_lv,
+					param_a) = 
+			dbisim((let
+				stateClockSync = {||}
+			 within
+				(MachineBody(id__,
+							param_lv,
+							param_a)) \ union(stateClockSync,enteredSS)
+			)
+			)
+		
+		Stateful(id__,
+					param_lv,
+					param_a) = 
+			((let
+				getsetLocalChannels = {||}
+				clockSync = {||}
+			within
+				(Behaviour(id__,
+							param_lv,
+							param_a) 
+				 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+				 (varMemory(id__,
+				 			param_lv,
+				 			param_a) [| {terminate} |] Clocks(id__))
+			 	)\union(getsetLocalChannels,clockSync)
+			)
+			)
+		
+		IteratedStateful(id__,
+					param_lv,
+					param_a) =
+			(IteratedBehaviour(id__,
+						param_lv,
+						param_a))
+		
+		-- Visible counterparts
+		MachineBody_VS_O(id__,
+					param_lv,
+					param_a) = 
+			dbisim((
+			let
+				finalNodesEntered = {|f0::entered|}
+			within
+				(dbisim((dbisim((let
+					-- IMPLEMENTATION NOTE:
+					-- Here the 'enter' channel set is calculated explicitly because of the use of CSPM 
+					-- modules for defining the semantics of each node.
+					enterSS = {|
+					i0::enter,
+					f0::enter
+					|}
+					hideSet = union(enterSS,{|exit,exited,internal__|})
+				within 
+					((let
+						-- IMPLEMENTATION NOTE: the channel set 'enter' is calculated explicitly
+						-- because CSPM modules are used for the semantics of Node.
+						flowevts = union(enterSS,{|exit,exited,interrupt|})
+						transSync = {|internal__.NID_i0|}
+					within
+						((
+						 (((-- RULE composeNodes(nc:NodeContainer)^nops : CSPProcess
+						   i0::VS_O__(id__,
+						   			param_lv,
+						   			param_a)
+						   [| { share__, terminate } |] (
+						   f0::VS_O__(id__,
+						   			param_lv,
+						   			param_a)
+						   )
+						 )
+						 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
+						 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
+						 )
+						  [[ share__ <- x__ | x__ <- {| share__ |} ]] 
+						 )
+						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
+						|}) |]
+						 ((i0::enter -> Transitions(id__,
+						 			param_lv,
+						 			param_a))
+						  [[ share__ <- x__ | x__ <- {| share__ |} ]]
+						 )
+						)
+						)
+					)
+					 \ hideSet)
+					[[
+						opevt__.x____ <- opevt
+						| x____ <- NIDS
+					]]
+				)
+				)
+				 [| union(stateClockSync,{terminate}) |]
+				 StateClocks(id__)
+				)\diff(stateClockSync,enteredSS))
+				 [| {| interrupt |} |] SKIP)
+			)
+			)
+		
+		Behaviour_VS_O(id__,
+					param_lv,
+					param_a) = 
+			dbisim((let
+				stateClockSync = {||}
+			 within
+				(MachineBody_VS_O(id__,
+							param_lv,
+							param_a) [| union(stateClockSync,{terminate}) |] StateClocks(id__)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+			)
+			)
+		
+		IteratedBehaviour_VS_O(id__,
+					param_lv,
+					param_a) = 
+			dbisim((let
+				stateClockSync = {||}
+			 within
+				(MachineBody_VS_O(id__,
+							param_lv,
+							param_a)) \ diff(union(stateClockSync,enteredSS),enteredSS)
+			)
+			)
+		
+		Stateful_VS_O(id__,
+					param_lv,
+					param_a) = 
+			dbisim((let
+				getsetLocalChannels = {||}
+				clockSync = {||}
+			within
+				(Behaviour_VS_O(id__,
+							param_lv,
+							param_a) 
+				 [| union(union(getsetLocalChannels,clockSync),{terminate}) |] 
+				 (varMemory(id__,
+				 			param_lv,
+				 			param_a) [| {terminate} |] Clocks(id__))
+			 	)\union(getsetLocalChannels,clockSync)
+			)
+			)
+		
+		IteratedStateful_VS_O(id__,
+					param_lv,
+					param_a) =
+			(IteratedBehaviour_VS_O(id__,
+						param_lv,
+						param_a))
+		
+		-- END
+		
+		-- Memory
+		-- Memory variables
+		
+		-- varMemory process
+		varMemory(id__,
+					param_lv,
+					param_a) = terminate -> SKIP
+		
+		getsetLocalChannels = {||}
+		
+		-- Definition of the behaviour of state machines (default, optimised, visible, visible and optimised)
+		FVS__(id__,
+					param_lv,
+					param_a) = STM_VS_O(id__,
+					param_lv,
+					param_a) \ localClockResets
+		D__(id__,
+					param_lv,
+					param_a) = timed_priority(STM(id__,
+					param_lv,
+					param_a) \ union(internal_events,localClockResets))
+		O__(id__,
+					param_lv,
+					param_a) = dbisim(D__(id__,
+					param_lv,
+					param_a))
+		VS__(id__,
+					param_lv,
+					param_a) = FVS__(id__,
+					param_lv,
+					param_a)
+		VS_O__(id__,
+					param_lv,
+					param_a) = dbisim(FVS__(id__,
+					param_lv,
+					param_a))
+		HEXT__(id__,
+					param_lv,
+					param_a) = O__(id__,
+					param_lv,
+					param_a) [|shared_variable_events|] SKIP
+		FVS_C__(id__,
+					param_lv,
+					param_a) = dbisim(timed_priority(STM(id__,
+					param_lv,
+					param_a) \ internal_events))
+		HUP__(id__,
+					param_lv,
+					param_a) = timed_priority(O__(id__,
+					param_lv,
+					param_a) [|{share__}|] SKIP)
+		
+		-- Clocks
+		
+		Clocks(id__) = terminate -> SKIP
+		
+		clockSync = {||}
+		
+		
+		StateClocks(id__) = terminate -> SKIP
+		
+		stateClockSync = {||}
+		}
+			endmodule
+
+endmodule

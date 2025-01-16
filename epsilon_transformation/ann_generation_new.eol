@@ -9,7 +9,7 @@
 */
 
 //import "boolean_query.eol";
-import "RC2Circus.eol";
+import "RoboChart2Circus_2024/Transformation/RC2Circus.eol";
 import "RoboChart2Circus_M2MExtension.eol";
 
 //RC!ANNController.all().at(0).println();

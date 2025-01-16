@@ -1,0 +1,37 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:31
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "pkg0_M_C1_stm0.csp"
+include "core_defs.csp"
+include "pkg0_defs.csp"
+include "state_defs.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+channel r__
+-- generate pkg0_M_C1_stm0
+P_pkg0_M_C1_stm0 = let
+	id__ = 0
+	
+	const_pkg0_M_C1_stm0_c2 = 0
+	const_pkg0_M_C1_stm0_c3 = 0
+	
+	const_pkg0_M_C1_stm0_c6 = 8
+	
+within
+	pkg0_M_C1_stm0::O__(
+		id__,
+		const_pkg0_M_C1_stm0_c2,
+		const_pkg0_M_C1_stm0_c3,
+		const_pkg0_M_C1_stm0_c6,
+		const_pkg0_M_C1_stm0_c1
+	)
+assert P_pkg0_M_C1_stm0 :[deadlock-free]	
+assert P_pkg0_M_C1_stm0;RUN({r__}) :[deadlock-free]
+assert P_pkg0_M_C1_stm0 :[deterministic]
+assert P_pkg0_M_C1_stm0 :[divergence-free]

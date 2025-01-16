@@ -1,0 +1,39 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:30
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "core_timed_defs.csp"
+include "core_defs.csp"
+include "state_timed_defs.csp"
+include "pkg1_defs.csp"
+include "pkg1_C1_stm0.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+
+transparent wbisim
+channel r__
+-- generate pkg1_C1_stm0
+P_pkg1_C1_stm0 = let
+	id__ = 0
+	
+	
+	
+within
+	pkg1_C1_stm0::O__(
+		id__,
+		const_pkg1_C1_stm0_const1
+	)
+assert P_pkg1_C1_stm0 :[deadlock-free]	
+assert P_pkg1_C1_stm0;RUN({r__}) :[deadlock-free]
+assert P_pkg1_C1_stm0 :[deterministic]
+assert P_pkg1_C1_stm0 :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_pkg1_C1_stm0[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_pkg1_C1_stm0

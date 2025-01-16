@@ -1,0 +1,33 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 16-01-2025 14:26:31
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "pkg0_move2.csp"
+include "core_defs.csp"
+include "pkg0_defs.csp"
+include "state_defs.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+channel r__
+-- generate pkg0_OP_move2
+P_pkg0_OP_move2 = let
+	id__ = 0
+	
+	param_lv = 0
+	param_a = 0
+	
+	
+	
+within
+	pkg0::OP_move2::O__(id__,
+				param_lv,
+				param_a)
+assert P_pkg0_OP_move2 :[deadlock-free]	
+assert P_pkg0_OP_move2;RUN({r__}) :[deadlock-free]
+assert P_pkg0_OP_move2 :[deterministic]
+assert P_pkg0_OP_move2 :[divergence-free]
