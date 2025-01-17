@@ -602,20 +602,20 @@
                 <declList>
                   <decls xsi:type="circus:VarDecl">
                     <expr xsi:type="circus:RefExpr">
+                      <name word="real"/>
+                    </expr>
+                    <nameList>
+                      <names word="sum"/>
+                    </nameList>
+                  </decls>
+                  <decls xsi:type="circus:VarDecl">
+                    <expr xsi:type="circus:RefExpr">
                       <name word="int"/>
                     </expr>
                     <nameList>
                       <names word="l"/>
                       <names word="n"/>
                       <names word="i"/>
-                    </nameList>
-                  </decls>
-                  <decls xsi:type="circus:VarDecl">
-                    <expr xsi:type="circus:RefExpr">
-                      <name word="real"/>
-                    </expr>
-                    <nameList>
-                      <names word="sum"/>
                     </nameList>
                   </decls>
                 </declList>
@@ -935,13 +935,185 @@
             </paras>
             <paras xsi:type="circus:ActionPara">
               <circusAction xsi:type="circus:SeqAction">
+                <leftAction xsi:type="circus:ParallelAction">
+                  <leftAction xsi:type="circus:CallAction">
+                    <name word="HiddenLayers"/>
+                  </leftAction>
+                  <rightAction xsi:type="circus:CallAction">
+                    <name word="OutputLayer"/>
+                  </rightAction>
+                  <channelSet xsi:type="circus:CircusChannelSet">
+                    <expr xsi:type="circus:BasicChannelSetExpr">
+                      <communicationList>
+                        <communications commUsage="Normal" multiSych="0">
+                          <channelExpr>
+                            <name word="layerRes"/>
+                          </channelExpr>
+                          <fieldList/>
+                        </communications>
+                      </communicationList>
+                    </expr>
+                  </channelSet>
+                </leftAction>
+                <rightAction xsi:type="circus:CallAction">
+                  <name word="ANN"/>
+                </rightAction>
+              </circusAction>
+              <name word="ANN"/>
+            </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:SeqAction">
+                <leftAction xsi:type="circus:SeqAction">
+                  <leftAction xsi:type="circus:InterleaveAction">
+                    <leftAction xsi:type="circus:InterleaveAction">
+                      <leftAction xsi:type="circus:SkipAction"/>
+                      <rightAction xsi:type="circus:PrefixingAction">
+                        <circusAction xsi:type="circus:PrefixingAction">
+                          <circusAction xsi:type="circus:SkipAction"/>
+                          <communication commPattern="Input" commUsage="Normal" multiSych="0">
+                            <channelExpr>
+                              <name word="anewError"/>
+                            </channelExpr>
+                            <fieldList>
+                              <fields xsi:type="circus:DotField">
+                                <expr xsi:type="circus:RefExpr">
+                                  <name word="i"/>
+                                </expr>
+                              </fields>
+                              <fields xsi:type="circus:InputField">
+                                <varialbeName word="x"/>
+                              </fields>
+                            </fieldList>
+                          </communication>
+                        </circusAction>
+                        <communication commPattern="Output" commUsage="Normal" multiSych="0">
+                          <channelExpr>
+                            <name word="layerRes"/>
+                          </channelExpr>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:NumExpr">
+                                <numeral value="0"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="i"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="(normIn(i,x))"/>
+                              </expr>
+                            </fields>
+                          </fieldList>
+                        </communication>
+                      </rightAction>
+                    </leftAction>
+                    <rightAction xsi:type="circus:PrefixingAction">
+                      <circusAction xsi:type="circus:PrefixingAction">
+                        <circusAction xsi:type="circus:SkipAction"/>
+                        <communication commPattern="Input" commUsage="Normal" multiSych="0">
+                          <channelExpr>
+                            <name word="adiff"/>
+                          </channelExpr>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="i"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:InputField">
+                              <varialbeName word="x"/>
+                            </fields>
+                          </fieldList>
+                        </communication>
+                      </circusAction>
+                      <communication commPattern="Output" commUsage="Normal" multiSych="0">
+                        <channelExpr>
+                          <name word="layerRes"/>
+                        </channelExpr>
+                        <fieldList>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:NumExpr">
+                              <numeral value="0"/>
+                            </expr>
+                          </fields>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:RefExpr">
+                              <name word="i"/>
+                            </expr>
+                          </fields>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:RefExpr">
+                              <name word="(normIn(i,x))"/>
+                            </expr>
+                          </fields>
+                        </fieldList>
+                      </communication>
+                    </rightAction>
+                  </leftAction>
+                  <rightAction xsi:type="circus:InterleaveAction">
+                    <leftAction xsi:type="circus:SkipAction"/>
+                    <rightAction xsi:type="circus:PrefixingAction">
+                      <circusAction xsi:type="circus:PrefixingAction">
+                        <circusAction xsi:type="circus:SkipAction"/>
+                        <communication commPattern="Input" commUsage="Normal" multiSych="0">
+                          <channelExpr>
+                            <name word="layerRes"/>
+                          </channelExpr>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField">
+                              <expr xsi:type="circus:NumExpr">
+                                <numeral value="2"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:DotField">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="i"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:InputField">
+                              <varialbeName word="y"/>
+                            </fields>
+                          </fieldList>
+                        </communication>
+                      </circusAction>
+                      <communication commPattern="Output" commUsage="Normal" multiSych="0">
+                        <channelExpr>
+                          <name word="angleOutputE"/>
+                        </channelExpr>
+                        <fieldList>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:RefExpr">
+                              <name word="i"/>
+                            </expr>
+                          </fields>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:RefExpr">
+                              <name word="(denormOut(i, y))"/>
+                            </expr>
+                          </fields>
+                        </fieldList>
+                      </communication>
+                    </rightAction>
+                  </rightAction>
+                </leftAction>
+                <rightAction xsi:type="circus:CallAction">
+                  <name word="Interpreter"/>
+                </rightAction>
+              </circusAction>
+              <name word="Interpreter"/>
+            </paras>
+            <paras xsi:type="circus:ActionPara">
+              <circusAction xsi:type="circus:InterruptAction">
                 <leftAction xsi:type="circus:HideAction">
                   <circusAction xsi:type="circus:ParallelAction">
                     <leftAction xsi:type="circus:CallAction">
-                      <name word="HiddenLayers"/>
+                      <name word="Interpreter"/>
                     </leftAction>
                     <rightAction xsi:type="circus:CallAction">
-                      <name word="OutputLayer"/>
+                      <name word="ANN"/>
                     </rightAction>
                     <channelSet xsi:type="circus:CircusChannelSet">
                       <expr xsi:type="circus:BasicChannelSetExpr">
@@ -957,16 +1129,28 @@
                     </channelSet>
                   </circusAction>
                   <channelSet xsi:type="circus:CircusChannelSet">
-                    <expr xsi:type="circus:RefExpr">
-                      <name word="ANNHiddenEvts"/>
+                    <expr xsi:type="circus:BasicChannelSetExpr">
+                      <communicationList>
+                        <communications commUsage="Normal" multiSych="0">
+                          <channelExpr>
+                            <name word="layerRes"/>
+                          </channelExpr>
+                          <fieldList/>
+                        </communications>
+                      </communicationList>
                     </expr>
                   </channelSet>
                 </leftAction>
-                <rightAction xsi:type="circus:CallAction">
-                  <name word="ANN"/>
+                <rightAction xsi:type="circus:PrefixingAction">
+                  <circusAction xsi:type="circus:SkipAction"/>
+                  <communication>
+                    <channelExpr>
+                      <name word="terminate"/>
+                    </channelExpr>
+                  </communication>
                 </rightAction>
               </circusAction>
-              <name word="ANN"/>
+              <name word="CircANN"/>
             </paras>
           </paraList>
         </circusProcess>

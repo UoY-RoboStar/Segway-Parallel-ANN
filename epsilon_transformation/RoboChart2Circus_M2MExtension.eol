@@ -225,6 +225,10 @@ operation createApplExpr(operator: String, operandLeft: Z!Expr, operandRight: Z!
 	return 	expr;
 }
 
+//_leq_.createMemPredEquality()
+
+
+
 operation createUnaryApplExpr(operator: String, operand : Z!Expr): Z!ApplExpr{
 
 	var expr = new Z!ApplExpr;
