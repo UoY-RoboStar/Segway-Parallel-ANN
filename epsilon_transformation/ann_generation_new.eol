@@ -519,9 +519,11 @@ operation createAxiomPara(name: String, type : String, value : Z!Expr) : Z!Para 
 		//We are using a MEM PRED instead of applexpr. Pred that relates, on the left, the weights reference expression, on the right, the set expression created from the 
 		//seqexpr of weights. 
 		var pred =  new Z!MemPred;
-		pred.leftExpr = name.createRefExpr(false, false);
+		pred.leftExpr = value;
+		var set = new Set<Z!Expr>;
+		set.add(value);
 	
-		pred.rightExpr = value;
+		pred.rightExpr = set.createSetExpr();
 		pred.mixFix = true;
 		
 		//the SET EXPRESSION, is definitely right, I'm not sure if the 
