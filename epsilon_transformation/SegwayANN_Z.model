@@ -763,11 +763,22 @@
                     <channelSet xsi:type="circus:CircusChannelSet">
                       <expr xsi:type="circus:BasicChannelSetExpr">
                         <communicationList>
-                          <communications commUsage="Normal" multiSych="0">
+                          <communications commPattern="Output" commUsage="Normal" multiSych="0">
                             <channelExpr>
                               <name word="nodeOut"/>
                             </channelExpr>
-                            <fieldList/>
+                            <fieldList>
+                              <fields xsi:type="circus:DotField" outputField="true">
+                                <expr xsi:type="circus:RefExpr">
+                                  <name word="l"/>
+                                </expr>
+                              </fields>
+                              <fields xsi:type="circus:DotField" outputField="true">
+                                <expr xsi:type="circus:RefExpr">
+                                  <name word="n"/>
+                                </expr>
+                              </fields>
+                            </fieldList>
                           </communications>
                         </communicationList>
                       </expr>
@@ -776,11 +787,22 @@
                   <channelSet xsi:type="circus:CircusChannelSet">
                     <expr xsi:type="circus:BasicChannelSetExpr">
                       <communicationList>
-                        <communications commUsage="Normal" multiSych="0">
+                        <communications commPattern="Output" commUsage="Normal" multiSych="0">
                           <channelExpr>
                             <name word="nodeOut"/>
                           </channelExpr>
-                          <fieldList/>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="l"/>
+                              </expr>
+                            </fields>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="n"/>
+                              </expr>
+                            </fields>
+                          </fieldList>
                         </communications>
                       </communicationList>
                     </expr>
@@ -843,11 +865,17 @@
                   <channelSet xsi:type="circus:CircusChannelSet">
                     <expr xsi:type="circus:BasicChannelSetExpr">
                       <communicationList>
-                        <communications commUsage="Normal" multiSych="0">
+                        <communications commPattern="Output" commUsage="Normal" multiSych="0">
                           <channelExpr>
                             <name word="layerRes"/>
                           </channelExpr>
-                          <fieldList/>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:RefExpr">
+                                <name word="(l-1)"/>
+                              </expr>
+                            </fields>
+                          </fieldList>
                         </communications>
                       </communicationList>
                     </expr>
@@ -926,11 +954,17 @@
                 <channelSet xsi:type="circus:CircusChannelSet">
                   <expr xsi:type="circus:BasicChannelSetExpr">
                     <communicationList>
-                      <communications commUsage="Normal" multiSych="0">
+                      <communications commPattern="Output" commUsage="Normal" multiSych="0">
                         <channelExpr>
                           <name word="layerRes"/>
                         </channelExpr>
-                        <fieldList/>
+                        <fieldList>
+                          <fields xsi:type="circus:DotField" outputField="true">
+                            <expr xsi:type="circus:NumExpr">
+                              <numeral value="1"/>
+                            </expr>
+                          </fields>
+                        </fieldList>
                       </communications>
                     </communicationList>
                   </expr>
@@ -950,11 +984,17 @@
                   <channelSet xsi:type="circus:CircusChannelSet">
                     <expr xsi:type="circus:BasicChannelSetExpr">
                       <communicationList>
-                        <communications commUsage="Normal" multiSych="0">
+                        <communications commPattern="Output" commUsage="Normal" multiSych="0">
                           <channelExpr>
                             <name word="layerRes"/>
                           </channelExpr>
-                          <fieldList/>
+                          <fieldList>
+                            <fields xsi:type="circus:DotField" outputField="true">
+                              <expr xsi:type="circus:NumExpr">
+                                <numeral value="1"/>
+                              </expr>
+                            </fields>
+                          </fieldList>
                         </communications>
                       </communicationList>
                     </expr>
@@ -1123,11 +1163,29 @@
                     <channelSet xsi:type="circus:CircusChannelSet">
                       <expr xsi:type="circus:BasicChannelSetExpr">
                         <communicationList>
-                          <communications commUsage="Normal" multiSych="0">
+                          <communications commPattern="Output" commUsage="Normal" multiSych="0">
                             <channelExpr>
                               <name word="layerRes"/>
                             </channelExpr>
-                            <fieldList/>
+                            <fieldList>
+                              <fields xsi:type="circus:DotField" outputField="true">
+                                <expr xsi:type="circus:NumExpr">
+                                  <numeral value="0"/>
+                                </expr>
+                              </fields>
+                            </fieldList>
+                          </communications>
+                          <communications commPattern="Output" commUsage="Normal" multiSych="0">
+                            <channelExpr>
+                              <name word="layerRes"/>
+                            </channelExpr>
+                            <fieldList>
+                              <fields xsi:type="circus:DotField" outputField="true">
+                                <expr xsi:type="circus:NumExpr">
+                                  <numeral value="2"/>
+                                </expr>
+                              </fields>
+                            </fieldList>
                           </communications>
                         </communicationList>
                       </expr>

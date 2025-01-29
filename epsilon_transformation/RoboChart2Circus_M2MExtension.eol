@@ -127,7 +127,6 @@ operation createOutputCommunication(
     field.outputField = true;
 	
 	commu.fieldList.fields = Sequence{field};
-	
 	return commu;
 }
 
@@ -376,3 +375,19 @@ operation RC!Expression negExtract() : Real {
     return self.value;
   }
 }
+
+
+//NEED this rule because sequence overloading now working, this is the same as line 5098: createBasicChannelSetExpr(channels:Sequence<Z!Communication>):
+operation createComBasicChannelSetExpr(channels:Sequence<Z!Communication>): Z!BasicChannelSetExpr{
+	var expr = new Z!BasicChannelSetExpr;
+//	var commuList = new Sequence<Z!Communication>;
+//	for(n in channel_names){
+//		commuList.add(createChannelSetCommunication(n));
+//	} 
+	var communicationList = new Z!CircusCommunicationList;
+	expr.communicationList = communicationList;
+	expr.communicationList.communications = channels;
+	return expr;
+}
+
+

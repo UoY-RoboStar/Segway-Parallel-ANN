@@ -105,7 +105,7 @@ operation RC!ANNController ANNProc() : Z!ProcessPara {
   var hiddenLayersCall = "HiddenLayers".createCallAction();
   var outputLayerCall = "OutputLayer".createCallAction();
 
-  var annParAction = createParallelAction(self.IndexedLayerRes(), hiddenLayersCall, outputLayerCall);
+  var annParAction = createParallelAction(createParamChannelSet("layerRes", Sequence{(self.layerNo()-1).createNumExpr()}), hiddenLayersCall, outputLayerCall);
   var annFinal = createAction2("SeqAction", annParAction, "ANN".createCallAction());
   
   var annPara = annFinal.createActionPara("ANN");
@@ -137,11 +137,36 @@ operation RC!ANNController OutputLayer() : Z!ActionPara {
   
   var declList = Set{varList}.createDeclList();
   
-  var iteAction = createParallelActionIte(self.IndexedLayerRes(), nodeCall, declList); 
+  var iteAction = createParallelActionIte(createParamChannelSet("layerRes", Sequence{createNumExpr(self.layerNo()-1)}), nodeCall, declList); 
     
   return iteAction.createActionPara("OutputLayer");
 
 }
+
+
+//Helper operation for making parameterised Channel Sets. 
+//Takes the channel name, a String, the parameters of this channel to be partially instantiated:expr:Sequence<Z!Expr>
+//returns a Z Circus Channel Set object. 
+operation createParamChannelSet(chan : String, params : Sequence<Z!Expr>) : Z!CircusChannelSet {
+   var paramComm = createOutputCommunication(chan, params);
+   var comms = new Sequence<Z!Communication>;
+   comms.add(paramComm);
+   var syncset = createChannelSet(createComBasicChannelSetExpr(comms));
+   return syncset;
+}
+
+//Operation to just create the CircANN channel set, as it requires two communications.
+//Pass the parameter of layerNo instead of making this an operation on ANNControllers, it doesn't need to be.
+operation createCircANNChanSet(layerNo : Integer) : Z!CircusChannelSet {
+   var paramComm = createOutputCommunication("layerRes", Sequence{createNumExpr(0)});
+   var paramComm2 = createOutputCommunication("layerRes", Sequence{createNumExpr(layerNo)});
+   var comms = new Sequence<Z!Communication>;
+   comms.add(paramComm);
+   comms.add(paramComm2);
+   var syncset = createChannelSet(createComBasicChannelSetExpr(comms));
+   return syncset;
+}
+
 
 
 //Rule 7: Function CircANN:
@@ -152,7 +177,7 @@ operation RC!ANNController CircANN() : Z!ActionPara {
    var annCall = "ANN".createCallAction();
    
   //Parallelism between ANN and Interpreter
-  var annParAction = createParallelAction(self.IndexedLayerRes(), interpreterCall, annCall);
+  var annParAction = createParallelAction(createCircANNChanSet(self.layerNo()), interpreterCall, annCall);
     
   //Need a hiding action. 
   var hideAction = createHideAction(self.IndexedLayerRes(), annParAction);
@@ -397,9 +422,9 @@ operation RC!ANNController NodeAction() : Z!CircusAction {
   
   var collatorCall = "Collator".createCallAction(collatorArgs);
   
-  var collatorHideAction = createHideAction(self.IndexedNodeOut(), collatorCall);
+  var collatorHideAction = createHideAction(createParamChannelSet("nodeOut", Sequence{"l".createRefExpr(false,false), "n".createRefExpr(false,false)}), collatorCall);
   
-  var parNode = createParallelAction(self.IndexedNodeOut(), iteAction, collatorHideAction);
+  var parNode = createParallelAction(createParamChannelSet("nodeOut", Sequence{"l".createRefExpr(false,false), "n".createRefExpr(false,false)}), iteAction, collatorHideAction);
   
   return parNode;
 }
@@ -432,7 +457,7 @@ operation RC!ANNController HiddenLayerAction() : Z!CircusAction {
   
   var declList = Set{varList}.createDeclList();
   
-  var iteAction = createParallelActionIte(self.IndexedLayerRes(), nodeCall, declList); 
+  var iteAction = createParallelActionIte(createParamChannelSet("layerRes", Sequence{"(l-1)".createRefExpr(false, false)}), nodeCall, declList); 
 
   return iteAction;
 }
@@ -449,7 +474,7 @@ operation RC!ANNController HiddenLayersInt(l : Integer) : Z!CircusAction {
   }
   
   else {
-    return createParallelAction(self.IndexedLayerRes(l-1), self.HiddenLayersInt(l-1), hiddenLayerCall);
+    return createParallelAction(createParamChannelSet("layerRes", Sequence{createNumExpr(l-1)}), self.HiddenLayersInt(l-1), hiddenLayerCall);
   }
 }
 
