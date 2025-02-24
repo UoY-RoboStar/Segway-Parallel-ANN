@@ -74,7 +74,6 @@ operation RC!ANNController ANNChannelDecl() : Sequence<Z!Para> {
   
 }
 
-
 //RULE 3: Function ANNConstants
 //Defines all the constants in an axiom, in an AxPara.
 operation RC!ANNController ANNConstants() : Sequence<Z!Para> {
@@ -85,7 +84,11 @@ operation RC!ANNController ANNConstants() : Sequence<Z!Para> {
 		var outRangesPara = createAxiomPara("outRanges", "(real \\<times> real) list", self.annparameters.outRanges.createSeqExpr());
 		var annRangePara = createAxiomPara("annRange", "(real \\<times> real)", self.annparameters.annRange.createExpr());
 		
-		return Sequence{weightsPara, biasesPara, inRangesPara, outRangesPara, annRangePara};
+		//Implementing the concatenation specified 
+		var base = self.LStructure(0).createNumExpr(); //To get the input size, and create it as an expression. 
+		var layerInputPara = createAxiomPara("layerInput", "nat list", self.annparameters.layerstructure.createSeqExprAppended(base));
+		
+		return Sequence{weightsPara, biasesPara, inRangesPara, outRangesPara, annRangePara, layerInputPara};
 		
 }
 
@@ -95,7 +98,7 @@ operation RC!ANNController ANNProc() : Z!ProcessPara {
   var mainAction = "CircANN";
   
   var collatorPar = self.Collator();
-  var nodeInPar = self.NodeIn();
+  var edgePar = self.Edge();
   var nodePar = self.Node();
   var hiddenLayerPar = self.HiddenLayer();
   var hiddenLayersPar = self.HiddenLayers(self.layerNo() - 1);
@@ -113,7 +116,7 @@ operation RC!ANNController ANNProc() : Z!ProcessPara {
   var interpreterPara = self.Interpreter();
   var circANNPara = self.CircANN();
   
-  var annProcFull = Sequence{collatorPar, nodeInPar, nodePar, hiddenLayerPar, hiddenLayersPar, outputLayerPar, annPara, interpreterPara, circANNPara}.createBasicProcess(mainAction);
+  var annProcFull = Sequence{collatorPar, edgePar, nodePar, hiddenLayerPar, hiddenLayersPar, outputLayerPar, annPara, interpreterPara, circANNPara}.createBasicProcess(mainAction);
   
   return annProcFull.createProcessPara("AnglePIDANN", true);
   
@@ -326,7 +329,7 @@ operation RC!ANNController CollatorAction() : Z!CircusAction {
 	 
 	 var nodeOutEvent = createInputCommunication("nodeOut", "x", Sequence{"l".createRefExpr(false,false), 
      																"n".createRefExpr(false, false),
-     																"i".createRefExpr(false, false)});
+     																"layerInput(l)-i+1".createRefExpr(false, false)});
      																
      var collatorArgs = Sequence{"l".createRefExpr(false,false), "n".createRefExpr(false,false), "i-1".createRefExpr(false,false), "sum + x".createRefExpr(false,false)};
      
@@ -345,9 +348,9 @@ operation RC!ANNController CollatorAction() : Z!CircusAction {
 }
 
 
-//Function NodeIn
-operation RC!ANNController NodeIn() : Z!ActionPara {
-   var basicAction = self.NodeInAction(); 
+//Function Edge
+operation RC!ANNController Edge() : Z!ActionPara {
+   var basicAction = self.EdgeAction(); 
 
   var varList = createVarDecl(Sequence{"l", "n", "i"}, "int");
   
@@ -355,14 +358,14 @@ operation RC!ANNController NodeIn() : Z!ActionPara {
   
   var paramProcess = basicAction.createParamAction(declList);
   
-  var nodeInActionPar = paramProcess.createActionPara("NodeIn");
+  var edgeActionPar = paramProcess.createActionPara("Edge");
   
-  return nodeInActionPar;
+  return edgeActionPar;
 }
 
 
-//NodeIn Helper Rule:
-operation RC!ANNController NodeInAction() : Z!CircusAction {
+//Edge Helper Rule:
+operation RC!ANNController EdgeAction() : Z!CircusAction {
 	
      var layerResEvent = createInputCommunication("layerRes", "x", Sequence{"l-1".createRefExpr(false, false),
      																		"i".createRefExpr(false,false)});
@@ -402,15 +405,15 @@ operation RC!ANNController Node() : Z!ActionPara {
 //Node Action method.
 operation RC!ANNController NodeAction() : Z!CircusAction {
   
-   var nodeInArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "i".createRefExpr(false, false)};
+   var edgeArgs = Sequence{"l".createRefExpr(false, false), "n".createRefExpr(false, false), "i".createRefExpr(false, false)};
      
-   var nodeInCall = "NodeIn".createCallAction(nodeInArgs);
+   var edgeCall = "Edge".createCallAction(edgeArgs);
      
   var varList = createVarDecl(Sequence{"i"}, createUpToExpr(1.createNumExpr(), "inpSize".createRefExpr(false, false)));
   
   var declList = Set{varList}.createDeclList();
   
-  var iteAction = createInterleaveIteAction(nodeInCall, declList); 
+  var iteAction = createSeqIteAction(edgeCall, declList); 
   
   //Parallel, synchronising on indexednodeout. 
   
@@ -478,7 +481,7 @@ operation RC!ANNController HiddenLayersInt(l : Integer) : Z!CircusAction {
   }
 }
 
-//The output of a nodeIn, the weighted output expression.,
+//The output of an edge, the weighted output expression.,
 operation weightedOutputExp() : Z!RefExpr {
   var call = "(x * (weights(l)(n)(i)))";
   return call.createRefExpr(false,false);

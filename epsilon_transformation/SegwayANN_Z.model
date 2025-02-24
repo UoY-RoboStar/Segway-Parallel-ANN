@@ -473,6 +473,65 @@
           </pred>
         </zSchText>
       </paras>
+      <paras xsi:type="circus:AxPara">
+        <zSchText>
+          <declList>
+            <decls xsi:type="circus:VarDecl">
+              <nameList>
+                <names word="layerInput"/>
+              </nameList>
+              <expr xsi:type="circus:RefExpr">
+                <name word="nat list"/>
+              </expr>
+            </decls>
+          </declList>
+          <pred xsi:type="circus:MemPred" mixFix="true">
+            <rightExpr xsi:type="circus:SetExpr">
+              <exprList>
+                <exprs xsi:type="circus:ApplExpr" mixFix="true">
+                  <leftExpr xsi:type="circus:RefExpr">
+                    <name word="&lt;,,>"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="circus:SetExpr">
+                    <exprList>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="1"/>
+                          </exprs>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="2"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="2"/>
+                          </exprs>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="1"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                      <exprs xsi:type="circus:TupleExpr">
+                        <exprList>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="3"/>
+                          </exprs>
+                          <exprs xsi:type="circus:NumExpr">
+                            <numeral value="1"/>
+                          </exprs>
+                        </exprList>
+                      </exprs>
+                    </exprList>
+                  </rightExpr>
+                </exprs>
+              </exprList>
+            </rightExpr>
+          </pred>
+        </zSchText>
+      </paras>
       <paras xsi:type="circus:ProcessPara" isBasicProcess="true">
         <circusProcess xsi:type="circus:BasicProcess">
           <mainAction xsi:type="circus:CallAction">
@@ -569,7 +628,7 @@
                           </fields>
                           <fields xsi:type="circus:DotField" outputField="true">
                             <expr xsi:type="circus:RefExpr">
-                              <name word="i"/>
+                              <name word="layerInput(l)-i+1"/>
                             </expr>
                           </fields>
                           <fields xsi:type="circus:InputField">
@@ -607,20 +666,20 @@
                 <declList>
                   <decls xsi:type="circus:VarDecl">
                     <nameList>
+                      <names word="sum"/>
+                    </nameList>
+                    <expr xsi:type="circus:RefExpr">
+                      <name word="real"/>
+                    </expr>
+                  </decls>
+                  <decls xsi:type="circus:VarDecl">
+                    <nameList>
                       <names word="l"/>
                       <names word="n"/>
                       <names word="i"/>
                     </nameList>
                     <expr xsi:type="circus:RefExpr">
                       <name word="int"/>
-                    </expr>
-                  </decls>
-                  <decls xsi:type="circus:VarDecl">
-                    <nameList>
-                      <names word="sum"/>
-                    </nameList>
-                    <expr xsi:type="circus:RefExpr">
-                      <name word="real"/>
                     </expr>
                   </decls>
                 </declList>
@@ -694,12 +753,12 @@
                   </decls>
                 </declList>
               </circusAction>
-              <name word="NodeIn"/>
+              <name word="Edge"/>
             </paras>
             <paras xsi:type="circus:ActionPara">
               <circusAction xsi:type="circus:ParamAction">
                 <circusAction xsi:type="circus:ParallelAction">
-                  <leftAction xsi:type="circus:InterleaveActionIte">
+                  <leftAction xsi:type="circus:SeqActionIte">
                     <circusAction xsi:type="circus:CallAction">
                       <exprList>
                         <exprs xsi:type="circus:RefExpr">
@@ -712,7 +771,7 @@
                           <name word="i"/>
                         </exprs>
                       </exprList>
-                      <name word="NodeIn"/>
+                      <name word="Edge"/>
                     </circusAction>
                     <declList>
                       <decls xsi:type="circus:VarDecl">
@@ -736,11 +795,6 @@
                         </expr>
                       </decls>
                     </declList>
-                    <nameSet xsi:type="circus:CircusNameSet">
-                      <expr xsi:type="circus:SetExpr">
-                        <exprList/>
-                      </expr>
-                    </nameSet>
                   </leftAction>
                   <rightAction xsi:type="circus:HideAction">
                     <circusAction xsi:type="circus:CallAction">

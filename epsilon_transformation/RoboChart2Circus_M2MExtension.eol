@@ -3,6 +3,7 @@
 
 
 //Iterated Actions: 
+// class InterleaveActionIte extends ParActionIte 
 
 //Iterated Parallel Creation, with no nameset, creates the empty set for the name set. 
 operation createInterleaveIteAction(action : Z!CircusAction, declList: Z!ZDeclList) : Z!InterleaveActionIte {
@@ -10,9 +11,8 @@ operation createInterleaveIteAction(action : Z!CircusAction, declList: Z!ZDeclLi
   Parameters we need to set: 
 	val NameSet nameSet - can ignore. 
      - Decl, List,  which is, i : 1 .. inpSize. 
-     - CallAction, there is an Action, somewhere, which is, NodeIn, with l, n, i as parameters. 
+     - CallAction, there is an Action, somewhere, which is, Edge, with l, n, i as parameters. 
  */
- 
   var interleaveIteAction = new Z!InterleaveActionIte;
   
   interleaveIteAction.circusAction = action;
@@ -20,6 +20,61 @@ operation createInterleaveIteAction(action : Z!CircusAction, declList: Z!ZDeclLi
   interleaveIteAction.nameSet = createEmptyNS();
   
   return interleaveIteAction;
+}
+
+
+
+//Creates a sequence expression out of the RC sequence expression, but adds a first element before any of the others, that is a Circus Expression.
+operation RC!SeqExp createSeqExprAppended(first : Z!Expr): Z!ApplExpr{
+	var expr = new Z!ApplExpr;
+	expr.mixFix = true; //CZT: C.6.21 (Function Operator Application). 
+	
+	expr.leftExpr = "<,,>".createRefExpr(false,false);
+
+	var setExpr = new Z!SetExpr;
+	var exprList = new Z!ZExprList;
+	var exprs = new Sequence<Z!Expr>;
+	exprs = Sequence{};
+	
+	//to do
+	//Start with first element. 
+	var s = new Sequence<Z!Expr>;
+	s.add(createNumExpr(1));//index of the element
+	s.add(first);
+	exprs.add(s.createTupleExpr());//Z list is a list of tupleExpr (index and value)
+
+	var i = 2;
+	for(v in self.values){
+		var seq = new Sequence<Z!Expr>;
+		seq.add(createNumExpr(i));//index of the element
+		seq.add(v.createExpr());//element
+		exprs.add(seq.createTupleExpr());//Z list is a list of tupleExpr (index and value)
+		i++;
+	}
+	exprList.exprs = exprs;
+	setExpr.exprList = exprList;
+	expr.rightExpr = setExpr;	
+
+	
+	return 	expr;
+}
+
+
+
+operation createSeqIteAction(action : Z!CircusAction, declList: Z!ZDeclList) : Z!SeqActionIte {
+  /*
+  Parameters we need to set: 
+	val NameSet nameSet - can ignore. 
+     - Decl, List,  which is, i : 1 .. inpSize. 
+     - CallAction, there is an Action, somewhere, which is, Edge, with l, n, i as parameters. 
+ */
+ 
+  var seqIteAction = new Z!SeqActionIte;
+  
+  seqIteAction.circusAction = action;
+  seqIteAction.declList = declList;
+  
+  return seqIteAction;
 }
 
 
