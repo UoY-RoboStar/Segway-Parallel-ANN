@@ -1,0 +1,39 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 25-02-2025 13:26:23
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+-- data definitions used by platform:/resource/Segway-Parallel-ANN/epsilon_transformation/RoboChart2Circus_2024/Test1/GasAnalysis/GasAnalysis2.rct
+datatype Chemical2_Status = Chemical2_Status_noGas | Chemical2_Status_gasD
+Chemical2_Status_is(Chemical2_Status_noGas,Chemical2_Status_noGas) = true
+Chemical2_Status_is(_,Chemical2_Status_noGas) = false
+Chemical2_Status_is(Chemical2_Status_gasD,Chemical2_Status_gasD) = true
+Chemical2_Status_is(_,Chemical2_Status_gasD) = false
+
+datatype Chemical2_Angle = Chemical2_Angle_Left | Chemical2_Angle_Right | Chemical2_Angle_Back | Chemical2_Angle_Front
+Chemical2_Angle_is(Chemical2_Angle_Left,Chemical2_Angle_Left) = true
+Chemical2_Angle_is(_,Chemical2_Angle_Left) = false
+Chemical2_Angle_is(Chemical2_Angle_Right,Chemical2_Angle_Right) = true
+Chemical2_Angle_is(_,Chemical2_Angle_Right) = false
+Chemical2_Angle_is(Chemical2_Angle_Back,Chemical2_Angle_Back) = true
+Chemical2_Angle_is(_,Chemical2_Angle_Back) = false
+Chemical2_Angle_is(Chemical2_Angle_Front,Chemical2_Angle_Front) = true
+Chemical2_Angle_is(_,Chemical2_Angle_Front) = false
+
+nametype Chemical2_GasSensor = (Chemical2_Chem,Chemical2_Intensity)
+Chemical2_GasSensor_c((c,i)) = c
+update_Chemical2_GasSensor_c((c,i),v__) = (v__,i)
+Chemical2_GasSensor_i((c,i)) = i
+update_Chemical2_GasSensor_i((c,i),v__) = (c,v__)
+
+pre_Chemical2_analysis(param_gs) =  (length(param_gs)>0)
+pre_Chemical2_goreq(param_i1,param_i2) = true
+pre_Chemical2_intensity(param_gs) =  (length(param_gs)>0)
+pre_Chemical2_location(param_gs) =  (length(param_gs)>0)
+pre_Chemical2_angle(param_x) = true
+pre_Chemical2_card(param_A) = true
+	

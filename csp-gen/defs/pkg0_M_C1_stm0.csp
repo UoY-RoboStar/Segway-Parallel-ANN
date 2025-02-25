@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 16-01-2025 14:26:31
+-- Automatically generated on 25-02-2025 13:26:26
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -56,10 +56,10 @@ exports
 	channel trigger1: InOut.core_int
 	
 	-- Declaring call and ret events for undefined operations
-	channel move2Call: core_real.core_int
-	channel moveCall: core_real.core_int
 	channel move5Call: core_real.core_int
+	channel move2Call: core_real.core_int
 	channel move4Call
+	channel moveCall: core_real.core_int
 	
 	enterSS = {|
 	i0::enter,
@@ -91,10 +91,10 @@ exports
 		event1,
 		event2,
 		trigger1
-	,	move2Call,
-		moveCall,
-		move5Call,
-		move4Call
+	,	move5Call,
+		move2Call,
+		move4Call,
+		moveCall
 		|}
 
 	-- Nodes --
@@ -312,20 +312,6 @@ exports
 	-- If it is in the context of a controller, the required operations not provided by the
 	-- controller will be declared here, and the defined operations will be defined in the
 	-- context of the Controller module, and therefore within scope of the state machine module.
-	CALL__move2(id__,
-			    const_pkg0_M_C1_stm0_c2,
-			    const_pkg0_M_C1_stm0_c3,
-			    const_pkg0_M_C1_stm0_c6,
-			    const_pkg0_M_C1_stm0_c1,
-				param_lv,
-				param_a) 	= move2Call.param_lv.param_a -> SKIP
-	CALL__move(id__,
-			    const_pkg0_M_C1_stm0_c2,
-			    const_pkg0_M_C1_stm0_c3,
-			    const_pkg0_M_C1_stm0_c6,
-			    const_pkg0_M_C1_stm0_c1,
-				param_lv,
-				param_a) 	= moveCall.param_lv.param_a -> SKIP
 	CALL__move5(id__,
 			    const_pkg0_M_C1_stm0_c2,
 			    const_pkg0_M_C1_stm0_c3,
@@ -333,11 +319,25 @@ exports
 			    const_pkg0_M_C1_stm0_c1,
 				param_lv,
 				param_a) 	= move5Call.param_lv.param_a -> SKIP
+	CALL__move2(id__,
+			    const_pkg0_M_C1_stm0_c2,
+			    const_pkg0_M_C1_stm0_c3,
+			    const_pkg0_M_C1_stm0_c6,
+			    const_pkg0_M_C1_stm0_c1,
+				param_lv,
+				param_a) 	= move2Call.param_lv.param_a -> SKIP
 	CALL__move4(id__,
 			    const_pkg0_M_C1_stm0_c2,
 			    const_pkg0_M_C1_stm0_c3,
 			    const_pkg0_M_C1_stm0_c6,
 			    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
+	CALL__move(id__,
+			    const_pkg0_M_C1_stm0_c2,
+			    const_pkg0_M_C1_stm0_c3,
+			    const_pkg0_M_C1_stm0_c6,
+			    const_pkg0_M_C1_stm0_c1,
+				param_lv,
+				param_a) 	= moveCall.param_lv.param_a -> SKIP
 	
 	-- END of Operation calls --
 	

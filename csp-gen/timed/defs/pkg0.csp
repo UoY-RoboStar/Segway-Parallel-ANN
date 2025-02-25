@@ -1,7 +1,7 @@
 
 --
 -- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 16-01-2025 14:26:31
+-- Automatically generated on 25-02-2025 13:26:26
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -76,8 +76,8 @@ module M
 			channel set_EXT_a3: core_int
 			
 			-- declaring call and ret events for undefined operations
-			channel move2Call: core_real.core_int
 			channel move5Call: core_real.core_int
+			channel move2Call: core_real.core_int
 			channel move4Call
 			
 			-- declaring controller termination channel
@@ -90,8 +90,8 @@ module M
 			,	set_EXT_m, set_m,
 				set_EXT_a1, set_a1,
 				set_EXT_a3, set_a3
-			,	move2Call,
-				move5Call,
+			,	move5Call,
+				move2Call,
 				move4Call
 			|}
 			
@@ -620,8 +620,8 @@ module M
 				channel trigger1: InOut.core_int
 				
 				-- Declaring call and ret events for undefined operations
-				channel move2Call: core_real.core_int
 				channel move5Call: core_real.core_int
+				channel move2Call: core_real.core_int
 				channel move4Call
 				
 				enterSS = {|
@@ -654,8 +654,8 @@ module M
 					event1,
 					event2,
 					trigger1
-				,	move2Call,
-					move5Call,
+				,	move5Call,
+					move2Call,
 					move4Call
 					|}
 				
@@ -931,13 +931,6 @@ module M
 					-- If it is in the context of a controller, the required operations not provided by the
 					-- controller will be declared here, and the defined operations will be defined in the
 					-- context of the Controller module, and therefore within scope of the state machine module.
-					CALL__move2(id__,
-							    const_pkg0_M_C1_stm0_c2,
-							    const_pkg0_M_C1_stm0_c3,
-							    const_pkg0_M_C1_stm0_c6,
-							    const_pkg0_M_C1_stm0_c1,
-								param_lv,
-								param_a) = EDeadline(move2Call.param_lv.param_a,0)
 					CALL__move5(id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -945,6 +938,13 @@ module M
 							    const_pkg0_M_C1_stm0_c1,
 								param_lv,
 								param_a) = EDeadline(move5Call.param_lv.param_a,0)
+					CALL__move2(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move2Call.param_lv.param_a,0)
 					CALL__move4(id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -1681,8 +1681,8 @@ module M
 				channel trigger1: InOut.core_int
 				
 				-- Declaring call and ret events for undefined operations
-				channel move2Call: core_real.core_int
 				channel move5Call: core_real.core_int
+				channel move2Call: core_real.core_int
 				channel move4Call
 				
 				enterSS = {|
@@ -1715,8 +1715,8 @@ module M
 					event1,
 					event2,
 					trigger1
-				,	move2Call,
-					move5Call,
+				,	move5Call,
+					move2Call,
 					move4Call
 					|}
 				
@@ -1992,13 +1992,6 @@ module M
 					-- If it is in the context of a controller, the required operations not provided by the
 					-- controller will be declared here, and the defined operations will be defined in the
 					-- context of the Controller module, and therefore within scope of the state machine module.
-					CALL__move2(id__,
-							    const_pkg0_M_C1_stm0_c2,
-							    const_pkg0_M_C1_stm0_c3,
-							    const_pkg0_M_C1_stm0_c6,
-							    const_pkg0_M_C1_stm0_c1,
-								param_lv,
-								param_a) = EDeadline(move2Call.param_lv.param_a,0)
 					CALL__move5(id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -2006,6 +1999,13 @@ module M
 							    const_pkg0_M_C1_stm0_c1,
 								param_lv,
 								param_a) = EDeadline(move5Call.param_lv.param_a,0)
+					CALL__move2(id__,
+							    const_pkg0_M_C1_stm0_c2,
+							    const_pkg0_M_C1_stm0_c3,
+							    const_pkg0_M_C1_stm0_c6,
+							    const_pkg0_M_C1_stm0_c1,
+								param_lv,
+								param_a) = EDeadline(move2Call.param_lv.param_a,0)
 					CALL__move4(id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -2694,12 +2694,12 @@ module M
 			
 			Timed(OneStep) {
 					-- undefined operations
-					CALL__move2(id__,
-							    param_lv,
-							    param_a) 	= move2Call.param_lv.param_a -> SKIP
 					CALL__move5(id__,
 							    param_lv,
 							    param_a) 	= move5Call.param_lv.param_a -> SKIP
+					CALL__move2(id__,
+							    param_lv,
+							    param_a) 	= move2Call.param_lv.param_a -> SKIP
 					CALL__move4(id__) 	= move4Call -> SKIP
 					
 					-- declaring controller memory
@@ -2745,8 +2745,8 @@ module M
 									stm0::get_a1 <- get_a1,
 									stm0::set_a3 <- set_a3,
 									stm0::get_a3 <- get_a3,
-									stm0::move2Call <- move2Call,
 									stm0::move5Call <- move5Call,
+									stm0::move2Call <- move2Call,
 									stm0::move4Call <- move4Call
 								]]
 								\ {|
@@ -2777,8 +2777,8 @@ module M
 									stm1::get_a1 <- get_a1,
 									stm1::set_a3 <- set_a3,
 									stm1::get_a3 <- get_a3,
-									stm1::move2Call <- move2Call,
 									stm1::move5Call <- move5Call,
+									stm1::move2Call <- move2Call,
 									stm1::move4Call <- move4Call
 								]]
 								\ {|
@@ -2847,8 +2847,8 @@ module M
 									stm0::get_a1 <- get_a1,
 									stm0::set_a3 <- set_a3,
 									stm0::get_a3 <- get_a3,
-									stm0::move2Call <- move2Call,
 									stm0::move5Call <- move5Call,
+									stm0::move2Call <- move2Call,
 									stm0::move4Call <- move4Call
 								]]
 								\ {|
@@ -2879,8 +2879,8 @@ module M
 									stm1::get_a1 <- get_a1,
 									stm1::set_a3 <- set_a3,
 									stm1::get_a3 <- get_a3,
-									stm1::move2Call <- move2Call,
 									stm1::move5Call <- move5Call,
+									stm1::move2Call <- move2Call,
 									stm1::move4Call <- move4Call
 								]]
 								\ {|
@@ -2949,8 +2949,8 @@ module M
 									stm0::get_a1 <- get_a1,
 									stm0::set_a3 <- set_a3,
 									stm0::get_a3 <- get_a3,
-									stm0::move2Call <- move2Call,
 									stm0::move5Call <- move5Call,
+									stm0::move2Call <- move2Call,
 									stm0::move4Call <- move4Call
 								]]
 								\ {|
@@ -2981,8 +2981,8 @@ module M
 									stm1::get_a1 <- get_a1,
 									stm1::set_a3 <- set_a3,
 									stm1::get_a3 <- get_a3,
-									stm1::move2Call <- move2Call,
 									stm1::move5Call <- move5Call,
+									stm1::move2Call <- move2Call,
 									stm1::move4Call <- move4Call
 								]]
 								\ {|
@@ -3051,8 +3051,8 @@ module M
 									stm0::get_a1 <- get_a1,
 									stm0::set_a3 <- set_a3,
 									stm0::get_a3 <- get_a3,
-									stm0::move2Call <- move2Call,
 									stm0::move5Call <- move5Call,
+									stm0::move2Call <- move2Call,
 									stm0::move4Call <- move4Call
 								]]
 								\ {|
@@ -3083,8 +3083,8 @@ module M
 									stm1::get_a1 <- get_a1,
 									stm1::set_a3 <- set_a3,
 									stm1::get_a3 <- get_a3,
-									stm1::move2Call <- move2Call,
 									stm1::move5Call <- move5Call,
+									stm1::move2Call <- move2Call,
 									stm1::move4Call <- move4Call
 								]]
 								\ {|
@@ -3195,8 +3195,8 @@ module M
 								C1::get_a3 <- get_a3,
 								C1::set_m <- set_m,
 								C1::get_m <- get_m,
-								C1::move2Call <- move2Call,
 								C1::move5Call <- move5Call,
+								C1::move2Call <- move2Call,
 								C1::move4Call <- move4Call
 							]]
 							\ {|
@@ -3269,8 +3269,8 @@ module M
 								C1::get_a3 <- get_a3,
 								C1::set_m <- set_m,
 								C1::get_m <- get_m,
-								C1::move2Call <- move2Call,
 								C1::move5Call <- move5Call,
+								C1::move2Call <- move2Call,
 								C1::move4Call <- move4Call
 							]]
 							\ {|
@@ -3343,8 +3343,8 @@ module M
 								C1::get_a3 <- get_a3,
 								C1::set_m <- set_m,
 								C1::get_m <- get_m,
-								C1::move2Call <- move2Call,
 								C1::move5Call <- move5Call,
+								C1::move2Call <- move2Call,
 								C1::move4Call <- move4Call
 							]]
 							\ {|
@@ -3417,8 +3417,8 @@ module M
 								C1::get_a3 <- get_a3,
 								C1::set_m <- set_m,
 								C1::get_m <- get_m,
-								C1::move2Call <- move2Call,
 								C1::move5Call <- move5Call,
+								C1::move2Call <- move2Call,
 								C1::move4Call <- move4Call
 							]]
 							\ {|
@@ -3491,8 +3491,8 @@ module M
 								C1::get_a3 <- get_a3,
 								C1::set_m <- set_m,
 								C1::get_m <- get_m,
-								C1::move2Call <- move2Call,
 								C1::move5Call <- move5Call,
+								C1::move2Call <- move2Call,
 								C1::move4Call <- move4Call
 							]]
 							\ {|

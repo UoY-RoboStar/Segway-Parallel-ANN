@@ -198,75 +198,60 @@ operation RC!ANNController CircANN() : Z!ActionPara {
 
 }
 
+operation gen_string(event_index) : String {
+  return "(normIn(" + event_index.asString() + ",x))";
+}
+
+operation gen_out_string(out_index) : String {
+  return "(denormOut("+ out_index.asString() + ", y))";
+}
+
 //Rule 8: Function Interpreter
 operation RC!ANNController Interpreter() : Z!ActionPara {
   //Entire thing is SEQUENCE of three processes.
   //Input cannot be 0, WF conditions.
   var inputRecursivePara = createSkipAction();
-  
-  if(self.sortedInputEvents().size() == 1) {
-     var inEvent = createInputCommunication(self.sortedInputEvents().at(0).name, "x", Sequence{"i".createRefExpr(false, false)});
+  //Each event has an index, 1-based.
+  var in_index = 1;
+  for(e in self.sortedInputEvents()) {
+    var inEvent = createInputCommunication(e.name, "x", Sequence{});
 	
-     var layerResEvent = createOutputCommunication("layerRes", Sequence{createNumExpr(0), 
-     																  "i".createRefExpr(false, false),
-     																  "(normIn(i,x))".createRefExpr(false,false)});
+    var layerResEvent = createOutputCommunication("layerRes", Sequence{createNumExpr(0), 
+     																  createNumExpr(in_index),
+     																  gen_string(in_index).createRefExpr(false,false)});
+    var prefixAction1 = createPrefixingAction(layerResEvent, createSkipAction());
      
-     var prefixAction1 = createPrefixingAction(inEvent, createSkipAction());
+    var prefixAction2 = createPrefixingAction(inEvent, prefixAction1);
      
-     var prefixAction2 = createPrefixingAction(layerResEvent, prefixAction1);
-     
-     inputRecursivePara = createAction2("InterleaveAction", inputRecursivePara, prefixAction2);
-    
-  }
-  else {
-    for(e in self.sortedInputEvents()) {
-      var inEvent = createInputCommunication(e.name, "x", Sequence{"i".createRefExpr(false, false)});
-	
-     var layerResEvent = createOutputCommunication("layerRes", Sequence{createNumExpr(0), 
-     																  "i".createRefExpr(false, false),
-     																  "(normIn(i,x))".createRefExpr(false,false)});
-     
-     var prefixAction1 = createPrefixingAction(inEvent, createSkipAction());
-     
-     var prefixAction2 = createPrefixingAction(layerResEvent, prefixAction1);
-     
-     inputRecursivePara = createAction2("InterleaveAction", inputRecursivePara, prefixAction2);
+    if(in_index == 1) {
+      inputRecursivePara = prefixAction2;
     }
-  
+    if(in_index > 1) {
+      inputRecursivePara = createAction2("InterleaveAction", inputRecursivePara, prefixAction2);
+    }
+    in_index++;
   }
   
   var outputRecursivePara = createSkipAction();
-  
-  if(self.sortedOutputEvents().size() == 1) {
-     var outEvent = createOutputCommunication(self.sortedOutputEvents().at(0).name, Sequence{"i".createRefExpr(false, false), "(denormOut(i, y))".createRefExpr(false, false)});
+  var out_index = 1;
+  for(e in self.sortedOutputEvents()) {
+    var outEvent = createOutputCommunication(e.name, Sequence{gen_out_string(out_index).createRefExpr(false, false)});
 	
-     var layerResEvent = createInputCommunication("layerRes", "y", Sequence{createNumExpr(self.layerNo()), 
-     																  "i".createRefExpr(false, false)});
+    var layerResEvent = createInputCommunication("layerRes", "y", Sequence{createNumExpr(self.layerNo()), 
+     																  createNumExpr(out_index)});
      
-     var prefixAction1 = createPrefixingAction(layerResEvent, createSkipAction());
+    var prefixAction1 = createPrefixingAction(outEvent, createSkipAction());
      
-     var prefixAction2 = createPrefixingAction(outEvent, prefixAction1);
+    var prefixAction2 = createPrefixingAction(layerResEvent, prefixAction1);
      
-     outputRecursivePara = createAction2("InterleaveAction", outputRecursivePara, prefixAction2);
-    
-  }
-  else {
-    for(e in self.sortedOutputEvents()) {
-      var outEvent = createOutputCommunication(e.name, Sequence{"i".createRefExpr(false, false), "(denormOut(i, y))".createRefExpr()});
-	
-     var layerResEvent = createInputCommunication("layerRes", "y", Sequence{createNumExpr(self.layerNo()), 
-     																  "i".createRefExpr(false, false)});
-     
-     var prefixAction1 = createPrefixingAction(layerResEvent, createSkipAction());
-     
-     var prefixAction2 = createPrefixingAction(outEvent, prefixAction1);
-     
-     outputRecursivePara = createAction2("InterleaveAction", outputRecursivePara, prefixAction2);
+    if(out_index == 1) {
+      outputRecursivePara = prefixAction2;
     }
-  
+    if(out_index > 1) {
+      outputRecursivePara = createAction2("InterleaveAction", outputRecursivePara, prefixAction2);
+    }
+    out_index++;
   }
-  
-
   
   var interpreterSeq = createAction2("SeqAction",inputRecursivePara, outputRecursivePara); 
   var interpreterAction = createAction2("SeqAction", interpreterSeq, "Interpreter".createCallAction());

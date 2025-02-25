@@ -1,0 +1,43 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 25-02-2025 13:26:24
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "function_toolkit_defs.csp"
+include "Chemical_defs.csp"
+include "relation_toolkit_defs.csp"
+include "set_toolkit_defs.csp"
+include "core_timed_defs.csp"
+include "sequence_toolkit_defs.csp"
+include "Chemical_GasAnalysis_stm.csp"
+include "core_defs.csp"
+include "state_timed_defs.csp"
+include "robochart_defs.csp"
+include "../instantiations.csp"
+
+transparent wbisim
+channel r__
+-- generate Chemical_GasAnalysis_stm
+P_Chemical_GasAnalysis_stm = let
+	id__ = 0
+	
+	
+	
+within
+	Chemical_GasAnalysis_stm::O__(
+		id__,
+		const_Chemical_GasAnalysis_stm_thr
+	)
+assert P_Chemical_GasAnalysis_stm :[deadlock-free]	
+assert P_Chemical_GasAnalysis_stm;RUN({r__}) :[deadlock-free]
+assert P_Chemical_GasAnalysis_stm :[deterministic]
+assert P_Chemical_GasAnalysis_stm :[divergence-free]
+-- timed deadlock free
+assert prioritise(P_Chemical_GasAnalysis_stm[[tock<-tock,tock<-tock']],<diff(Events,{tock',tock}),{tock}>)\{tock} :[divergence free [FD]]
+
+-- timelock free
+assert RUN({tock}) ||| CHAOS(diff(Events,{|tock|})) [F= P_Chemical_GasAnalysis_stm

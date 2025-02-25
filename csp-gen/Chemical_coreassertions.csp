@@ -1,0 +1,29 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 25-02-2025 13:26:24
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+include "Chemical.csp"
+
+-- generate Chemical_GasAnalysis_stm
+P_Chemical_GasAnalysis_stm = let
+	id__ = 0
+	
+	
+	
+within
+	Chemical::GasAnalysis_stm::O__(
+		id__,
+		const_Chemical_GasAnalysis_stm_thr
+	)
+assert P_Chemical_GasAnalysis_stm :[deadlock-free]	
+assert P_Chemical_GasAnalysis_stm;RUN({r__}) :[deadlock-free]
+assert P_Chemical_GasAnalysis_stm :[deterministic]
+assert P_Chemical_GasAnalysis_stm :[divergence-free]
+
+
+
