@@ -564,7 +564,7 @@
                             </fields>
                             <fields xsi:type="circus:DotField" outputField="true">
                               <expr xsi:type="circus:RefExpr">
-                                <name word="(relu(sum + (biases(l)(n))))"/>
+                                <name word="(relu(sum + (biases ! l ! n)))"/>
                               </expr>
                             </fields>
                           </fieldList>
@@ -631,7 +631,7 @@
                             </fields>
                             <fields xsi:type="circus:DotField" outputField="true">
                               <expr xsi:type="circus:RefExpr">
-                                <name word="layerInput(l)-i+1"/>
+                                <name word="(layerInput ! l)-i+1"/>
                               </expr>
                             </fields>
                             <fields xsi:type="circus:InputField">
@@ -669,20 +669,20 @@
                   <declList>
                     <decls xsi:type="circus:VarDecl">
                       <nameList>
+                        <names word="sum"/>
+                      </nameList>
+                      <expr xsi:type="circus:RefExpr">
+                        <name word="real"/>
+                      </expr>
+                    </decls>
+                    <decls xsi:type="circus:VarDecl">
+                      <nameList>
                         <names word="l"/>
                         <names word="n"/>
                         <names word="i"/>
                       </nameList>
                       <expr xsi:type="circus:RefExpr">
                         <name word="int"/>
-                      </expr>
-                    </decls>
-                    <decls xsi:type="circus:VarDecl">
-                      <nameList>
-                        <names word="sum"/>
-                      </nameList>
-                      <expr xsi:type="circus:RefExpr">
-                        <name word="real"/>
                       </expr>
                     </decls>
                   </declList>
@@ -716,7 +716,7 @@
                           </fields>
                           <fields xsi:type="circus:DotField" outputField="true">
                             <expr xsi:type="circus:RefExpr">
-                              <name word="(x * (weights(l)(n)(i)))"/>
+                              <name word="(x * (weights ! l ! n ! i))"/>
                             </expr>
                           </fields>
                         </fieldList>
@@ -1087,7 +1087,7 @@
                               </fields>
                               <fields xsi:type="circus:DotField" outputField="true">
                                 <expr xsi:type="circus:RefExpr">
-                                  <name word="(normIn(1,x))"/>
+                                  <name word="(norm x (inRanges ! 1) annRange)"/>
                                 </expr>
                               </fields>
                             </fieldList>
@@ -1124,7 +1124,7 @@
                               </fields>
                               <fields xsi:type="circus:DotField" outputField="true">
                                 <expr xsi:type="circus:RefExpr">
-                                  <name word="(normIn(2,x))"/>
+                                  <name word="(norm x (inRanges ! 2) annRange)"/>
                                 </expr>
                               </fields>
                             </fieldList>
@@ -1152,7 +1152,7 @@
                           <fieldList>
                             <fields xsi:type="circus:DotField" outputField="true">
                               <expr xsi:type="circus:RefExpr">
-                                <name word="(denormOut(1, y))"/>
+                                <name word="(norm y annRange (outRanges ! 1))"/>
                               </expr>
                             </fields>
                           </fieldList>

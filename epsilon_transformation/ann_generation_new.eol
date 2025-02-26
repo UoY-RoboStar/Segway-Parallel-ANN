@@ -199,11 +199,11 @@ operation RC!ANNController CircANN() : Z!ActionPara {
 }
 
 operation gen_string(event_index) : String {
-  return "(normIn(" + event_index.asString() + ",x))";
+  return "(norm x (inRanges ! " + event_index.asString() + ") annRange)";
 }
 
 operation gen_out_string(out_index) : String {
-  return "(denormOut("+ out_index.asString() + ", y))";
+  return "(norm y annRange (outRanges ! "+ out_index.asString() + "))";
 }
 
 //Rule 8: Function Interpreter
@@ -314,7 +314,7 @@ operation RC!ANNController CollatorAction() : Z!CircusAction {
 	 
 	 var nodeOutEvent = createInputCommunication("nodeOut", "x", Sequence{"l".createRefExpr(false,false), 
      																"n".createRefExpr(false, false),
-     																"layerInput(l)-i+1".createRefExpr(false, false)});
+     																"(layerInput ! l)-i+1".createRefExpr(false, false)});
      																
      var collatorArgs = Sequence{"l".createRefExpr(false,false), "n".createRefExpr(false,false), "i-1".createRefExpr(false,false), "sum + x".createRefExpr(false,false)};
      
@@ -468,7 +468,7 @@ operation RC!ANNController HiddenLayersInt(l : Integer) : Z!CircusAction {
 
 //The output of an edge, the weighted output expression.,
 operation weightedOutputExp() : Z!RefExpr {
-  var call = "(x * (weights(l)(n)(i)))";
+  var call = "(x * (weights ! l ! n ! i))";
   return call.createRefExpr(false,false);
 }
 
@@ -558,7 +558,7 @@ operation generateVarDecl(nameList : Sequence<String>, type : String):Z!VarDecl 
 
 //The output of a node, the base case communication of Collator.
 operation nodeOutputExp() : Z!RefExpr {
-  var call = "(relu(sum + (biases(l)(n))))";
+  var call = "(relu(sum + (biases ! l ! n)))";
   return call.createRefExpr(false,false);
 }
 
