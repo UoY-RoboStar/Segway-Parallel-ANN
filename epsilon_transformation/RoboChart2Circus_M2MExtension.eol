@@ -208,7 +208,7 @@ operation createOutputCommunication(
 		var field = new Z!DotField;
 		field.expr = e;
 		
-    	field.outputField = true;
+    	field.outputField = false;
     	fieldList.add(field);
 	}	
 	
@@ -243,7 +243,7 @@ operation createInputCommunication(
 	   var field = new Z!DotField;
 	   field.expr = e;
 	   
-	   field.outputField = true;
+	   field.outputField = false;
 	   fieldList.add(field);
 		
 	}

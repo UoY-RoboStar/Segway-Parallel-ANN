@@ -56,11 +56,11 @@ operation RC!ANNController ANNChannelDecl() : Sequence<Z!Para> {
   var outputEvents = self.sortedOutputEvents();  
 
   for(chan : RC!Event in inputEvents) {
-     annChannels.add(Sequence{chan.name}.createChannelPara(chan.name, chan.type.ref.name));
+     annChannels.add(Sequence{chan.name + "_in"}.createChannelPara(chan.name + "_in", chan.type.ref.name));
   }
   
   for(chan : RC!Event in outputEvents) {
-     annChannels.add(Sequence{chan.name}.createChannelPara(chan.name, chan.type.ref.name));
+     annChannels.add(Sequence{chan.name + "_out"}.createChannelPara(chan.name + "_out", chan.type.ref.name));
   }
   
   //declare terminate channel
@@ -214,7 +214,7 @@ operation RC!ANNController Interpreter() : Z!ActionPara {
   //Each event has an index, 1-based.
   var in_index = 1;
   for(e in self.sortedInputEvents()) {
-    var inEvent = createInputCommunication(e.name, "x", Sequence{});
+    var inEvent = createInputCommunication(e.name + "_in", "x", Sequence{});
 	
     var layerResEvent = createOutputCommunication("layerRes", Sequence{createNumExpr(0), 
      																  createNumExpr(in_index),
@@ -235,7 +235,7 @@ operation RC!ANNController Interpreter() : Z!ActionPara {
   var outputRecursivePara = createSkipAction();
   var out_index = 1;
   for(e in self.sortedOutputEvents()) {
-    var outEvent = createOutputCommunication(e.name, Sequence{gen_out_string(out_index).createRefExpr(false, false)});
+    var outEvent = createOutputCommunication(e.name + "_out", Sequence{gen_out_string(out_index).createRefExpr(false, false)});
 	
     var layerResEvent = createInputCommunication("layerRes", "y", Sequence{createNumExpr(self.layerNo()), 
      																  createNumExpr(out_index)});
@@ -314,7 +314,7 @@ operation RC!ANNController CollatorAction() : Z!CircusAction {
 	 
 	 var nodeOutEvent = createInputCommunication("nodeOut", "x", Sequence{"l".createRefExpr(false,false), 
      																"n".createRefExpr(false, false),
-     																"(layerInput ! l)-i+1".createRefExpr(false, false)});
+     																"((layerInput ! l)-i+1)".createRefExpr(false, false)});
      																
      var collatorArgs = Sequence{"l".createRefExpr(false,false), "n".createRefExpr(false,false), "i-1".createRefExpr(false,false), "sum + x".createRefExpr(false,false)};
      

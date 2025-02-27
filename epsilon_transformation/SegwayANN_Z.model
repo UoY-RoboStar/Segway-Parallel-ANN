@@ -11,42 +11,42 @@
             <decls xsi:type="circus:ChannelDecl">
               <genFormals/>
               <channelNameList>
-                <names word="anewError"/>
+                <names word="anewError_in"/>
               </channelNameList>
               <expr xsi:type="circus:RefExpr">
                 <name word="real"/>
               </expr>
             </decls>
           </declList>
-          <name word="anewError"/>
+          <name word="anewError_in"/>
         </paras>
         <paras xsi:type="circus:ChannelPara">
           <declList>
             <decls xsi:type="circus:ChannelDecl">
               <genFormals/>
               <channelNameList>
-                <names word="adiff"/>
+                <names word="adiff_in"/>
               </channelNameList>
               <expr xsi:type="circus:RefExpr">
                 <name word="real"/>
               </expr>
             </decls>
           </declList>
-          <name word="adiff"/>
+          <name word="adiff_in"/>
         </paras>
         <paras xsi:type="circus:ChannelPara">
           <declList>
             <decls xsi:type="circus:ChannelDecl">
               <genFormals/>
               <channelNameList>
-                <names word="angleOutputE"/>
+                <names word="angleOutputE_out"/>
               </channelNameList>
               <expr xsi:type="circus:RefExpr">
                 <name word="real"/>
               </expr>
             </decls>
           </declList>
-          <name word="angleOutputE"/>
+          <name word="angleOutputE_out"/>
         </paras>
         <paras xsi:type="circus:ChannelPara">
           <declList>
@@ -552,17 +552,17 @@
                             <name word="layerRes"/>
                           </channelExpr>
                           <fieldList>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="l"/>
                               </expr>
                             </fields>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="n"/>
                               </expr>
                             </fields>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="(relu(sum + (biases ! l ! n)))"/>
                               </expr>
@@ -619,19 +619,19 @@
                             <name word="nodeOut"/>
                           </channelExpr>
                           <fieldList>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="l"/>
                               </expr>
                             </fields>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="n"/>
                               </expr>
                             </fields>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
-                                <name word="(layerInput ! l)-i+1"/>
+                                <name word="((layerInput ! l)-i+1)"/>
                               </expr>
                             </fields>
                             <fields xsi:type="circus:InputField">
@@ -699,22 +699,22 @@
                           <name word="nodeOut"/>
                         </channelExpr>
                         <fieldList>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:RefExpr">
                               <name word="l"/>
                             </expr>
                           </fields>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:RefExpr">
                               <name word="n"/>
                             </expr>
                           </fields>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:RefExpr">
                               <name word="i"/>
                             </expr>
                           </fields>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:RefExpr">
                               <name word="(x * (weights ! l ! n ! i))"/>
                             </expr>
@@ -727,12 +727,12 @@
                         <name word="layerRes"/>
                       </channelExpr>
                       <fieldList>
-                        <fields xsi:type="circus:DotField" outputField="true">
+                        <fields xsi:type="circus:DotField" outputField="false">
                           <expr xsi:type="circus:RefExpr">
                             <name word="l-1"/>
                           </expr>
                         </fields>
-                        <fields xsi:type="circus:DotField" outputField="true">
+                        <fields xsi:type="circus:DotField" outputField="false">
                           <expr xsi:type="circus:RefExpr">
                             <name word="i"/>
                           </expr>
@@ -825,12 +825,12 @@
                                 <name word="nodeOut"/>
                               </channelExpr>
                               <fieldList>
-                                <fields xsi:type="circus:DotField" outputField="true">
+                                <fields xsi:type="circus:DotField" outputField="false">
                                   <expr xsi:type="circus:RefExpr">
                                     <name word="l"/>
                                   </expr>
                                 </fields>
-                                <fields xsi:type="circus:DotField" outputField="true">
+                                <fields xsi:type="circus:DotField" outputField="false">
                                   <expr xsi:type="circus:RefExpr">
                                     <name word="n"/>
                                   </expr>
@@ -849,12 +849,12 @@
                               <name word="nodeOut"/>
                             </channelExpr>
                             <fieldList>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:RefExpr">
                                   <name word="l"/>
                                 </expr>
                               </fields>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:RefExpr">
                                   <name word="n"/>
                                 </expr>
@@ -927,7 +927,7 @@
                               <name word="layerRes"/>
                             </channelExpr>
                             <fieldList>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:RefExpr">
                                   <name word="(l-1)"/>
                                 </expr>
@@ -1016,7 +1016,7 @@
                             <name word="layerRes"/>
                           </channelExpr>
                           <fieldList>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:NumExpr">
                                 <numeral value="1"/>
                               </expr>
@@ -1046,7 +1046,7 @@
                               <name word="layerRes"/>
                             </channelExpr>
                             <fieldList>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:NumExpr">
                                   <numeral value="1"/>
                                 </expr>
@@ -1075,17 +1075,17 @@
                               <name word="layerRes"/>
                             </channelExpr>
                             <fieldList>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:NumExpr">
                                   <numeral value="0"/>
                                 </expr>
                               </fields>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:NumExpr">
                                   <numeral value="1"/>
                                 </expr>
                               </fields>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:RefExpr">
                                   <name word="(norm x (inRanges ! 1) annRange)"/>
                                 </expr>
@@ -1095,7 +1095,7 @@
                         </circusAction>
                         <communication commPattern="Input" commUsage="Normal" multiSych="0">
                           <channelExpr>
-                            <name word="anewError"/>
+                            <name word="anewError_in"/>
                           </channelExpr>
                           <fieldList>
                             <fields xsi:type="circus:InputField">
@@ -1112,17 +1112,17 @@
                               <name word="layerRes"/>
                             </channelExpr>
                             <fieldList>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:NumExpr">
                                   <numeral value="0"/>
                                 </expr>
                               </fields>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:NumExpr">
                                   <numeral value="2"/>
                                 </expr>
                               </fields>
-                              <fields xsi:type="circus:DotField" outputField="true">
+                              <fields xsi:type="circus:DotField" outputField="false">
                                 <expr xsi:type="circus:RefExpr">
                                   <name word="(norm x (inRanges ! 2) annRange)"/>
                                 </expr>
@@ -1132,7 +1132,7 @@
                         </circusAction>
                         <communication commPattern="Input" commUsage="Normal" multiSych="0">
                           <channelExpr>
-                            <name word="adiff"/>
+                            <name word="adiff_in"/>
                           </channelExpr>
                           <fieldList>
                             <fields xsi:type="circus:InputField">
@@ -1147,10 +1147,10 @@
                         <circusAction xsi:type="circus:SkipAction"/>
                         <communication commPattern="Output" commUsage="Normal" multiSych="0">
                           <channelExpr>
-                            <name word="angleOutputE"/>
+                            <name word="angleOutputE_out"/>
                           </channelExpr>
                           <fieldList>
-                            <fields xsi:type="circus:DotField" outputField="true">
+                            <fields xsi:type="circus:DotField" outputField="false">
                               <expr xsi:type="circus:RefExpr">
                                 <name word="(norm y annRange (outRanges ! 1))"/>
                               </expr>
@@ -1163,12 +1163,12 @@
                           <name word="layerRes"/>
                         </channelExpr>
                         <fieldList>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:NumExpr">
                               <numeral value="2"/>
                             </expr>
                           </fields>
-                          <fields xsi:type="circus:DotField" outputField="true">
+                          <fields xsi:type="circus:DotField" outputField="false">
                             <expr xsi:type="circus:NumExpr">
                               <numeral value="1"/>
                             </expr>
@@ -1204,7 +1204,7 @@
                                 <name word="layerRes"/>
                               </channelExpr>
                               <fieldList>
-                                <fields xsi:type="circus:DotField" outputField="true">
+                                <fields xsi:type="circus:DotField" outputField="false">
                                   <expr xsi:type="circus:NumExpr">
                                     <numeral value="0"/>
                                   </expr>
@@ -1216,7 +1216,7 @@
                                 <name word="layerRes"/>
                               </channelExpr>
                               <fieldList>
-                                <fields xsi:type="circus:DotField" outputField="true">
+                                <fields xsi:type="circus:DotField" outputField="false">
                                   <expr xsi:type="circus:NumExpr">
                                     <numeral value="2"/>
                                   </expr>
