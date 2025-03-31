@@ -669,20 +669,20 @@
                   <declList>
                     <decls xsi:type="circus:VarDecl">
                       <nameList>
-                        <names word="sum"/>
-                      </nameList>
-                      <expr xsi:type="circus:RefExpr">
-                        <name word="real"/>
-                      </expr>
-                    </decls>
-                    <decls xsi:type="circus:VarDecl">
-                      <nameList>
                         <names word="l"/>
                         <names word="n"/>
                         <names word="i"/>
                       </nameList>
                       <expr xsi:type="circus:RefExpr">
-                        <name word="int"/>
+                        <name word="nat"/>
+                      </expr>
+                    </decls>
+                    <decls xsi:type="circus:VarDecl">
+                      <nameList>
+                        <names word="sum"/>
+                      </nameList>
+                      <expr xsi:type="circus:RefExpr">
+                        <name word="real"/>
                       </expr>
                     </decls>
                   </declList>
@@ -751,7 +751,7 @@
                         <names word="i"/>
                       </nameList>
                       <expr xsi:type="circus:RefExpr">
-                        <name word="int"/>
+                        <name word="nat"/>
                       </expr>
                     </decls>
                   </declList>
@@ -873,7 +873,7 @@
                         <names word="inpSize"/>
                       </nameList>
                       <expr xsi:type="circus:RefExpr">
-                        <name word="int"/>
+                        <name word="nat"/>
                       </expr>
                     </decls>
                   </declList>
@@ -946,7 +946,7 @@
                         <names word="inpSize"/>
                       </nameList>
                       <expr xsi:type="circus:RefExpr">
-                        <name word="int"/>
+                        <name word="nat"/>
                       </expr>
                     </decls>
                   </declList>
@@ -974,8 +974,8 @@
                 <circusAction xsi:type="circus:ParallelActionIte">
                   <circusAction xsi:type="circus:CallAction">
                     <exprList>
-                      <exprs xsi:type="circus:RefExpr">
-                        <name word="l"/>
+                      <exprs xsi:type="circus:NumExpr">
+                        <numeral value="2"/>
                       </exprs>
                       <exprs xsi:type="circus:RefExpr">
                         <name word="i"/>

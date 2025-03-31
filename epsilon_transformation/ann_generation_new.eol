@@ -132,7 +132,7 @@ operation RC!ANNController HiddenLayers(l : Integer) : Z!ActionPara {
 //Rule 6: Function OutputLayer:
 operation RC!ANNController OutputLayer() : Z!ActionPara {
     
-   var nodeArgs = Sequence{"l".createRefExpr(false, false), "i".createRefExpr(false, false), self.LStructure(self.layerNo()-1).createNumExpr()};
+   var nodeArgs = Sequence{self.layerNo().createNumExpr(), "i".createRefExpr(false, false), self.LStructure(self.layerNo()-1).createNumExpr()};
      
    var nodeCall = "Node".createCallAction(nodeArgs);
      
@@ -289,10 +289,11 @@ operation RC!ANNController layerNo() : Integer {
 operation RC!ANNController Collator() : Z!ActionPara {
   var basicAction = self.CollatorAction();
   
-  var varList1 = createVarDecl(Sequence{"l", "n", "i"}, "int");
+  var varList1 = createVarDecl(Sequence{"l", "n", "i"}, "nat");
   var varList2 = createVarDecl(Sequence{"sum"}, "real");
-  
-  var declList = Set{varList1, varList2}.createDeclList();
+
+  var declList = new Z!ZDeclList; 
+  declList.decls.addAll(Sequence{varList1, varList2});
   
   var paramProcess = basicAction.createParamAction(declList);
   
@@ -337,7 +338,7 @@ operation RC!ANNController CollatorAction() : Z!CircusAction {
 operation RC!ANNController Edge() : Z!ActionPara {
    var basicAction = self.EdgeAction(); 
 
-  var varList = createVarDecl(Sequence{"l", "n", "i"}, "int");
+  var varList = createVarDecl(Sequence{"l", "n", "i"}, "nat");
   
   var declList = Set{varList}.createDeclList();
   
@@ -375,7 +376,7 @@ operation RC!ANNController EdgeAction() : Z!CircusAction {
 operation RC!ANNController Node() : Z!ActionPara {
   var basicAction = self.NodeAction(); 
   
-  var varList = createVarDecl(Sequence{"l", "n", "inpSize"}, "int");
+  var varList = createVarDecl(Sequence{"l", "n", "inpSize"}, "nat");
   
   var declList = Set{varList}.createDeclList();
   
@@ -422,7 +423,7 @@ operation RC!ANNController NodeAction() : Z!CircusAction {
 operation RC!ANNController HiddenLayer() : Z!ActionPara {
   var basicAction = self.HiddenLayerAction(); 
   
-  var varList = createVarDecl(Sequence{"l", "s", "inpSize"}, "int");
+  var varList = createVarDecl(Sequence{"l", "s", "inpSize"}, "nat");
   
   var declList = Set{varList}.createDeclList();
   
