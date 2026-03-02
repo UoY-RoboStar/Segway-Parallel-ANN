@@ -1,13 +1,13 @@
 
 --
--- RoboChart generator version 3.0.0.202506041503
--- Automatically generated on 09-06-2025 10:26:51
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 02-03-2026 13:09:22
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
 --
 
--- data definitions used by platform:/resource/Segway-Parallel-ANN/epsilon_transformation/RoboChart2Circus_2024/Test1/GasAnalysis/GasAnalysis2.rct
+-- data definitions used by /Segway-Parallel-ANN/epsilon_transformation/RoboChart2Circus_2024/Test1/GasAnalysis/GasAnalysis2.rct
 datatype Chemical2_Status = Chemical2_Status_noGas | Chemical2_Status_gasD
 Chemical2_Status_is(Chemical2_Status_noGas,Chemical2_Status_noGas) = true
 Chemical2_Status_is(_,Chemical2_Status_noGas) = false

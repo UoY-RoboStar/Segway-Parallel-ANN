@@ -1,0 +1,13 @@
+
+--
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 02-03-2026 13:09:21
+--
+-- Iterated compression status: true
+-- Assertions compression status: false
+--
+
+-- data definitions used by /Segway-Parallel-ANN/SegwayANN.rct
+
+pre_ReLU(param_input) = true
+	

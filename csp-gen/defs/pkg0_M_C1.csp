@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.202506041503
--- Automatically generated on 09-06-2025 10:26:50
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 02-03-2026 13:09:23
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -39,8 +39,8 @@
 		channel set_EXT_a3: core_int
 		
 		-- declaring call and ret events for undefined operations
-		channel move5Call: core_real.core_int
 		channel move4Call
+		channel move5Call: core_real.core_int
 		channel move2Call: core_real.core_int
 		
 		-- declaring controller termination channel
@@ -53,8 +53,8 @@
 		,	set_EXT_m, set_m,
 			set_EXT_a1, set_a1,
 			set_EXT_a3, set_a3
-		,	move5Call,
-			move4Call,
+		,	move4Call,
+			move5Call,
 			move2Call
 		|}
 
@@ -513,8 +513,8 @@
 			channel trigger1: InOut.core_int
 			
 			-- Declaring call and ret events for undefined operations
-			channel move5Call: core_real.core_int
 			channel move4Call
+			channel move5Call: core_real.core_int
 			channel move2Call: core_real.core_int
 			
 			enterSS = {|
@@ -547,8 +547,8 @@
 				event1,
 				event2,
 				trigger1
-			,	move5Call,
-				move4Call,
+			,	move4Call,
+				move5Call,
 				move2Call
 				|}
 		
@@ -656,7 +656,7 @@
 							 	  share__choice(exited -> SKIP) ; Inactive
 				
 					Behaviour 	= entered -> During
-					During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+					During 		= ((share__choice(share__choice(get_l?l -> share__choice(get_a3?a3 -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
 								id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -705,7 +705,7 @@
 							 	  share__choice(exited -> SKIP) ; Inactive
 				
 					Behaviour 	= entered -> During
-					During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+					During 		= ((share__choice(share__choice(get_l?l -> share__choice(get_a3?a3 -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
 								id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -767,6 +767,11 @@
 			-- If it is in the context of a controller, the required operations not provided by the
 			-- controller will be declared here, and the defined operations will be defined in the
 			-- context of the Controller module, and therefore within scope of the state machine module.
+			CALL__move4(id__,
+					    const_pkg0_M_C1_stm0_c2,
+					    const_pkg0_M_C1_stm0_c3,
+					    const_pkg0_M_C1_stm0_c6,
+					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move5(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -774,11 +779,6 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move5Call.param_lv.param_a -> SKIP
-			CALL__move4(id__,
-					    const_pkg0_M_C1_stm0_c2,
-					    const_pkg0_M_C1_stm0_c3,
-					    const_pkg0_M_C1_stm0_c6,
-					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -1376,8 +1376,8 @@
 			channel trigger1: InOut.core_int
 			
 			-- Declaring call and ret events for undefined operations
-			channel move5Call: core_real.core_int
 			channel move4Call
+			channel move5Call: core_real.core_int
 			channel move2Call: core_real.core_int
 			
 			enterSS = {|
@@ -1410,8 +1410,8 @@
 				event1,
 				event2,
 				trigger1
-			,	move5Call,
-				move4Call,
+			,	move4Call,
+				move5Call,
 				move2Call
 				|}
 		
@@ -1519,7 +1519,7 @@
 							 	  share__choice(exited -> SKIP) ; Inactive
 				
 					Behaviour 	= entered -> During
-					During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+					During 		= ((share__choice(share__choice(get_l?l -> share__choice(get_a3?a3 -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
 								id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -1568,7 +1568,7 @@
 							 	  share__choice(exited -> SKIP) ; Inactive
 				
 					Behaviour 	= entered -> During
-					During 		= ((share__choice(share__choice(get_a3?a3 -> share__choice(get_l?l -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
+					During 		= ((share__choice(share__choice(get_l?l -> share__choice(get_a3?a3 -> true & (share__choice(set_a!Plus(Plus(a3, l, core_int), 1, core_int) -> SKIP)))));true&CALL__move2(
 								id__,
 							    const_pkg0_M_C1_stm0_c2,
 							    const_pkg0_M_C1_stm0_c3,
@@ -1630,6 +1630,11 @@
 			-- If it is in the context of a controller, the required operations not provided by the
 			-- controller will be declared here, and the defined operations will be defined in the
 			-- context of the Controller module, and therefore within scope of the state machine module.
+			CALL__move4(id__,
+					    const_pkg0_M_C1_stm0_c2,
+					    const_pkg0_M_C1_stm0_c3,
+					    const_pkg0_M_C1_stm0_c6,
+					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move5(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -1637,11 +1642,6 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move5Call.param_lv.param_a -> SKIP
-			CALL__move4(id__,
-					    const_pkg0_M_C1_stm0_c2,
-					    const_pkg0_M_C1_stm0_c3,
-					    const_pkg0_M_C1_stm0_c6,
-					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -2190,10 +2190,10 @@
 		endmodule
 		
 			-- undefined operations
+			CALL__move4(id__) 	= move4Call -> SKIP
 			CALL__move5(id__,
 					    param_lv,
 					    param_a) 	= move5Call.param_lv.param_a -> SKIP
-			CALL__move4(id__) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    param_lv,
 					    param_a) 	= move2Call.param_lv.param_a -> SKIP
@@ -2241,8 +2241,8 @@
 							stm0::get_a1 <- get_a1,
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
-							stm0::move5Call <- move5Call,
 							stm0::move4Call <- move4Call,
+							stm0::move5Call <- move5Call,
 							stm0::move2Call <- move2Call
 						]]
 						\ {|
@@ -2273,8 +2273,8 @@
 							stm1::get_a1 <- get_a1,
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
-							stm1::move5Call <- move5Call,
 							stm1::move4Call <- move4Call,
+							stm1::move5Call <- move5Call,
 							stm1::move2Call <- move2Call
 						]]
 						\ {|
@@ -2342,8 +2342,8 @@
 							stm0::get_a1 <- get_a1,
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
-							stm0::move5Call <- move5Call,
 							stm0::move4Call <- move4Call,
+							stm0::move5Call <- move5Call,
 							stm0::move2Call <- move2Call
 						]]
 						\ {|
@@ -2374,8 +2374,8 @@
 							stm1::get_a1 <- get_a1,
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
-							stm1::move5Call <- move5Call,
 							stm1::move4Call <- move4Call,
+							stm1::move5Call <- move5Call,
 							stm1::move2Call <- move2Call
 						]]
 						\ {|
@@ -2443,8 +2443,8 @@
 							stm0::get_a1 <- get_a1,
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
-							stm0::move5Call <- move5Call,
 							stm0::move4Call <- move4Call,
+							stm0::move5Call <- move5Call,
 							stm0::move2Call <- move2Call
 						]]
 						\ {|
@@ -2475,8 +2475,8 @@
 							stm1::get_a1 <- get_a1,
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
-							stm1::move5Call <- move5Call,
 							stm1::move4Call <- move4Call,
+							stm1::move5Call <- move5Call,
 							stm1::move2Call <- move2Call
 						]]
 						\ {|
@@ -2545,8 +2545,8 @@
 							stm0::get_a1 <- get_a1,
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
-							stm0::move5Call <- move5Call,
 							stm0::move4Call <- move4Call,
+							stm0::move5Call <- move5Call,
 							stm0::move2Call <- move2Call
 						]]
 						\ {|
@@ -2577,8 +2577,8 @@
 							stm1::get_a1 <- get_a1,
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
-							stm1::move5Call <- move5Call,
 							stm1::move4Call <- move4Call,
+							stm1::move5Call <- move5Call,
 							stm1::move2Call <- move2Call
 						]]
 						\ {|

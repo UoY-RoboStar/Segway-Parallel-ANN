@@ -8,6 +8,7 @@ interface ANNInput {
 interface ANNOutput {
 	event angleOutputE:real
 }
+function ReLU(input:real):real {}
 
 module SegwayANN {
 	controller SegwayController {
@@ -41,24 +42,60 @@ module SegwayANN {
 	rref rp_ref0 = SegwayRP
 
 	anncontroller AnglePIDANN {
-		params { 
-			inputcontext {
+		event anewError:real
+		event adiff:real
+		
+		event angleOutputE:real
+		
+		connection AnglePIDANN on anewError to norm on anewError
+		connection AnglePIDANN on adiff to norm on adiff
+		connection norm on anewError_norm to ANN on anewError_norm
+		connection ANN on angleOutputE_denorm to denorm on angleOutputE_denorm
+		connection denorm on angleOutputE to AnglePIDANN on angleOutputE
+		
+		minmaxscaler norm {
+			normalise
+
+			inputRanges = [| [|-30.0,30.0 |], [| -250.0, 250.0 |] |]
+			outputRanges = [| [| 0.0, 1.0 |] |] 
+
+			inputContext {
 				ordevent anewError:real 1
 				ordevent adiff:real 2
 			}
-
-		outputcontext {
-			ordevent angleOutputE:real 1
+			outputContext {
+				ordevent anewError_norm:real 1
+				ordevent adiff_norm:real 2
+			}
 		}
-
-		layerstructure < 1 , 1 > 
-		weights < < < 1.22838 , 0.132874 > > , < < 0.744636 > > > 
-		biases < < 0.125424 > , < -0.107753 > > 
-		activationfunction relu 
-		inRanges <(| -30.0,30.0 |),(| -250.0, 250.0 |)> 
-		outRanges < (| -1950.0, 1950.0 |) >
-		annRange (| 0.0, 1.0 |)
 		
+		fcblock ANN {
+			inputContext {
+				ordevent anewError_norm:real 1
+				ordevent adiff_norm:real 2
+			}
+			outputContext {
+				event angleOutputE_denorm:real
+			}
+			weights =  <[| [| 1.22838 , 0.132874 |] |] ,  [| [| 0.744636 |] |] > 
+			biases = < [| 0.125424|], [| -0.107753 |] >
+			activation = ReLU
+			layerstructure = [| 1,1 |]
+		}
+		
+		minmaxscaler denorm {
+			denormalise
+			
+			inputRanges = [| [| 0.0, 1.0 |] |] 
+			outputRanges = [| [| -1950.0, 1950.0 |] |] 
+			
+			inputContext {
+				event angleOutputE_denorm:real
+			}
+			outputContext {
+				event angleOutputE:real
+			}
+			
 		}
 	}
 	connection rp_ref0 on gyroX to SegwayController on gyroX ( _async )
@@ -66,12 +103,13 @@ module SegwayANN {
 	connection rp_ref0 on gyroZ to SegwayController on gyroZ ( _async )
 
 	connection SegwayController on anewError to AnglePIDANN on anewError
+	
+	connection SegwayController on adiff to AnglePIDANN on adiff
 
 	connection AnglePIDANN on angleOutputE to SegwayController on angleOutputE
 
 	connection rp_ref0 on angle to SegwayController on angle ( _async )
 
-	connection SegwayController on adiff to AnglePIDANN on adiff
 
 	connection rp_ref0 on leftMotorVelocity to SegwayController on leftMotorVelocity ( _async )
 

@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.202506041503
--- Automatically generated on 09-06-2025 10:26:51
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 02-03-2026 13:09:23
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -115,11 +115,11 @@ exports
 			localClockResets = {||}
 			
 			
-			channel get_CLID_f0 : core_clock_type 
 			channel get_CLID_s0 : core_clock_type 
+			channel get_CLID_f0 : core_clock_type 
 			--channel increment__
 			
-			CLID_f0_clock_type(id__,
+			CLID_s0_clock_type(id__,
 					          const_pkg1_C1_stm0_const1) = 
 				let
 					max = (clock_type_max(Union({
@@ -129,7 +129,7 @@ exports
 			within
 				if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 			
-			CLID_s0_clock_type(id__,
+			CLID_f0_clock_type(id__,
 					          const_pkg1_C1_stm0_const1) = 
 				let
 					max = (clock_type_max(Union({
@@ -393,21 +393,21 @@ exports
 								 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
 								 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 								 )
-								  [[ share__ <- x__ | x__ <- {| share__,setR_a1,setR_a |} ]] 
+								  [[ share__ <- x__ | x__ <- {| share__,setR_a,setR_a1 |} ]] 
 								  [[set_a <- setL_a]]
 								 )
 								 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 								 			,setL_a
-								 			,setR_a1
-								 			 			,setR_a
+								 			,setR_a
+								 			 			,setR_a1
 								 			|}) |]
 								 ((i0::enter -> Transitions(id__,
 								 		    const_pkg1_C1_stm0_const1))
 								  [[ share__ <- x__ | x__ <- {| share__,setL_a |} ]]
-								  [[set_a1 <- setR_a1,set_a <- setR_a]]
+								  [[set_a <- setR_a,set_a1 <- setR_a1]]
 								 )
 								)[[setL_a <- set_a]]
-								 [[setR_a1 <- set_a1,setR_a <- set_a]]
+								 [[setR_a <- set_a,setR_a1 <- set_a1]]
 								)
 							)
 							 \ hideSet)
@@ -547,21 +547,21 @@ exports
 								 [[f0::interrupt <- x__ | x__ <- {|interrupt|}]]
 								 [[i0::interrupt <- x__ | x__ <- {|internal__.NID_i0|}]]
 								 )
-								  [[ share__ <- x__ | x__ <- {| share__,setR_a1,setR_a |} ]] 
+								  [[ share__ <- x__ | x__ <- {| share__,setR_a,setR_a1 |} ]] 
 								  [[set_a <- setL_a]]
 								 )
 								 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 								 			,setL_a
-								 			,setR_a1
-								 			 			,setR_a
+								 			,setR_a
+								 			 			,setR_a1
 								 			|}) |]
 								 ((i0::enter -> Transitions(id__,
 								 		    const_pkg1_C1_stm0_const1))
 								  [[ share__ <- x__ | x__ <- {| share__,setL_a |} ]]
-								  [[set_a1 <- setR_a1,set_a <- setR_a]]
+								  [[set_a <- setR_a,set_a1 <- setR_a1]]
 								 )
 								)[[setL_a <- set_a]]
-								 [[setR_a1 <- set_a1,setR_a <- set_a]]
+								 [[setR_a <- set_a,setR_a1 <- set_a1]]
 								)
 							)
 							 \ hideSet)

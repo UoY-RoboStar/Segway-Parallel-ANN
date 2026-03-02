@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.202506041503
--- Automatically generated on 09-06-2025 10:26:51
+-- RoboChart generator version 3.0.0.qualifier
+-- Automatically generated on 02-03-2026 13:09:22
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -14,8 +14,8 @@ include "defs/file_SegwayRP.csp"
 include "defs/robochart_defs.csp"
 include "defs/state_defs.csp"
 include "defs/core_defs.csp"
-include "defs/file_auv_defs.csp"
 include "defs/file_SpeedPID_defs.csp"
+include "defs/file_auv_defs.csp"
 include "instantiations.csp"
 include "defs/file_SegwayRP_defs.csp"
 include "defs/file_BalanceSTM_defs.csp"
