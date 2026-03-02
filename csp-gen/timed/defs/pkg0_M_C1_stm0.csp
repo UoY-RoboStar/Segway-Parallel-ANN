@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 25-02-2025 13:26:26
+-- RoboChart generator version 3.0.0.202506041503
+-- Automatically generated on 09-06-2025 10:26:50
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -57,9 +57,9 @@ exports
 	
 	-- Declaring call and ret events for undefined operations
 	channel move5Call: core_real.core_int
-	channel move2Call: core_real.core_int
-	channel move4Call
 	channel moveCall: core_real.core_int
+	channel move4Call
+	channel move2Call: core_real.core_int
 	
 	enterSS = {|
 	i0::enter,
@@ -92,9 +92,9 @@ exports
 		event2,
 		trigger1
 	,	move5Call,
-		move2Call,
+		moveCall,
 		move4Call,
-		moveCall
+		move2Call
 		|}
 	
 	channel clockReset, clockResetL, clockResetR 
@@ -376,18 +376,6 @@ exports
 				    const_pkg0_M_C1_stm0_c1,
 					param_lv,
 					param_a) = EDeadline(move5Call.param_lv.param_a,0)
-		CALL__move2(id__,
-				    const_pkg0_M_C1_stm0_c2,
-				    const_pkg0_M_C1_stm0_c3,
-				    const_pkg0_M_C1_stm0_c6,
-				    const_pkg0_M_C1_stm0_c1,
-					param_lv,
-					param_a) = EDeadline(move2Call.param_lv.param_a,0)
-		CALL__move4(id__,
-				    const_pkg0_M_C1_stm0_c2,
-				    const_pkg0_M_C1_stm0_c3,
-				    const_pkg0_M_C1_stm0_c6,
-				    const_pkg0_M_C1_stm0_c1) = EDeadline(move4Call,0)
 		CALL__move(id__,
 				    const_pkg0_M_C1_stm0_c2,
 				    const_pkg0_M_C1_stm0_c3,
@@ -395,6 +383,18 @@ exports
 				    const_pkg0_M_C1_stm0_c1,
 					param_lv,
 					param_a) = EDeadline(moveCall.param_lv.param_a,0)
+		CALL__move4(id__,
+				    const_pkg0_M_C1_stm0_c2,
+				    const_pkg0_M_C1_stm0_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1) = EDeadline(move4Call,0)
+		CALL__move2(id__,
+				    const_pkg0_M_C1_stm0_c2,
+				    const_pkg0_M_C1_stm0_c3,
+				    const_pkg0_M_C1_stm0_c6,
+				    const_pkg0_M_C1_stm0_c1,
+					param_lv,
+					param_a) = EDeadline(move2Call.param_lv.param_a,0)
 		
 		-- END of Operation calls --
 	

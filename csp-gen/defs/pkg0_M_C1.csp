@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 25-02-2025 13:26:26
+-- RoboChart generator version 3.0.0.202506041503
+-- Automatically generated on 09-06-2025 10:26:50
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -40,8 +40,8 @@
 		
 		-- declaring call and ret events for undefined operations
 		channel move5Call: core_real.core_int
-		channel move2Call: core_real.core_int
 		channel move4Call
+		channel move2Call: core_real.core_int
 		
 		-- declaring controller termination channel
 		channel terminate
@@ -54,8 +54,8 @@
 			set_EXT_a1, set_a1,
 			set_EXT_a3, set_a3
 		,	move5Call,
-			move2Call,
-			move4Call
+			move4Call,
+			move2Call
 		|}
 
 		-- defined operations
@@ -514,8 +514,8 @@
 			
 			-- Declaring call and ret events for undefined operations
 			channel move5Call: core_real.core_int
-			channel move2Call: core_real.core_int
 			channel move4Call
+			channel move2Call: core_real.core_int
 			
 			enterSS = {|
 			i0::enter,
@@ -548,8 +548,8 @@
 				event2,
 				trigger1
 			,	move5Call,
-				move2Call,
-				move4Call
+				move4Call,
+				move2Call
 				|}
 		
 			-- Nodes --
@@ -774,6 +774,11 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move5Call.param_lv.param_a -> SKIP
+			CALL__move4(id__,
+					    const_pkg0_M_C1_stm0_c2,
+					    const_pkg0_M_C1_stm0_c3,
+					    const_pkg0_M_C1_stm0_c6,
+					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -781,11 +786,6 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move2Call.param_lv.param_a -> SKIP
-			CALL__move4(id__,
-					    const_pkg0_M_C1_stm0_c2,
-					    const_pkg0_M_C1_stm0_c3,
-					    const_pkg0_M_C1_stm0_c6,
-					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			
 			CALL__move(id__,
 					    const_pkg0_M_C1_stm0_c2,
@@ -1377,8 +1377,8 @@
 			
 			-- Declaring call and ret events for undefined operations
 			channel move5Call: core_real.core_int
-			channel move2Call: core_real.core_int
 			channel move4Call
+			channel move2Call: core_real.core_int
 			
 			enterSS = {|
 			i0::enter,
@@ -1411,8 +1411,8 @@
 				event2,
 				trigger1
 			,	move5Call,
-				move2Call,
-				move4Call
+				move4Call,
+				move2Call
 				|}
 		
 			-- Nodes --
@@ -1637,6 +1637,11 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move5Call.param_lv.param_a -> SKIP
+			CALL__move4(id__,
+					    const_pkg0_M_C1_stm0_c2,
+					    const_pkg0_M_C1_stm0_c3,
+					    const_pkg0_M_C1_stm0_c6,
+					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    const_pkg0_M_C1_stm0_c2,
 					    const_pkg0_M_C1_stm0_c3,
@@ -1644,11 +1649,6 @@
 					    const_pkg0_M_C1_stm0_c1,
 						param_lv,
 						param_a) 	= move2Call.param_lv.param_a -> SKIP
-			CALL__move4(id__,
-					    const_pkg0_M_C1_stm0_c2,
-					    const_pkg0_M_C1_stm0_c3,
-					    const_pkg0_M_C1_stm0_c6,
-					    const_pkg0_M_C1_stm0_c1) 	= move4Call -> SKIP
 			
 			CALL__move(id__,
 					    const_pkg0_M_C1_stm0_c2,
@@ -2193,10 +2193,10 @@
 			CALL__move5(id__,
 					    param_lv,
 					    param_a) 	= move5Call.param_lv.param_a -> SKIP
+			CALL__move4(id__) 	= move4Call -> SKIP
 			CALL__move2(id__,
 					    param_lv,
 					    param_a) 	= move2Call.param_lv.param_a -> SKIP
-			CALL__move4(id__) 	= move4Call -> SKIP
 			
 			-- declaring controller memory
 			Memory(id__, cv1, x, m, a1, a3, c2, c3) = (
@@ -2242,8 +2242,8 @@
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
 							stm0::move5Call <- move5Call,
-							stm0::move2Call <- move2Call,
-							stm0::move4Call <- move4Call
+							stm0::move4Call <- move4Call,
+							stm0::move2Call <- move2Call
 						]]
 						\ {|
 							stm0::mv_evt1,
@@ -2274,8 +2274,8 @@
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
 							stm1::move5Call <- move5Call,
-							stm1::move2Call <- move2Call,
-							stm1::move4Call <- move4Call
+							stm1::move4Call <- move4Call,
+							stm1::move2Call <- move2Call
 						]]
 						\ {|
 							stm1::mv_evt1,
@@ -2343,8 +2343,8 @@
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
 							stm0::move5Call <- move5Call,
-							stm0::move2Call <- move2Call,
-							stm0::move4Call <- move4Call
+							stm0::move4Call <- move4Call,
+							stm0::move2Call <- move2Call
 						]]
 						\ {|
 							stm0::mv_evt1,
@@ -2375,8 +2375,8 @@
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
 							stm1::move5Call <- move5Call,
-							stm1::move2Call <- move2Call,
-							stm1::move4Call <- move4Call
+							stm1::move4Call <- move4Call,
+							stm1::move2Call <- move2Call
 						]]
 						\ {|
 							stm1::mv_evt1,
@@ -2444,8 +2444,8 @@
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
 							stm0::move5Call <- move5Call,
-							stm0::move2Call <- move2Call,
-							stm0::move4Call <- move4Call
+							stm0::move4Call <- move4Call,
+							stm0::move2Call <- move2Call
 						]]
 						\ {|
 							stm0::mv_evt1,
@@ -2476,8 +2476,8 @@
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
 							stm1::move5Call <- move5Call,
-							stm1::move2Call <- move2Call,
-							stm1::move4Call <- move4Call
+							stm1::move4Call <- move4Call,
+							stm1::move2Call <- move2Call
 						]]
 						\ {|
 							stm1::mv_evt1,
@@ -2546,8 +2546,8 @@
 							stm0::set_a3 <- set_a3,
 							stm0::get_a3 <- get_a3,
 							stm0::move5Call <- move5Call,
-							stm0::move2Call <- move2Call,
-							stm0::move4Call <- move4Call
+							stm0::move4Call <- move4Call,
+							stm0::move2Call <- move2Call
 						]]
 						\ {|
 							stm0::mv_evt1,
@@ -2578,8 +2578,8 @@
 							stm1::set_a3 <- set_a3,
 							stm1::get_a3 <- get_a3,
 							stm1::move5Call <- move5Call,
-							stm1::move2Call <- move2Call,
-							stm1::move4Call <- move4Call
+							stm1::move4Call <- move4Call,
+							stm1::move2Call <- move2Call
 						]]
 						\ {|
 							stm1::mv_evt1,

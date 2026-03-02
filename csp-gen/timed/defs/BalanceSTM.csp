@@ -1,7 +1,7 @@
 
 --
--- RoboChart generator version 3.0.0.qualifier
--- Automatically generated on 25-02-2025 13:26:24
+-- RoboChart generator version 3.0.0.202506041503
+-- Automatically generated on 09-06-2025 10:26:52
 --
 -- Iterated compression status: true
 -- Assertions compression status: false
@@ -88,9 +88,9 @@ exports
 	channel rotationOutputE: InOut.core_real
 	
 	-- Declaring call and ret events for undefined operations
-	channel setLeftMotorSpeedCall: core_real
 	channel setRightMotorSpeedCall: core_real
 	channel enableInterruptsCall
+	channel setLeftMotorSpeedCall: core_real
 	channel disableInterruptsCall
 	
 	enterSS = {|
@@ -140,9 +140,9 @@ exports
 		speedOutputE,
 		rdiff,
 		rotationOutputE
-	,	setLeftMotorSpeedCall,
-		setRightMotorSpeedCall,
+	,	setRightMotorSpeedCall,
 		enableInterruptsCall,
+		setLeftMotorSpeedCall,
 		disableInterruptsCall
 		|}
 	datatype ClockSet = 
@@ -153,17 +153,35 @@ exports
 	localClockResets = {|clockReset.CLID_loopTimer|}
 	
 	
+	channel get_CLID_SendRotation : core_clock_type 
 	channel get_CLID_SendAngle : core_clock_type 
 	channel get_CLID_SetMotors : core_clock_type 
+	channel get_CLID_SendSpeed : core_clock_type 
 	channel get_CLID_WaitForNextIteration : core_clock_type 
+	channel get_CLID_Initialisation : core_clock_type 
 	channel get_CLID_StopMotors : core_clock_type 
 	channel get_CLID_ReceiveInput : core_clock_type 
 	channel get_CLID_loopTimer : core_clock_type 
 	channel get_CLID_Setup : core_clock_type 
-	channel get_CLID_Initialisation : core_clock_type 
-	channel get_CLID_SendRotation : core_clock_type 
-	channel get_CLID_SendSpeed : core_clock_type 
 	--channel increment__
+	
+	CLID_SendRotation_clock_type(id__,
+			          const_BalanceSTM_maxAngle,
+			          const_BalanceSTM_loopTime,
+			          const_BalanceSTM_startupDelay,
+			          const_BalanceSTM_speedUpdate,
+			          const_BalanceSTM_rotationUpdate,
+			          const_BalanceSTM_motorBudget,
+			          const_BalanceSTM_angleBudget,
+			          const_BalanceSTM_speedBudget,
+			          const_BalanceSTM_rotationBudget) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
 	CLID_SendAngle_clock_type(id__,
 			          const_BalanceSTM_maxAngle,
@@ -201,7 +219,43 @@ exports
 	within
 		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
+	CLID_SendSpeed_clock_type(id__,
+			          const_BalanceSTM_maxAngle,
+			          const_BalanceSTM_loopTime,
+			          const_BalanceSTM_startupDelay,
+			          const_BalanceSTM_speedUpdate,
+			          const_BalanceSTM_rotationUpdate,
+			          const_BalanceSTM_motorBudget,
+			          const_BalanceSTM_angleBudget,
+			          const_BalanceSTM_speedBudget,
+			          const_BalanceSTM_rotationBudget) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
 	CLID_WaitForNextIteration_clock_type(id__,
+			          const_BalanceSTM_maxAngle,
+			          const_BalanceSTM_loopTime,
+			          const_BalanceSTM_startupDelay,
+			          const_BalanceSTM_speedUpdate,
+			          const_BalanceSTM_rotationUpdate,
+			          const_BalanceSTM_motorBudget,
+			          const_BalanceSTM_angleBudget,
+			          const_BalanceSTM_speedBudget,
+			          const_BalanceSTM_rotationBudget) = 
+		let
+			max = (clock_type_max(Union({
+	{}
+	}))+1)
+		ctype = {0..max}
+	within
+		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
+	
+	CLID_Initialisation_clock_type(id__,
 			          const_BalanceSTM_maxAngle,
 			          const_BalanceSTM_loopTime,
 			          const_BalanceSTM_startupDelay,
@@ -275,60 +329,6 @@ exports
 		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
 	
 	CLID_Setup_clock_type(id__,
-			          const_BalanceSTM_maxAngle,
-			          const_BalanceSTM_loopTime,
-			          const_BalanceSTM_startupDelay,
-			          const_BalanceSTM_speedUpdate,
-			          const_BalanceSTM_rotationUpdate,
-			          const_BalanceSTM_motorBudget,
-			          const_BalanceSTM_angleBudget,
-			          const_BalanceSTM_speedBudget,
-			          const_BalanceSTM_rotationBudget) = 
-		let
-			max = (clock_type_max(Union({
-	{}
-	}))+1)
-		ctype = {0..max}
-	within
-		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
-	
-	CLID_Initialisation_clock_type(id__,
-			          const_BalanceSTM_maxAngle,
-			          const_BalanceSTM_loopTime,
-			          const_BalanceSTM_startupDelay,
-			          const_BalanceSTM_speedUpdate,
-			          const_BalanceSTM_rotationUpdate,
-			          const_BalanceSTM_motorBudget,
-			          const_BalanceSTM_angleBudget,
-			          const_BalanceSTM_speedBudget,
-			          const_BalanceSTM_rotationBudget) = 
-		let
-			max = (clock_type_max(Union({
-	{}
-	}))+1)
-		ctype = {0..max}
-	within
-		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
-	
-	CLID_SendRotation_clock_type(id__,
-			          const_BalanceSTM_maxAngle,
-			          const_BalanceSTM_loopTime,
-			          const_BalanceSTM_startupDelay,
-			          const_BalanceSTM_speedUpdate,
-			          const_BalanceSTM_rotationUpdate,
-			          const_BalanceSTM_motorBudget,
-			          const_BalanceSTM_angleBudget,
-			          const_BalanceSTM_speedBudget,
-			          const_BalanceSTM_rotationBudget) = 
-		let
-			max = (clock_type_max(Union({
-	{}
-	}))+1)
-		ctype = {0..max}
-	within
-		if member(max,core_clock_type) then ctype else error("core_clock_type is not wide enough")
-	
-	CLID_SendSpeed_clock_type(id__,
 			          const_BalanceSTM_maxAngle,
 			          const_BalanceSTM_loopTime,
 			          const_BalanceSTM_startupDelay,
@@ -889,7 +889,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= Deadline(true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP))),0);Deadline(true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP))),0);share__choice(get_currLeftVel?currLeftVel -> share__choice(get_currRightVel?currRightVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SHARE_WAIT_INTERVAL({ x | x <- { 0..const_BalanceSTM_speedBudget}, 0<= x, x <=const_BalanceSTM_speedBudget}) ; 
+					Active 		= Deadline(true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP))),0);Deadline(true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP))),0);share__choice(get_currRightVel?currRightVel -> share__choice(get_currLeftVel?currLeftVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SHARE_WAIT_INTERVAL({ x | x <- { 0..const_BalanceSTM_speedBudget}, 0<= x, x <=const_BalanceSTM_speedBudget}) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -914,7 +914,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= Deadline(true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP))),0);Deadline(true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP))),0);share__choice(get_currLeftVel?currLeftVel -> share__choice(get_currRightVel?currRightVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SHARE_WAIT_INTERVAL({ x | x <- { 0..const_BalanceSTM_speedBudget}, 0<= x, x <=const_BalanceSTM_speedBudget}) ; 
+					Active 		= Deadline(true&(share__choice(leftMotorVelocity.in?currLeftVel -> (SStop /\ set_currLeftVel!currLeftVel -> SKIP))),0);Deadline(true&(share__choice(rightMotorVelocity.in?currRightVel -> (SStop /\ set_currRightVel!currRightVel -> SKIP))),0);share__choice(get_currRightVel?currRightVel -> share__choice(get_currLeftVel?currLeftVel -> true&(share__choice(snewError.out!(Plus(currLeftVel, currRightVel, core_real)) -> SKIP))));share__choice(true & (share__choice(set_speedCount!0 -> SKIP)));SHARE_WAIT_INTERVAL({ x | x <- { 0..const_BalanceSTM_speedBudget}, 0<= x, x <=const_BalanceSTM_speedBudget}) ; 
 							 	  Behaviour ; 
 							 	  share__choice(exit -> SKIP) ; SKIP ; 
 							 	  share__choice(exited -> SKIP) ; Inactive
@@ -1201,7 +1201,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1213,7 +1213,7 @@ exports
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1250,7 +1250,7 @@ exports
 					
 					Termination = terminate -> SKIP
 					
-					Active 		= share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
+					Active 		= share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setLeftMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1262,7 +1262,7 @@ exports
 							    const_BalanceSTM_speedBudget,
 							    const_BalanceSTM_rotationBudget,
 								Minus(Plus(angleOutput, speedOutput, core_real), rotationOutput, core_real)
-							))));share__choice(get_rotationOutput?rotationOutput -> share__choice(get_angleOutput?angleOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
+							))));share__choice(get_angleOutput?angleOutput -> share__choice(get_rotationOutput?rotationOutput -> share__choice(get_speedOutput?speedOutput -> true&CALL__setRightMotorSpeed(
 								id__,
 							    const_BalanceSTM_maxAngle,
 							    const_BalanceSTM_loopTime,
@@ -1515,17 +1515,6 @@ exports
 		-- If it is in the context of a controller, the required operations not provided by the
 		-- controller will be declared here, and the defined operations will be defined in the
 		-- context of the Controller module, and therefore within scope of the state machine module.
-		CALL__setLeftMotorSpeed(id__,
-				    const_BalanceSTM_maxAngle,
-				    const_BalanceSTM_loopTime,
-				    const_BalanceSTM_startupDelay,
-				    const_BalanceSTM_speedUpdate,
-				    const_BalanceSTM_rotationUpdate,
-				    const_BalanceSTM_motorBudget,
-				    const_BalanceSTM_angleBudget,
-				    const_BalanceSTM_speedBudget,
-				    const_BalanceSTM_rotationBudget,
-					param_speed) = EDeadline(setLeftMotorSpeedCall.param_speed,0)
 		CALL__setRightMotorSpeed(id__,
 				    const_BalanceSTM_maxAngle,
 				    const_BalanceSTM_loopTime,
@@ -1547,6 +1536,17 @@ exports
 				    const_BalanceSTM_angleBudget,
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = EDeadline(enableInterruptsCall,0)
+		CALL__setLeftMotorSpeed(id__,
+				    const_BalanceSTM_maxAngle,
+				    const_BalanceSTM_loopTime,
+				    const_BalanceSTM_startupDelay,
+				    const_BalanceSTM_speedUpdate,
+				    const_BalanceSTM_rotationUpdate,
+				    const_BalanceSTM_motorBudget,
+				    const_BalanceSTM_angleBudget,
+				    const_BalanceSTM_speedBudget,
+				    const_BalanceSTM_rotationBudget,
+					param_speed) = EDeadline(setLeftMotorSpeedCall.param_speed,0)
 		CALL__disableInterrupts(id__,
 				    const_BalanceSTM_maxAngle,
 				    const_BalanceSTM_loopTime,
@@ -1654,7 +1654,7 @@ exports
 				    const_BalanceSTM_angleBudget,
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = ((let
-			Trans = share__choice(get_rotationSent?rotationSent -> get_angleSent?angleSent -> get_currAngle?currAngle -> get_angleReceived?angleReceived -> get_speedSent?speedSent -> get_speedCount?speedCount -> get_rotationCount?rotationCount -> get_CLID_loopTimer?loopTimer:CLID_loopTimer_clock_type(id__,
+			Trans = share__choice(get_rotationSent?rotationSent -> get_angleReceived?angleReceived -> get_currAngle?currAngle -> get_speedSent?speedSent -> get_rotationCount?rotationCount -> get_angleSent?angleSent -> get_speedCount?speedCount -> get_CLID_loopTimer?loopTimer:CLID_loopTimer_clock_type(id__,
 					          const_BalanceSTM_maxAngle,
 					          const_BalanceSTM_loopTime,
 					          const_BalanceSTM_startupDelay,
@@ -1895,16 +1895,16 @@ exports
 						 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 						 )
 						  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-						  [[set_rotationSent <- setL_rotationSent,set_angleSent <- setL_angleSent,set_currAngle <- setL_currAngle,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_speedCount <- setL_speedCount,set_rotationCount <- setL_rotationCount,clockReset.CLID_loopTimer <- clockResetL.CLID_loopTimer]]
+						  [[set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived,set_currAngle <- setL_currAngle,set_speedSent <- setL_speedSent,set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,clockReset.CLID_loopTimer <- clockResetL.CLID_loopTimer]]
 						 )
 						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 						 			,setL_rotationSent
-						 			,setL_angleSent
-						 			,setL_currAngle
 						 			,setL_angleReceived
+						 			,setL_currAngle
 						 			,setL_speedSent
-						 			,setL_speedCount
 						 			,setL_rotationCount
+						 			,setL_angleSent
+						 			,setL_speedCount
 						 			,clockResetL.CLID_loopTimer
 						 			,setR_rotationOutput
 						 			 			,setR_speedOutput
@@ -1920,10 +1920,10 @@ exports
 						 		    const_BalanceSTM_angleBudget,
 						 		    const_BalanceSTM_speedBudget,
 						 		    const_BalanceSTM_rotationBudget))
-						  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleSent,setL_currAngle,setL_angleReceived,setL_speedSent,setL_speedCount,setL_rotationCount,clockResetL.CLID_loopTimer |} ]]
+						  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleReceived,setL_currAngle,setL_speedSent,setL_rotationCount,setL_angleSent,setL_speedCount,clockResetL.CLID_loopTimer |} ]]
 						  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
 						 )
-						)[[setL_rotationSent <- set_rotationSent,setL_angleSent <- set_angleSent,setL_currAngle <- set_currAngle,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_speedCount <- set_speedCount,setL_rotationCount <- set_rotationCount,clockResetL.CLID_loopTimer <- clockReset.CLID_loopTimer]]
+						)[[setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived,setL_currAngle <- set_currAngle,setL_speedSent <- set_speedSent,setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,clockResetL.CLID_loopTimer <- clockReset.CLID_loopTimer]]
 						 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
 						)
 					)
@@ -1973,7 +1973,7 @@ exports
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_SendRotation,SendRotation::entered,get_CLID_SendSpeed,SendSpeed::entered|}
+				stateClockSync = {|get_CLID_SendRotation,SendRotation::entered,get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_SendSpeed,SendSpeed::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered|}
 			 within
 				(MachineBody(id__,
 						    const_BalanceSTM_maxAngle,
@@ -2008,7 +2008,7 @@ exports
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_SendRotation,SendRotation::entered,get_CLID_SendSpeed,SendSpeed::entered|}
+				stateClockSync = {|get_CLID_SendRotation,SendRotation::entered,get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_SendSpeed,SendSpeed::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -2038,8 +2038,8 @@ exports
 																								    const_BalanceSTM_angleBudget,
 																								    const_BalanceSTM_speedBudget,
 																								    const_BalanceSTM_rotationBudget)
-																						[| {|get_CLID_SendSpeed,SendSpeed::entered,terminate|} |]
-																						dbisim(Clock_CLID_SendSpeed(id__,0,
+																						[| {|get_CLID_Setup,Setup::entered,terminate|} |]
+																						dbisim(Clock_CLID_Setup(id__,0,
 																								          const_BalanceSTM_maxAngle,
 																								          const_BalanceSTM_loopTime,
 																								          const_BalanceSTM_startupDelay,
@@ -2049,10 +2049,10 @@ exports
 																								          const_BalanceSTM_angleBudget,
 																								          const_BalanceSTM_speedBudget,
 																								          const_BalanceSTM_rotationBudget))
-																					)\{|get_CLID_SendSpeed|}
+																					)\{|get_CLID_Setup|}
 																				)
-																				[| {|get_CLID_SendRotation,SendRotation::entered,terminate|} |]
-																				dbisim(Clock_CLID_SendRotation(id__,0,
+																				[| {|get_CLID_ReceiveInput,ReceiveInput::entered,terminate|} |]
+																				dbisim(Clock_CLID_ReceiveInput(id__,0,
 																						          const_BalanceSTM_maxAngle,
 																						          const_BalanceSTM_loopTime,
 																						          const_BalanceSTM_startupDelay,
@@ -2062,10 +2062,10 @@ exports
 																						          const_BalanceSTM_angleBudget,
 																						          const_BalanceSTM_speedBudget,
 																						          const_BalanceSTM_rotationBudget))
-																			)\{|get_CLID_SendRotation|}
+																			)\{|get_CLID_ReceiveInput|}
 																		)
-																		[| {|get_CLID_Initialisation,Initialisation::entered,terminate|} |]
-																		dbisim(Clock_CLID_Initialisation(id__,0,
+																		[| {|get_CLID_StopMotors,StopMotors::entered,terminate|} |]
+																		dbisim(Clock_CLID_StopMotors(id__,0,
 																				          const_BalanceSTM_maxAngle,
 																				          const_BalanceSTM_loopTime,
 																				          const_BalanceSTM_startupDelay,
@@ -2075,10 +2075,10 @@ exports
 																				          const_BalanceSTM_angleBudget,
 																				          const_BalanceSTM_speedBudget,
 																				          const_BalanceSTM_rotationBudget))
-																	)\{|get_CLID_Initialisation|}
+																	)\{|get_CLID_StopMotors|}
 																)
-																[| {|get_CLID_Setup,Setup::entered,terminate|} |]
-																dbisim(Clock_CLID_Setup(id__,0,
+																[| {|get_CLID_Initialisation,Initialisation::entered,terminate|} |]
+																dbisim(Clock_CLID_Initialisation(id__,0,
 																		          const_BalanceSTM_maxAngle,
 																		          const_BalanceSTM_loopTime,
 																		          const_BalanceSTM_startupDelay,
@@ -2088,10 +2088,10 @@ exports
 																		          const_BalanceSTM_angleBudget,
 																		          const_BalanceSTM_speedBudget,
 																		          const_BalanceSTM_rotationBudget))
-															)\{|get_CLID_Setup|}
+															)\{|get_CLID_Initialisation|}
 														)
-														[| {|get_CLID_ReceiveInput,ReceiveInput::entered,terminate|} |]
-														dbisim(Clock_CLID_ReceiveInput(id__,0,
+														[| {|get_CLID_WaitForNextIteration,WaitForNextIteration::entered,terminate|} |]
+														dbisim(Clock_CLID_WaitForNextIteration(id__,0,
 																          const_BalanceSTM_maxAngle,
 																          const_BalanceSTM_loopTime,
 																          const_BalanceSTM_startupDelay,
@@ -2101,10 +2101,10 @@ exports
 																          const_BalanceSTM_angleBudget,
 																          const_BalanceSTM_speedBudget,
 																          const_BalanceSTM_rotationBudget))
-													)\{|get_CLID_ReceiveInput|}
+													)\{|get_CLID_WaitForNextIteration|}
 												)
-												[| {|get_CLID_StopMotors,StopMotors::entered,terminate|} |]
-												dbisim(Clock_CLID_StopMotors(id__,0,
+												[| {|get_CLID_SendSpeed,SendSpeed::entered,terminate|} |]
+												dbisim(Clock_CLID_SendSpeed(id__,0,
 														          const_BalanceSTM_maxAngle,
 														          const_BalanceSTM_loopTime,
 														          const_BalanceSTM_startupDelay,
@@ -2114,10 +2114,10 @@ exports
 														          const_BalanceSTM_angleBudget,
 														          const_BalanceSTM_speedBudget,
 														          const_BalanceSTM_rotationBudget))
-											)\{|get_CLID_StopMotors|}
+											)\{|get_CLID_SendSpeed|}
 										)
-										[| {|get_CLID_WaitForNextIteration,WaitForNextIteration::entered,terminate|} |]
-										dbisim(Clock_CLID_WaitForNextIteration(id__,0,
+										[| {|get_CLID_SetMotors,SetMotors::entered,terminate|} |]
+										dbisim(Clock_CLID_SetMotors(id__,0,
 												          const_BalanceSTM_maxAngle,
 												          const_BalanceSTM_loopTime,
 												          const_BalanceSTM_startupDelay,
@@ -2127,10 +2127,10 @@ exports
 												          const_BalanceSTM_angleBudget,
 												          const_BalanceSTM_speedBudget,
 												          const_BalanceSTM_rotationBudget))
-									)\{|get_CLID_WaitForNextIteration|}
+									)\{|get_CLID_SetMotors|}
 								)
-								[| {|get_CLID_SetMotors,SetMotors::entered,terminate|} |]
-								dbisim(Clock_CLID_SetMotors(id__,0,
+								[| {|get_CLID_SendAngle,SendAngle::entered,terminate|} |]
+								dbisim(Clock_CLID_SendAngle(id__,0,
 										          const_BalanceSTM_maxAngle,
 										          const_BalanceSTM_loopTime,
 										          const_BalanceSTM_startupDelay,
@@ -2140,10 +2140,10 @@ exports
 										          const_BalanceSTM_angleBudget,
 										          const_BalanceSTM_speedBudget,
 										          const_BalanceSTM_rotationBudget))
-							)\{|get_CLID_SetMotors|}
+							)\{|get_CLID_SendAngle|}
 						)
-						[| {|get_CLID_SendAngle,SendAngle::entered,terminate|} |]
-						dbisim(Clock_CLID_SendAngle(id__,0,
+						[| {|get_CLID_SendRotation,SendRotation::entered,terminate|} |]
+						dbisim(Clock_CLID_SendRotation(id__,0,
 								          const_BalanceSTM_maxAngle,
 								          const_BalanceSTM_loopTime,
 								          const_BalanceSTM_startupDelay,
@@ -2153,7 +2153,7 @@ exports
 								          const_BalanceSTM_angleBudget,
 								          const_BalanceSTM_speedBudget,
 								          const_BalanceSTM_rotationBudget))
-					)\{|get_CLID_SendAngle|}
+					)\{|get_CLID_SendRotation|}
 				)
 				) \ union(stateClockSync,enteredSS)
 			)
@@ -2541,16 +2541,16 @@ exports
 						 [[j2::interrupt <- x__ | x__ <- {|internal__.NID_j2,internal__.NID_j2|}]]
 						 )
 						  [[ share__ <- x__ | x__ <- {| share__,setR_rotationOutput,setR_speedOutput,setR_angleOutput |} ]] 
-						  [[set_rotationSent <- setL_rotationSent,set_angleSent <- setL_angleSent,set_currAngle <- setL_currAngle,set_angleReceived <- setL_angleReceived,set_speedSent <- setL_speedSent,set_speedCount <- setL_speedCount,set_rotationCount <- setL_rotationCount,clockReset.CLID_loopTimer <- clockResetL.CLID_loopTimer]]
+						  [[set_rotationSent <- setL_rotationSent,set_angleReceived <- setL_angleReceived,set_currAngle <- setL_currAngle,set_speedSent <- setL_speedSent,set_rotationCount <- setL_rotationCount,set_angleSent <- setL_angleSent,set_speedCount <- setL_speedCount,clockReset.CLID_loopTimer <- clockResetL.CLID_loopTimer]]
 						 )
 						 [| union(union(union(flowevts,transSync),{terminate}),{|share__
 						 			,setL_rotationSent
-						 			,setL_angleSent
-						 			,setL_currAngle
 						 			,setL_angleReceived
+						 			,setL_currAngle
 						 			,setL_speedSent
-						 			,setL_speedCount
 						 			,setL_rotationCount
+						 			,setL_angleSent
+						 			,setL_speedCount
 						 			,clockResetL.CLID_loopTimer
 						 			,setR_rotationOutput
 						 			 			,setR_speedOutput
@@ -2566,10 +2566,10 @@ exports
 						 		    const_BalanceSTM_angleBudget,
 						 		    const_BalanceSTM_speedBudget,
 						 		    const_BalanceSTM_rotationBudget))
-						  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleSent,setL_currAngle,setL_angleReceived,setL_speedSent,setL_speedCount,setL_rotationCount,clockResetL.CLID_loopTimer |} ]]
+						  [[ share__ <- x__ | x__ <- {| share__,setL_rotationSent,setL_angleReceived,setL_currAngle,setL_speedSent,setL_rotationCount,setL_angleSent,setL_speedCount,clockResetL.CLID_loopTimer |} ]]
 						  [[set_rotationOutput <- setR_rotationOutput,set_speedOutput <- setR_speedOutput,set_angleOutput <- setR_angleOutput]]
 						 )
-						)[[setL_rotationSent <- set_rotationSent,setL_angleSent <- set_angleSent,setL_currAngle <- set_currAngle,setL_angleReceived <- set_angleReceived,setL_speedSent <- set_speedSent,setL_speedCount <- set_speedCount,setL_rotationCount <- set_rotationCount,clockResetL.CLID_loopTimer <- clockReset.CLID_loopTimer]]
+						)[[setL_rotationSent <- set_rotationSent,setL_angleReceived <- set_angleReceived,setL_currAngle <- set_currAngle,setL_speedSent <- set_speedSent,setL_rotationCount <- set_rotationCount,setL_angleSent <- set_angleSent,setL_speedCount <- set_speedCount,clockResetL.CLID_loopTimer <- clockReset.CLID_loopTimer]]
 						 [[setR_rotationOutput <- set_rotationOutput,setR_speedOutput <- set_speedOutput,setR_angleOutput <- set_angleOutput]]
 						)
 					)
@@ -2619,7 +2619,7 @@ exports
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_SendRotation,SendRotation::entered,get_CLID_SendSpeed,SendSpeed::entered|}
+				stateClockSync = {|get_CLID_SendRotation,SendRotation::entered,get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_SendSpeed,SendSpeed::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered|}
 			 within
 				(MachineBody_VS_O(id__,
 						    const_BalanceSTM_maxAngle,
@@ -2654,7 +2654,7 @@ exports
 				    const_BalanceSTM_speedBudget,
 				    const_BalanceSTM_rotationBudget) = 
 			dbisim((let
-				stateClockSync = {|get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_SendRotation,SendRotation::entered,get_CLID_SendSpeed,SendSpeed::entered|}
+				stateClockSync = {|get_CLID_SendRotation,SendRotation::entered,get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_SendSpeed,SendSpeed::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered|}
 			 within
 				(dbisim(
 					sbisim(
@@ -2684,8 +2684,8 @@ exports
 																								    const_BalanceSTM_angleBudget,
 																								    const_BalanceSTM_speedBudget,
 																								    const_BalanceSTM_rotationBudget)
-																						[| {|get_CLID_SendSpeed,SendSpeed::entered,terminate|} |]
-																						dbisim(Clock_CLID_SendSpeed(id__,0,
+																						[| {|get_CLID_Setup,Setup::entered,terminate|} |]
+																						dbisim(Clock_CLID_Setup(id__,0,
 																								          const_BalanceSTM_maxAngle,
 																								          const_BalanceSTM_loopTime,
 																								          const_BalanceSTM_startupDelay,
@@ -2695,10 +2695,10 @@ exports
 																								          const_BalanceSTM_angleBudget,
 																								          const_BalanceSTM_speedBudget,
 																								          const_BalanceSTM_rotationBudget))
-																					)\{|get_CLID_SendSpeed|}
+																					)\{|get_CLID_Setup|}
 																				)
-																				[| {|get_CLID_SendRotation,SendRotation::entered,terminate|} |]
-																				dbisim(Clock_CLID_SendRotation(id__,0,
+																				[| {|get_CLID_ReceiveInput,ReceiveInput::entered,terminate|} |]
+																				dbisim(Clock_CLID_ReceiveInput(id__,0,
 																						          const_BalanceSTM_maxAngle,
 																						          const_BalanceSTM_loopTime,
 																						          const_BalanceSTM_startupDelay,
@@ -2708,10 +2708,10 @@ exports
 																						          const_BalanceSTM_angleBudget,
 																						          const_BalanceSTM_speedBudget,
 																						          const_BalanceSTM_rotationBudget))
-																			)\{|get_CLID_SendRotation|}
+																			)\{|get_CLID_ReceiveInput|}
 																		)
-																		[| {|get_CLID_Initialisation,Initialisation::entered,terminate|} |]
-																		dbisim(Clock_CLID_Initialisation(id__,0,
+																		[| {|get_CLID_StopMotors,StopMotors::entered,terminate|} |]
+																		dbisim(Clock_CLID_StopMotors(id__,0,
 																				          const_BalanceSTM_maxAngle,
 																				          const_BalanceSTM_loopTime,
 																				          const_BalanceSTM_startupDelay,
@@ -2721,10 +2721,10 @@ exports
 																				          const_BalanceSTM_angleBudget,
 																				          const_BalanceSTM_speedBudget,
 																				          const_BalanceSTM_rotationBudget))
-																	)\{|get_CLID_Initialisation|}
+																	)\{|get_CLID_StopMotors|}
 																)
-																[| {|get_CLID_Setup,Setup::entered,terminate|} |]
-																dbisim(Clock_CLID_Setup(id__,0,
+																[| {|get_CLID_Initialisation,Initialisation::entered,terminate|} |]
+																dbisim(Clock_CLID_Initialisation(id__,0,
 																		          const_BalanceSTM_maxAngle,
 																		          const_BalanceSTM_loopTime,
 																		          const_BalanceSTM_startupDelay,
@@ -2734,10 +2734,10 @@ exports
 																		          const_BalanceSTM_angleBudget,
 																		          const_BalanceSTM_speedBudget,
 																		          const_BalanceSTM_rotationBudget))
-															)\{|get_CLID_Setup|}
+															)\{|get_CLID_Initialisation|}
 														)
-														[| {|get_CLID_ReceiveInput,ReceiveInput::entered,terminate|} |]
-														dbisim(Clock_CLID_ReceiveInput(id__,0,
+														[| {|get_CLID_WaitForNextIteration,WaitForNextIteration::entered,terminate|} |]
+														dbisim(Clock_CLID_WaitForNextIteration(id__,0,
 																          const_BalanceSTM_maxAngle,
 																          const_BalanceSTM_loopTime,
 																          const_BalanceSTM_startupDelay,
@@ -2747,10 +2747,10 @@ exports
 																          const_BalanceSTM_angleBudget,
 																          const_BalanceSTM_speedBudget,
 																          const_BalanceSTM_rotationBudget))
-													)\{|get_CLID_ReceiveInput|}
+													)\{|get_CLID_WaitForNextIteration|}
 												)
-												[| {|get_CLID_StopMotors,StopMotors::entered,terminate|} |]
-												dbisim(Clock_CLID_StopMotors(id__,0,
+												[| {|get_CLID_SendSpeed,SendSpeed::entered,terminate|} |]
+												dbisim(Clock_CLID_SendSpeed(id__,0,
 														          const_BalanceSTM_maxAngle,
 														          const_BalanceSTM_loopTime,
 														          const_BalanceSTM_startupDelay,
@@ -2760,10 +2760,10 @@ exports
 														          const_BalanceSTM_angleBudget,
 														          const_BalanceSTM_speedBudget,
 														          const_BalanceSTM_rotationBudget))
-											)\{|get_CLID_StopMotors|}
+											)\{|get_CLID_SendSpeed|}
 										)
-										[| {|get_CLID_WaitForNextIteration,WaitForNextIteration::entered,terminate|} |]
-										dbisim(Clock_CLID_WaitForNextIteration(id__,0,
+										[| {|get_CLID_SetMotors,SetMotors::entered,terminate|} |]
+										dbisim(Clock_CLID_SetMotors(id__,0,
 												          const_BalanceSTM_maxAngle,
 												          const_BalanceSTM_loopTime,
 												          const_BalanceSTM_startupDelay,
@@ -2773,10 +2773,10 @@ exports
 												          const_BalanceSTM_angleBudget,
 												          const_BalanceSTM_speedBudget,
 												          const_BalanceSTM_rotationBudget))
-									)\{|get_CLID_WaitForNextIteration|}
+									)\{|get_CLID_SetMotors|}
 								)
-								[| {|get_CLID_SetMotors,SetMotors::entered,terminate|} |]
-								dbisim(Clock_CLID_SetMotors(id__,0,
+								[| {|get_CLID_SendAngle,SendAngle::entered,terminate|} |]
+								dbisim(Clock_CLID_SendAngle(id__,0,
 										          const_BalanceSTM_maxAngle,
 										          const_BalanceSTM_loopTime,
 										          const_BalanceSTM_startupDelay,
@@ -2786,10 +2786,10 @@ exports
 										          const_BalanceSTM_angleBudget,
 										          const_BalanceSTM_speedBudget,
 										          const_BalanceSTM_rotationBudget))
-							)\{|get_CLID_SetMotors|}
+							)\{|get_CLID_SendAngle|}
 						)
-						[| {|get_CLID_SendAngle,SendAngle::entered,terminate|} |]
-						dbisim(Clock_CLID_SendAngle(id__,0,
+						[| {|get_CLID_SendRotation,SendRotation::entered,terminate|} |]
+						dbisim(Clock_CLID_SendRotation(id__,0,
 								          const_BalanceSTM_maxAngle,
 								          const_BalanceSTM_loopTime,
 								          const_BalanceSTM_startupDelay,
@@ -2799,7 +2799,7 @@ exports
 								          const_BalanceSTM_angleBudget,
 								          const_BalanceSTM_speedBudget,
 								          const_BalanceSTM_rotationBudget))
-					)\{|get_CLID_SendAngle|}
+					)\{|get_CLID_SendRotation|}
 				)
 				) \ diff(union(stateClockSync,enteredSS),enteredSS)
 			)
@@ -3391,6 +3391,58 @@ exports
 		
 		clockSync = {|get_CLID_loopTimer,clockReset.CLID_loopTimer|}
 		
+		Clock_CLID_SendRotation(id__,x__,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget) = 
+			TimeOut_1(
+				SendRotation::entered -> Clock_CLID_SendRotation(id__,0,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				get_CLID_SendRotation!x__ -> Clock_CLID_SendRotation(id__,x__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				terminate -> SKIP,Clock_CLID_SendRotation(id__,clock_type_plus(x__,1,CLID_SendRotation_clock_type(id__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)),
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget))
 		Clock_CLID_SendAngle(id__,x__,
 				          const_BalanceSTM_maxAngle,
 				          const_BalanceSTM_loopTime,
@@ -3495,6 +3547,58 @@ exports
 						          const_BalanceSTM_angleBudget,
 						          const_BalanceSTM_speedBudget,
 						          const_BalanceSTM_rotationBudget))
+		Clock_CLID_SendSpeed(id__,x__,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget) = 
+			TimeOut_1(
+				SendSpeed::entered -> Clock_CLID_SendSpeed(id__,0,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				get_CLID_SendSpeed!x__ -> Clock_CLID_SendSpeed(id__,x__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				terminate -> SKIP,Clock_CLID_SendSpeed(id__,clock_type_plus(x__,1,CLID_SendSpeed_clock_type(id__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)),
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget))
 		Clock_CLID_WaitForNextIteration(id__,x__,
 				          const_BalanceSTM_maxAngle,
 				          const_BalanceSTM_loopTime,
@@ -3529,6 +3633,58 @@ exports
 						          const_BalanceSTM_rotationBudget)
 				[]
 				terminate -> SKIP,Clock_CLID_WaitForNextIteration(id__,clock_type_plus(x__,1,CLID_WaitForNextIteration_clock_type(id__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)),
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget))
+		Clock_CLID_Initialisation(id__,x__,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget) = 
+			TimeOut_1(
+				Initialisation::entered -> Clock_CLID_Initialisation(id__,0,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				get_CLID_Initialisation!x__ -> Clock_CLID_Initialisation(id__,x__,
+						          const_BalanceSTM_maxAngle,
+						          const_BalanceSTM_loopTime,
+						          const_BalanceSTM_startupDelay,
+						          const_BalanceSTM_speedUpdate,
+						          const_BalanceSTM_rotationUpdate,
+						          const_BalanceSTM_motorBudget,
+						          const_BalanceSTM_angleBudget,
+						          const_BalanceSTM_speedBudget,
+						          const_BalanceSTM_rotationBudget)
+				[]
+				terminate -> SKIP,Clock_CLID_Initialisation(id__,clock_type_plus(x__,1,CLID_Initialisation_clock_type(id__,
 						          const_BalanceSTM_maxAngle,
 						          const_BalanceSTM_loopTime,
 						          const_BalanceSTM_startupDelay,
@@ -3703,162 +3859,6 @@ exports
 						          const_BalanceSTM_angleBudget,
 						          const_BalanceSTM_speedBudget,
 						          const_BalanceSTM_rotationBudget))
-		Clock_CLID_Initialisation(id__,x__,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget) = 
-			TimeOut_1(
-				Initialisation::entered -> Clock_CLID_Initialisation(id__,0,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				get_CLID_Initialisation!x__ -> Clock_CLID_Initialisation(id__,x__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				terminate -> SKIP,Clock_CLID_Initialisation(id__,clock_type_plus(x__,1,CLID_Initialisation_clock_type(id__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)),
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget))
-		Clock_CLID_SendRotation(id__,x__,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget) = 
-			TimeOut_1(
-				SendRotation::entered -> Clock_CLID_SendRotation(id__,0,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				get_CLID_SendRotation!x__ -> Clock_CLID_SendRotation(id__,x__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				terminate -> SKIP,Clock_CLID_SendRotation(id__,clock_type_plus(x__,1,CLID_SendRotation_clock_type(id__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)),
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget))
-		Clock_CLID_SendSpeed(id__,x__,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget) = 
-			TimeOut_1(
-				SendSpeed::entered -> Clock_CLID_SendSpeed(id__,0,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				get_CLID_SendSpeed!x__ -> Clock_CLID_SendSpeed(id__,x__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)
-				[]
-				terminate -> SKIP,Clock_CLID_SendSpeed(id__,clock_type_plus(x__,1,CLID_SendSpeed_clock_type(id__,
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget)),
-						          const_BalanceSTM_maxAngle,
-						          const_BalanceSTM_loopTime,
-						          const_BalanceSTM_startupDelay,
-						          const_BalanceSTM_speedUpdate,
-						          const_BalanceSTM_rotationUpdate,
-						          const_BalanceSTM_motorBudget,
-						          const_BalanceSTM_angleBudget,
-						          const_BalanceSTM_speedBudget,
-						          const_BalanceSTM_rotationBudget))
 		
 		StateClocks(id__,
 				          const_BalanceSTM_maxAngle,
@@ -3869,7 +3869,18 @@ exports
 				          const_BalanceSTM_motorBudget,
 				          const_BalanceSTM_angleBudget,
 				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget) = dbisim(Clock_CLID_SendAngle(id__,0,
+				          const_BalanceSTM_rotationBudget) = dbisim(Clock_CLID_SendRotation(id__,0,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_SendAngle(id__,0,
 				          const_BalanceSTM_maxAngle,
 				          const_BalanceSTM_loopTime,
 				          const_BalanceSTM_startupDelay,
@@ -3891,7 +3902,29 @@ exports
 				          const_BalanceSTM_speedBudget,
 				          const_BalanceSTM_rotationBudget))
 		[| { terminate } |] (
+		dbisim(Clock_CLID_SendSpeed(id__,0,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget))
+		[| { terminate } |] (
 		dbisim(Clock_CLID_WaitForNextIteration(id__,0,
+				          const_BalanceSTM_maxAngle,
+				          const_BalanceSTM_loopTime,
+				          const_BalanceSTM_startupDelay,
+				          const_BalanceSTM_speedUpdate,
+				          const_BalanceSTM_rotationUpdate,
+				          const_BalanceSTM_motorBudget,
+				          const_BalanceSTM_angleBudget,
+				          const_BalanceSTM_speedBudget,
+				          const_BalanceSTM_rotationBudget))
+		[| { terminate } |] (
+		dbisim(Clock_CLID_Initialisation(id__,0,
 				          const_BalanceSTM_maxAngle,
 				          const_BalanceSTM_loopTime,
 				          const_BalanceSTM_startupDelay,
@@ -3934,39 +3967,6 @@ exports
 				          const_BalanceSTM_angleBudget,
 				          const_BalanceSTM_speedBudget,
 				          const_BalanceSTM_rotationBudget))
-		[| { terminate } |] (
-		dbisim(Clock_CLID_Initialisation(id__,0,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget))
-		[| { terminate } |] (
-		dbisim(Clock_CLID_SendRotation(id__,0,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget))
-		[| { terminate } |] (
-		dbisim(Clock_CLID_SendSpeed(id__,0,
-				          const_BalanceSTM_maxAngle,
-				          const_BalanceSTM_loopTime,
-				          const_BalanceSTM_startupDelay,
-				          const_BalanceSTM_speedUpdate,
-				          const_BalanceSTM_rotationUpdate,
-				          const_BalanceSTM_motorBudget,
-				          const_BalanceSTM_angleBudget,
-				          const_BalanceSTM_speedBudget,
-				          const_BalanceSTM_rotationBudget))
 		)
 		)
 		)
@@ -3976,7 +3976,7 @@ exports
 		)
 		)
 		
-		stateClockSync = {|get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_SendRotation,SendRotation::entered,get_CLID_SendSpeed,SendSpeed::entered|}
+		stateClockSync = {|get_CLID_SendRotation,SendRotation::entered,get_CLID_SendAngle,SendAngle::entered,get_CLID_SetMotors,SetMotors::entered,get_CLID_SendSpeed,SendSpeed::entered,get_CLID_WaitForNextIteration,WaitForNextIteration::entered,get_CLID_Initialisation,Initialisation::entered,get_CLID_StopMotors,StopMotors::entered,get_CLID_ReceiveInput,ReceiveInput::entered,get_CLID_Setup,Setup::entered|}
 		
 		-- Shared memory
 		-- Shared memory variables

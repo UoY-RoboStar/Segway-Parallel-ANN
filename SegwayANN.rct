@@ -41,18 +41,24 @@ module SegwayANN {
 	rref rp_ref0 = SegwayRP
 
 	anncontroller AnglePIDANN {
-		params { inputcontext {
+		params { 
+			inputcontext {
 				ordevent anewError:real 1
 				ordevent adiff:real 2
-
-		}
+			}
 
 		outputcontext {
 			ordevent angleOutputE:real 1
 		}
 
-		layerstructure < 1 , 1 > weights < < < 1.22838 , 0.132874 > > , < < 0.744636 > > > biases < < 0.125424 > , < - 0.107753 > > activationfunction relu 
-		inRanges <(|-30.0, 30.0|), (|-250.0, 250.0|)> outRanges <(| -1950.0, 1950.0|)> annRange (| 0.0,1.0|)
+		layerstructure < 1 , 1 > 
+		weights < < < 1.22838 , 0.132874 > > , < < 0.744636 > > > 
+		biases < < 0.125424 > , < -0.107753 > > 
+		activationfunction relu 
+		inRanges <(| -30.0,30.0 |),(| -250.0, 250.0 |)> 
+		outRanges < (| -1950.0, 1950.0 |) >
+		annRange (| 0.0, 1.0 |)
+		
 		}
 	}
 	connection rp_ref0 on gyroX to SegwayController on gyroX ( _async )
